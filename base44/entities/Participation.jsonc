@@ -1,0 +1,25 @@
+{
+  "name": "Participation",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "number"
+    },
+    "img": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "campaign_name"
+  ]
+}

@@ -1,14 +1,38 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, Wallet, Video, Share2 } from "lucide-react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { ArrowLeft, CheckCircle2, Wallet, Video, Share2, Loader2 } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { getCampaign } from "@/lib/campaignsData";
 
 export default function CampaignDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [mode, setMode] = useState("creator");
+  const [joining, setJoining] = useState(false);
   const campaign = getCampaign(id);
+
+  const handleJoin = async () => {
+    setJoining(true);
+    const authed = await base44.auth.isAuthenticated();
+    if (!authed) {
+      window.location.href = "/login";
+      return;
+    }
+    const user = await base44.auth.me();
+    const existing = await base44.entities.Participation.filter({ campaign_id: campaign.id, created_by_id: user.id });
+    if (existing.length === 0) {
+      await base44.entities.Participation.create({
+        campaign_id: campaign.id,
+        campaign_name: campaign.name,
+        brand: campaign.brand,
+        rate: campaign.rate,
+        img: campaign.img,
+      });
+    }
+    navigate("/dashboard");
+  };
 
   if (!campaign) {
     return (
@@ -74,12 +98,13 @@ export default function CampaignDetail() {
                 ))}
               </div>
 
-              <Link
-                to="/login"
-                className="mt-10 inline-flex h-14 px-10 items-center rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03]"
+              <button
+                onClick={handleJoin}
+                disabled={joining}
+                className="mt-10 inline-flex h-14 px-10 items-center gap-2 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03] disabled:opacity-60"
               >
-                Rejoindre cette campagne →
-              </Link>
+                {joining ? <><Loader2 className="w-5 h-5 animate-spin" /> Inscription...</> : "Rejoindre cette campagne →"}
+              </button>
             </div>
           </div>
 

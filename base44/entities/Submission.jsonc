@@ -1,0 +1,45 @@
+{
+  "name": "Submission",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "TikTok",
+        "Instagram Reels",
+        "YouTube Shorts"
+      ]
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "earnings": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "campaign_id",
+    "campaign_name",
+    "video_url"
+  ]
+}

@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { base44 } from "@/api/base44Client";
 
 export default function Navbar({ mode = "creator", setMode = () => {} }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [authed, setAuthed] = useState(false);
+
+  useEffect(() => {
+    base44.auth.isAuthenticated().then(setAuthed).catch(() => setAuthed(false));
+  }, []);
 
   const scrollTo = (id) => {
     if (location.pathname !== "/") {
@@ -51,12 +57,21 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
               Marque
             </button>
           </div>
-          <button
-            onClick={() => navigate("/campaigns")}
-            className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
-          >
-            {mode === "creator" ? "Commencer à gagner" : "Lancer une campagne"} <span aria-hidden>→</span>
-          </button>
+          {authed ? (
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
+            >
+              Mon espace <span aria-hidden>→</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/campaigns")}
+              className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
+            >
+              {mode === "creator" ? "Commencer à gagner" : "Lancer une campagne"} <span aria-hidden>→</span>
+            </button>
+          )}
         </div>
       </div>
     </header>
