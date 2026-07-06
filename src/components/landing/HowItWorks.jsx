@@ -71,7 +71,7 @@ export default function HowItWorks() {
             <div className="mb-8 rounded-2xl bg-slate-900 p-5 text-white">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-xs opacity-60">Promote</p>
+                  <p className="text-xs opacity-60">ReelDeal</p>
                   <p className="text-xl font-extrabold mt-1">$12,480.00 <span className="text-xs font-normal opacity-60">earned</span></p>
                 </div>
                 <div className="text-right">

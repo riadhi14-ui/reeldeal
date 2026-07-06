@@ -22,9 +22,10 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <button onClick={goHome} className="flex items-center gap-1">
-          <span className="text-xl font-extrabold tracking-tight text-slate-900" style={{ fontStyle: "italic" }}>
-            <span className="text-[#0084CC]">P</span>romote
+        <button onClick={goHome} className="flex items-center gap-2">
+          <img src="https://media.base44.com/images/public/6a4bcc3db03674ee37b93254/813d2de75_generated_image.png" alt="ReelDeal logo" className="w-8 h-8 rounded-lg" />
+          <span className="text-xl font-extrabold tracking-tight text-slate-900">
+            Reel<span className="text-[#0084CC]">Deal</span>
           </span>
         </button>
 

@@ -46,7 +46,7 @@ export default function PhoneMockup() {
       <div className="absolute -right-4 sm:right-[-70px] top-24 w-52 rounded-2xl bg-gradient-to-br from-[#00C2FF] to-[#0084CC] text-white p-4 shadow-2xl shadow-cyan-500/40 rotate-[8deg]">
         <div className="flex justify-between items-start">
           <div>
-            <p className="font-bold text-sm">Promote</p>
+            <p className="font-bold text-sm">ReelDeal</p>
             <p className="text-[9px] opacity-75">Top earning</p>
           </div>
           <span className="w-3 h-3 rounded-full bg-emerald-300 shadow shadow-emerald-300/60" />

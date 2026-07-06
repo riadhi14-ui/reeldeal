@@ -57,12 +57,12 @@ export default function Estimator() {
             className="bg-white rounded-3xl p-8 sm:p-10 shadow-sm ring-1 ring-slate-100"
           >
             <h3 className="text-xl font-extrabold text-slate-900">Platform Comparison</h3>
-            <p className="text-sm text-slate-500 mb-8">See why creators choose Promote</p>
+            <p className="text-sm text-slate-500 mb-8">See why creators choose ReelDeal</p>
 
             <div className="space-y-5">
               <div className="rounded-2xl bg-cyan-50 ring-2 ring-[#00A3E0] p-4 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-900">Promote</p>
+                  <p className="font-bold text-slate-900">ReelDeal</p>
                   <p className="text-xs text-[#0084CC] font-mono">${PROMOTE_RATE.toFixed(2)}/1K views</p>
                 </div>
                 <p className="text-2xl font-extrabold text-[#0084CC] font-mono">{fmt(monthly)}<span className="text-xs font-semibold text-slate-400">/mo</span></p>

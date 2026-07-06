@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 const faqs = [
   {
-    q: "How do I get started with Promote?",
+    q: "How do I get started with ReelDeal?",
     a: "Simply create a free account, browse the active campaigns, and pick one that fits your style. Once you've read the brief, create your video, post it on your social channels, and submit the link for approval. That's it — you start earning as soon as your views come in.",
   },
   {
@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "Do I need a huge following to join?",
-    a: "Not at all! There is no follower minimum on Promote. What matters is the quality and performance of your content. Many of our top earners started with fewer than 5,000 followers.",
+    a: "Not at all! There is no follower minimum on ReelDeal. What matters is the quality and performance of your content. Many of our top earners started with fewer than 5,000 followers.",
   },
   {
     q: "What types of campaigns are available?",
@@ -53,7 +53,7 @@ export default function FAQ() {
 
         <div className="text-center mt-12">
           <a
-            href="mailto:support@promote.sh"
+            href="mailto:support@reeldeal.sh"
             className="inline-flex items-center h-12 px-7 rounded-full border-2 border-slate-200 hover:border-[#00A3E0] hover:text-[#0084CC] font-bold text-slate-700 transition-colors"
           >
             Contact Support

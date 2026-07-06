@@ -32,7 +32,7 @@ export default function Testimonials() {
         >
           <p className="text-sm font-bold text-[#0084CC] uppercase tracking-widest mb-3">Success Stories</p>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Hear From Our Community</h2>
-          <p className="mt-4 text-lg text-slate-500">Real creators, real results. See what's possible with Promote.</p>
+          <p className="mt-4 text-lg text-slate-500">Real creators, real results. See what's possible with ReelDeal.</p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
