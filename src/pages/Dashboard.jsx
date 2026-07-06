@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { LogOut } from "lucide-react";
+import { LogOut, UserRound } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import StatsCards from "@/components/dashboard/StatsCards";
 import MyCampaigns from "@/components/dashboard/MyCampaigns";
@@ -57,6 +58,13 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center gap-3">
               <SubmitVideoDialog participations={participations} onSubmitted={loadData} />
+              <Link
+                to="/profile"
+                className="h-11 w-11 rounded-full bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] hover:text-[#DC2626] text-slate-500 transition-colors flex items-center justify-center"
+                title="Mon profil"
+              >
+                <UserRound className="w-4 h-4" />
+              </Link>
               <button
                 onClick={() => base44.auth.logout("/")}
                 className="h-11 w-11 rounded-full bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] hover:text-[#DC2626] text-slate-500 transition-colors flex items-center justify-center"
