@@ -1,7 +1,18 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Footer() {
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollTo = (id) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 300);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <footer className="bg-slate-900 text-white pt-24 pb-10 overflow-hidden">
@@ -9,7 +20,7 @@ export default function Footer() {
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Ready to turn views into income?</h2>
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => navigate("/campaigns")}
             className="mt-8 h-14 px-8 rounded-full bg-[#00A3E0] hover:bg-[#0084CC] text-white font-bold shadow-xl shadow-cyan-500/30 transition-all hover:scale-[1.03]"
           >
             Start Earning Now →

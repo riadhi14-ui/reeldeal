@@ -1,12 +1,28 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Navbar({ mode, setMode }) {
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+export default function Navbar({ mode = "creator", setMode = () => {} }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollTo = (id) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 300);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const goHome = () => {
+    if (location.pathname !== "/") navigate("/");
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-1">
+        <button onClick={goHome} className="flex items-center gap-1">
           <span className="text-xl font-extrabold tracking-tight text-slate-900" style={{ fontStyle: "italic" }}>
             <span className="text-[#0084CC]">P</span>romote
           </span>
@@ -35,7 +51,7 @@ export default function Navbar({ mode, setMode }) {
             </button>
           </div>
           <button
-            onClick={() => scrollTo("campaigns")}
+            onClick={() => navigate("/campaigns")}
             className="h-10 px-5 rounded-full bg-[#00A3E0] hover:bg-[#0084CC] text-white text-sm font-bold shadow-lg shadow-cyan-500/25 transition-all flex items-center gap-1.5"
           >
             {mode === "creator" ? "Start Earning" : "Launch Campaign"} <span aria-hidden>→</span>
