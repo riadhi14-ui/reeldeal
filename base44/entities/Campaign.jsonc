@@ -1,0 +1,55 @@
+{
+  "name": "Campaign",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "number"
+    },
+    "budget": {
+      "type": "string"
+    },
+    "maxPerVideo": {
+      "type": "string"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string"
+    },
+    "brief": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "img": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "closed"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "name",
+    "brand",
+    "rate"
+  ]
+}

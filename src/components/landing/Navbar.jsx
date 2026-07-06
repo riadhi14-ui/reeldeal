@@ -59,7 +59,7 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
           </div>
           {authed ? (
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate(mode === "brand" ? "/brand" : "/dashboard")}
               className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
             >
               Mon espace <span aria-hidden>→</span>

@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { campaigns } from "@/lib/campaignsData";
-
-const categories = ["Toutes", ...new Set(campaigns.map((c) => c.category))];
+import { base44 } from "@/api/base44Client";
+import { campaigns as staticCampaigns } from "@/lib/campaignsData";
 
 export default function Campaigns() {
   const [mode, setMode] = useState("creator");
   const [category, setCategory] = useState("Toutes");
-  const filtered = category === "Toutes" ? campaigns : campaigns.filter((c) => c.category === category);
+  const [dbCampaigns, setDbCampaigns] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Campaign.filter({ status: "active" }).then(setDbCampaigns).catch(() => setDbCampaigns([]));
+  }, []);
+
+  const allCampaigns = [...dbCampaigns, ...staticCampaigns]
+    .sort((a, b) => b.rate - a.rate)
+    .map((c, i) => ({ ...c, rank: i + 1 }));
+  const categories = ["Toutes", ...new Set(allCampaigns.map((c) => c.category))];
+  const filtered = category === "Toutes" ? allCampaigns : allCampaigns.filter((c) => c.category === category);
 
   return (
     <div className="bg-white text-slate-900 font-body min-h-screen">

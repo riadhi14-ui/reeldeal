@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, Wallet, Video, Share2, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
@@ -11,7 +11,18 @@ export default function CampaignDetail() {
   const navigate = useNavigate();
   const [mode, setMode] = useState("creator");
   const [joining, setJoining] = useState(false);
-  const campaign = getCampaign(id);
+  const staticCampaign = getCampaign(id);
+  const [campaign, setCampaign] = useState(staticCampaign || null);
+  const [loadingCampaign, setLoadingCampaign] = useState(!staticCampaign);
+
+  useEffect(() => {
+    if (!staticCampaign) {
+      base44.entities.Campaign.filter({ id })
+        .then((r) => { setCampaign(r[0] || null); setLoadingCampaign(false); })
+        .catch(() => setLoadingCampaign(false));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const handleJoin = async () => {
     setJoining(true);
@@ -33,6 +44,14 @@ export default function CampaignDetail() {
     }
     navigate("/dashboard");
   };
+
+  if (loadingCampaign) {
+    return (
+      <div className="bg-white min-h-screen font-body flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-[#EF4444] rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!campaign) {
     return (
@@ -63,7 +82,9 @@ export default function CampaignDetail() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="relative rounded-3xl overflow-hidden ring-1 ring-slate-100 shadow-lg">
               <img src={campaign.img} alt={campaign.name} className="w-full aspect-square object-cover" />
-              <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top rémunération</span>
+              {campaign.rank && (
+                <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top rémunération</span>
+              )}
             </div>
 
             <div>
@@ -93,7 +114,7 @@ export default function CampaignDetail() {
 
               <div className="mt-6 flex items-center gap-2 flex-wrap">
                 <Share2 className="w-4 h-4 text-slate-400" />
-                {campaign.platforms.map((p) => (
+                {(campaign.platforms || []).map((p) => (
                   <span key={p} className="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1.5 rounded-full">{p}</span>
                 ))}
               </div>
@@ -111,7 +132,7 @@ export default function CampaignDetail() {
           <div className="mt-16 max-w-3xl">
             <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Brief de la campagne</h2>
             <div className="space-y-4">
-              {campaign.brief.map((item, i) => (
+              {(campaign.brief || []).map((item, i) => (
                 <div key={i} className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
                   <CheckCircle2 className="w-5 h-5 text-[#DC2626] mt-0.5 shrink-0" />
                   <p className="text-slate-600">{item}</p>
