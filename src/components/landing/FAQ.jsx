@@ -37,7 +37,7 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <p className="text-sm font-bold text-[#0084CC] uppercase tracking-widest mb-3">Questions & Answers</p>
+          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Questions & Answers</p>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Got Questions?</h2>
           <p className="mt-4 text-lg text-slate-500">Everything you need to know about getting started.</p>
         </motion.div>
@@ -54,7 +54,7 @@ export default function FAQ() {
         <div className="text-center mt-12">
           <a
             href="mailto:support@reeldeal.sh"
-            className="inline-flex items-center h-12 px-7 rounded-full border-2 border-slate-200 hover:border-[#00A3E0] hover:text-[#0084CC] font-bold text-slate-700 transition-colors"
+            className="inline-flex items-center h-12 px-7 rounded-full border-2 border-slate-200 hover:border-[#EF4444] hover:text-[#DC2626] font-bold text-slate-700 transition-colors"
           >
             Contact Support
           </a>

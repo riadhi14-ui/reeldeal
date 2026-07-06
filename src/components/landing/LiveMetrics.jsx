@@ -33,13 +33,13 @@ const metrics = [
 export default function LiveMetrics() {
   return (
     <section className="py-32 bg-slate-900 relative overflow-hidden">
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0084CC]/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#DC2626]/20 blur-[120px] rounded-full pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#00D1FF] uppercase tracking-widest mb-3">Live Metrics</p>
+          <p className="text-sm font-bold text-[#F87171] uppercase tracking-widest mb-3">Live Metrics</p>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">Numbers That Speak</h2>
           <p className="mt-4 text-lg text-slate-400">Real-time stats from our growing community of creators and brands.</p>
         </motion.div>

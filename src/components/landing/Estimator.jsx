@@ -23,7 +23,7 @@ export default function Estimator() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#0084CC] uppercase tracking-widest mb-3">Earnings Estimator</p>
+          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Earnings Estimator</p>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">How Much Can You Earn?</h2>
           <p className="mt-4 text-lg text-slate-500">Slide to see your potential earnings based on your content performance.</p>
         </motion.div>
@@ -38,12 +38,12 @@ export default function Estimator() {
               <p className="text-sm font-bold text-slate-500 uppercase tracking-wide">Monthly Views</p>
               <p className="text-3xl font-extrabold text-slate-900 font-mono">{views.toLocaleString("en-US")}</p>
             </div>
-            <Slider value={[views]} min={1000} max={500000} step={1000} onValueChange={([v]) => setViews(v)} className="[&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:border-[#00A3E0]" />
+            <Slider value={[views]} min={1000} max={500000} step={1000} onValueChange={([v]) => setViews(v)} className="[&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:border-[#EF4444]" />
             <div className="flex justify-between text-xs text-slate-400 font-mono mt-3">
               <span>1K</span><span>250K</span><span>500K</span>
             </div>
 
-            <div className="mt-10 rounded-2xl bg-gradient-to-br from-[#00C2FF] to-[#0084CC] text-white p-8 text-center">
+            <div className="mt-10 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#DC2626] text-white p-8 text-center">
               <p className="text-sm font-semibold opacity-80">Estimated Monthly Earnings</p>
               <p className="text-5xl font-extrabold mt-2">{fmt(monthly)}<span className="text-lg font-semibold opacity-80">/month</span></p>
               <p className="mt-2 text-sm opacity-80">{fmt(monthly * 12)}/year</p>
@@ -60,12 +60,12 @@ export default function Estimator() {
             <p className="text-sm text-slate-500 mb-8">See why creators choose ReelDeal</p>
 
             <div className="space-y-5">
-              <div className="rounded-2xl bg-cyan-50 ring-2 ring-[#00A3E0] p-4 flex items-center justify-between">
+              <div className="rounded-2xl bg-red-50 ring-2 ring-[#EF4444] p-4 flex items-center justify-between">
                 <div>
                   <p className="font-bold text-slate-900">ReelDeal</p>
-                  <p className="text-xs text-[#0084CC] font-mono">${PROMOTE_RATE.toFixed(2)}/1K views</p>
+                  <p className="text-xs text-[#DC2626] font-mono">${PROMOTE_RATE.toFixed(2)}/1K views</p>
                 </div>
-                <p className="text-2xl font-extrabold text-[#0084CC] font-mono">{fmt(monthly)}<span className="text-xs font-semibold text-slate-400">/mo</span></p>
+                <p className="text-2xl font-extrabold text-[#DC2626] font-mono">{fmt(monthly)}<span className="text-xs font-semibold text-slate-400">/mo</span></p>
               </div>
               {platforms.map((p) => (
                 <div key={p.name} className="rounded-2xl bg-slate-50 p-4 flex items-center justify-between">

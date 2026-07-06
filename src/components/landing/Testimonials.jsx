@@ -30,7 +30,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#0084CC] uppercase tracking-widest mb-3">Success Stories</p>
+          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Success Stories</p>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Hear From Our Community</h2>
           <p className="mt-4 text-lg text-slate-500">Real creators, real results. See what's possible with ReelDeal.</p>
         </motion.div>
@@ -50,7 +50,7 @@ export default function Testimonials() {
                 <p className="mt-3 text-slate-500 leading-relaxed">{s.quote}</p>
                 <div className="mt-5 pt-5 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Earned:</span>
-                  <span className="text-sm font-extrabold text-[#0084CC] font-mono">{s.earned}</span>
+                  <span className="text-sm font-extrabold text-[#DC2626] font-mono">{s.earned}</span>
                 </div>
               </div>
             </motion.div>

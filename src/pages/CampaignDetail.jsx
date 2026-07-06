@@ -17,7 +17,7 @@ export default function CampaignDetail() {
         <div className="pt-40 pb-24 text-center px-6">
           <h1 className="text-3xl font-extrabold text-slate-900">Campaign not found</h1>
           <p className="mt-3 text-slate-500">This campaign may have ended or been removed.</p>
-          <Link to="/campaigns" className="inline-flex mt-8 h-12 px-7 items-center rounded-full bg-[#00A3E0] text-white font-bold shadow-lg shadow-cyan-500/25">
+          <Link to="/campaigns" className="inline-flex mt-8 h-12 px-7 items-center rounded-full bg-[#EF4444] text-white font-bold shadow-lg shadow-red-500/25">
             Browse Campaigns
           </Link>
         </div>
@@ -47,7 +47,7 @@ export default function CampaignDetail() {
               <h1 className="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">{campaign.name}</h1>
               <p className="mt-1 text-lg text-slate-400 font-semibold">{campaign.brand}</p>
 
-              <div className="mt-6 inline-flex items-baseline gap-2 bg-cyan-50 text-[#0084CC] rounded-2xl px-5 py-3">
+              <div className="mt-6 inline-flex items-baseline gap-2 bg-red-50 text-[#DC2626] rounded-2xl px-5 py-3">
                 <span className="text-3xl font-extrabold font-mono">${campaign.rate.toFixed(2)}</span>
                 <span className="text-sm font-semibold">/1K views</span>
               </div>
@@ -56,12 +56,12 @@ export default function CampaignDetail() {
 
               <div className="mt-8 grid grid-cols-2 gap-4">
                 <div className="rounded-2xl bg-slate-50 p-4">
-                  <Wallet className="w-5 h-5 text-[#0084CC] mb-2" />
+                  <Wallet className="w-5 h-5 text-[#DC2626] mb-2" />
                   <p className="text-lg font-extrabold text-slate-900">{campaign.budget}</p>
                   <p className="text-xs text-slate-400">Total budget</p>
                 </div>
                 <div className="rounded-2xl bg-slate-50 p-4">
-                  <Video className="w-5 h-5 text-[#0084CC] mb-2" />
+                  <Video className="w-5 h-5 text-[#DC2626] mb-2" />
                   <p className="text-lg font-extrabold text-slate-900">{campaign.maxPerVideo}</p>
                   <p className="text-xs text-slate-400">Max per video</p>
                 </div>
@@ -76,7 +76,7 @@ export default function CampaignDetail() {
 
               <Link
                 to="/login"
-                className="mt-10 inline-flex h-14 px-10 items-center rounded-full bg-[#00A3E0] hover:bg-[#0084CC] text-white font-bold shadow-xl shadow-cyan-500/30 transition-all hover:scale-[1.03]"
+                className="mt-10 inline-flex h-14 px-10 items-center rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03]"
               >
                 Join This Campaign →
               </Link>
@@ -88,7 +88,7 @@ export default function CampaignDetail() {
             <div className="space-y-4">
               {campaign.brief.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-                  <CheckCircle2 className="w-5 h-5 text-[#0084CC] mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-[#DC2626] mt-0.5 shrink-0" />
                   <p className="text-slate-600">{item}</p>
                 </div>
               ))}

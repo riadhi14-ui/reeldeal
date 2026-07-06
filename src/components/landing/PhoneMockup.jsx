@@ -18,15 +18,15 @@ export default function PhoneMockup() {
             <span className="flex gap-1 items-center">▮▮▮ ▭</span>
           </div>
           {/* Earned badge */}
-          <div className="absolute top-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#00A3E0] text-white rounded-full px-4 py-1.5 text-xs font-bold shadow-lg">
+          <div className="absolute top-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#EF4444] text-white rounded-full px-4 py-1.5 text-xs font-bold shadow-lg">
             <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[9px]">$</span>
             $211 <span className="font-normal opacity-80 text-[10px]">earned</span>
           </div>
           {/* Right rail */}
           <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 text-white">
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 ring-2 ring-white" />
-              <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#00A3E0] flex items-center justify-center"><Plus className="w-3 h-3" /></span>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-400 to-red-600 ring-2 ring-white" />
+              <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#EF4444] flex items-center justify-center"><Plus className="w-3 h-3" /></span>
             </div>
             <div className="flex flex-col items-center gap-0.5"><Heart className="w-7 h-7 fill-white" /><span className="text-[10px] font-semibold">4.7K</span></div>
             <div className="flex flex-col items-center gap-0.5"><MessageCircle className="w-7 h-7" /><span className="text-[10px] font-semibold">633</span></div>
@@ -43,7 +43,7 @@ export default function PhoneMockup() {
       </div>
 
       {/* Floating card */}
-      <div className="absolute -right-4 sm:right-[-70px] top-24 w-52 rounded-2xl bg-gradient-to-br from-[#00C2FF] to-[#0084CC] text-white p-4 shadow-2xl shadow-cyan-500/40 rotate-[8deg]">
+      <div className="absolute -right-4 sm:right-[-70px] top-24 w-52 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#DC2626] text-white p-4 shadow-2xl shadow-red-500/40 rotate-[8deg]">
         <div className="flex justify-between items-start">
           <div>
             <p className="font-bold text-sm">ReelDeal</p>

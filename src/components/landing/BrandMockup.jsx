@@ -19,7 +19,7 @@ export default function BrandMockup() {
             { icon: Users, label: "Creators", value: "67" },
           ].map(({ icon: Icon, label, value }) => (
             <div key={label} className="rounded-xl bg-slate-50 p-3">
-              <Icon className="w-4 h-4 text-[#0084CC] mb-1.5" />
+              <Icon className="w-4 h-4 text-[#DC2626] mb-1.5" />
               <p className="text-lg font-extrabold text-slate-900 leading-none">{value}</p>
               <p className="text-[10px] text-slate-400 mt-1">{label}</p>
             </div>
@@ -31,16 +31,16 @@ export default function BrandMockup() {
               <p className="text-[10px] opacity-60">Total reach this week</p>
               <p className="text-2xl font-extrabold">+412K</p>
             </div>
-            <TrendingUp className="w-8 h-8 text-[#00D1FF]" />
+            <TrendingUp className="w-8 h-8 text-[#F87171]" />
           </div>
           <div className="flex items-end gap-1.5 h-14 mt-3">
             {[30, 45, 38, 60, 52, 78, 100].map((h, i) => (
-              <div key={i} className="flex-1 rounded-t bg-gradient-to-t from-[#0084CC] to-[#00D1FF]" style={{ height: `${h}%` }} />
+              <div key={i} className="flex-1 rounded-t bg-gradient-to-t from-[#DC2626] to-[#F87171]" style={{ height: `${h}%` }} />
             ))}
           </div>
         </div>
       </div>
-      <div className="absolute -right-3 -top-4 rounded-2xl bg-gradient-to-br from-[#00C2FF] to-[#0084CC] text-white px-4 py-3 shadow-xl shadow-cyan-500/40 rotate-[6deg]">
+      <div className="absolute -right-3 -top-4 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#DC2626] text-white px-4 py-3 shadow-xl shadow-red-500/40 rotate-[6deg]">
         <p className="text-[9px] opacity-80">CPM average</p>
         <p className="text-xl font-extrabold">$1.20</p>
       </div>
