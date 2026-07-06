@@ -15,10 +15,10 @@ export default function CampaignDetail() {
       <div className="bg-white min-h-screen font-body">
         <Navbar mode={mode} setMode={setMode} />
         <div className="pt-40 pb-24 text-center px-6">
-          <h1 className="text-3xl font-extrabold text-slate-900">Campaign not found</h1>
-          <p className="mt-3 text-slate-500">This campaign may have ended or been removed.</p>
+          <h1 className="text-3xl font-extrabold text-slate-900">Campagne introuvable</h1>
+          <p className="mt-3 text-slate-500">Cette campagne est peut-être terminée ou a été retirée.</p>
           <Link to="/campaigns" className="inline-flex mt-8 h-12 px-7 items-center rounded-full bg-[#EF4444] text-white font-bold shadow-lg shadow-red-500/25">
-            Browse Campaigns
+            Parcourir les campagnes
           </Link>
         </div>
         <Footer />
@@ -33,13 +33,13 @@ export default function CampaignDetail() {
       <main className="pt-28 pb-24">
         <div className="max-w-6xl mx-auto px-6">
           <Link to="/campaigns" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-8">
-            <ArrowLeft className="w-4 h-4" /> All Campaigns
+            <ArrowLeft className="w-4 h-4" /> Toutes les campagnes
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="relative rounded-3xl overflow-hidden ring-1 ring-slate-100 shadow-lg">
               <img src={campaign.img} alt={campaign.name} className="w-full aspect-square object-cover" />
-              <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top Paying</span>
+              <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top rémunération</span>
             </div>
 
             <div>
@@ -49,7 +49,7 @@ export default function CampaignDetail() {
 
               <div className="mt-6 inline-flex items-baseline gap-2 bg-red-50 text-[#DC2626] rounded-2xl px-5 py-3">
                 <span className="text-3xl font-extrabold font-mono">${campaign.rate.toFixed(2)}</span>
-                <span className="text-sm font-semibold">/1K views</span>
+                <span className="text-sm font-semibold">/1K vues</span>
               </div>
 
               <p className="mt-6 text-slate-500 leading-relaxed">{campaign.description}</p>
@@ -58,12 +58,12 @@ export default function CampaignDetail() {
                 <div className="rounded-2xl bg-slate-50 p-4">
                   <Wallet className="w-5 h-5 text-[#DC2626] mb-2" />
                   <p className="text-lg font-extrabold text-slate-900">{campaign.budget}</p>
-                  <p className="text-xs text-slate-400">Total budget</p>
+                  <p className="text-xs text-slate-400">Budget total</p>
                 </div>
                 <div className="rounded-2xl bg-slate-50 p-4">
                   <Video className="w-5 h-5 text-[#DC2626] mb-2" />
                   <p className="text-lg font-extrabold text-slate-900">{campaign.maxPerVideo}</p>
-                  <p className="text-xs text-slate-400">Max per video</p>
+                  <p className="text-xs text-slate-400">Max par vidéo</p>
                 </div>
               </div>
 
@@ -78,13 +78,13 @@ export default function CampaignDetail() {
                 to="/login"
                 className="mt-10 inline-flex h-14 px-10 items-center rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03]"
               >
-                Join This Campaign →
+                Rejoindre cette campagne →
               </Link>
             </div>
           </div>
 
           <div className="mt-16 max-w-3xl">
-            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Campaign Brief</h2>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Brief de la campagne</h2>
             <div className="space-y-4">
               {campaign.brief.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">

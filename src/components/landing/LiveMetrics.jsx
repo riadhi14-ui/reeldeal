@@ -24,10 +24,10 @@ function Counter({ target, prefix = "", suffix = "+", duration = 2000 }) {
 }
 
 const metrics = [
-  { label: "Active Creators", target: 12400 },
-  { label: "Paid Out", target: 2100000, prefix: "$" },
-  { label: "Videos Created", target: 48000 },
-  { label: "Total Views", target: 380000000 },
+  { label: "Créateurs actifs", target: 12400 },
+  { label: "Reversés", target: 2100000, prefix: "$" },
+  { label: "Vidéos créées", target: 48000 },
+  { label: "Vues totales", target: 380000000 },
 ];
 
 export default function LiveMetrics() {
@@ -39,9 +39,9 @@ export default function LiveMetrics() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#F87171] uppercase tracking-widest mb-3">Live Metrics</p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">Numbers That Speak</h2>
-          <p className="mt-4 text-lg text-slate-400">Real-time stats from our growing community of creators and brands.</p>
+          <p className="text-sm font-bold text-[#F87171] uppercase tracking-widest mb-3">Statistiques en direct</p>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">Des chiffres qui parlent</h2>
+          <p className="mt-4 text-lg text-slate-400">Des statistiques en temps réel de notre communauté grandissante de créateurs et de marques.</p>
         </motion.div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -60,7 +60,7 @@ export default function LiveMetrics() {
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-500 flex items-center justify-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Live data updating in real-time
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Données en direct, mises à jour en temps réel
         </p>
       </div>
     </section>

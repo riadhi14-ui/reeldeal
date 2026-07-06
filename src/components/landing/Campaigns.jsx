@@ -13,9 +13,9 @@ export default function Campaigns() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Top Paying Right Now</p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Campaigns Paying The Most</h2>
-          <p className="mt-4 text-lg text-slate-500">Live opportunities ranked by payout. First come, first served.</p>
+          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Les mieux payées du moment</p>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Les campagnes qui paient le plus</h2>
+          <p className="mt-4 text-lg text-slate-500">Des opportunités en direct classées par rémunération. Premier arrivé, premier servi.</p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -37,7 +37,7 @@ export default function Campaigns() {
                   <p className="text-sm text-slate-400 mt-0.5">{c.brand}</p>
                   <div className="mt-3 inline-flex items-baseline gap-1.5 bg-red-50 text-[#DC2626] rounded-full px-3 py-1.5">
                     <span className="font-extrabold font-mono">${c.rate.toFixed(2)}</span>
-                    <span className="text-[10px] font-semibold">/1K views</span>
+                    <span className="text-[10px] font-semibold">/1K vues</span>
                   </div>
                 </div>
               </Link>
@@ -50,7 +50,7 @@ export default function Campaigns() {
             to="/campaigns"
             className="inline-flex items-center h-12 px-7 rounded-full border-2 border-slate-200 hover:border-[#EF4444] hover:text-[#DC2626] font-bold text-slate-700 transition-colors"
           >
-            View All Campaigns
+            Voir toutes les campagnes
           </Link>
         </div>
       </div>

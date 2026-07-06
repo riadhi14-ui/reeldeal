@@ -5,12 +5,12 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { campaigns } from "@/lib/campaignsData";
 
-const categories = ["All", ...new Set(campaigns.map((c) => c.category))];
+const categories = ["Toutes", ...new Set(campaigns.map((c) => c.category))];
 
 export default function Campaigns() {
   const [mode, setMode] = useState("creator");
-  const [category, setCategory] = useState("All");
-  const filtered = category === "All" ? campaigns : campaigns.filter((c) => c.category === category);
+  const [category, setCategory] = useState("Toutes");
+  const filtered = category === "Toutes" ? campaigns : campaigns.filter((c) => c.category === category);
 
   return (
     <div className="bg-white text-slate-900 font-body min-h-screen">
@@ -19,9 +19,9 @@ export default function Campaigns() {
       <main className="pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Live Opportunities</p>
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900">All Campaigns</h1>
-            <p className="mt-4 text-lg text-slate-500">Ranked by payout. First come, first served.</p>
+            <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Opportunités en direct</p>
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900">Toutes les campagnes</h1>
+            <p className="mt-4 text-lg text-slate-500">Classées par rémunération. Premier arrivé, premier servi.</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -60,7 +60,7 @@ export default function Campaigns() {
                     <p className="text-sm text-slate-400 mt-0.5">{c.brand}</p>
                     <div className="mt-3 inline-flex items-baseline gap-1.5 bg-red-50 text-[#DC2626] rounded-full px-3 py-1.5">
                       <span className="font-extrabold font-mono">${c.rate.toFixed(2)}</span>
-                      <span className="text-[10px] font-semibold">/1K views</span>
+                      <span className="text-[10px] font-semibold">/1K vues</span>
                     </div>
                   </div>
                 </Link>

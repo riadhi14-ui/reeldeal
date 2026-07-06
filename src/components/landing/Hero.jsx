@@ -20,9 +20,9 @@ export default function Hero({ mode, setMode }) {
         <div>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-700 leading-[1.05]">
             {isCreator ? (
-              <>Create. Post. <span className="text-slate-800">Earn.</span></>
+              <>Crée. Publie. <span className="text-slate-800">Gagne.</span></>
             ) : (
-              <>Target. Launch. <span className="text-slate-800">Scale.</span></>
+              <>Cible. Lance. <span className="text-slate-800">Décolle.</span></>
             )}
           </h1>
 
@@ -46,15 +46,15 @@ export default function Hero({ mode, setMode }) {
                 exit={{ opacity: 0, x: -12 }}
                 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-[#EF4444]"
               >
-                {isCreator ? "Creator" : "Brand"}
+                {isCreator ? "Créateur" : "Marque"}
               </motion.span>
             </AnimatePresence>
           </div>
 
           <p className="mt-8 text-lg text-slate-500 max-w-md leading-relaxed">
             {isCreator
-              ? "Join campaigns from top brands, create authentic videos, and get paid for every view your content generates."
-              : "Launch UGC campaigns, tap into thousands of creators, and pay only for the views your campaign generates."}
+              ? "Rejoins des campagnes de grandes marques, crée des vidéos authentiques et sois payé pour chaque vue générée par ton contenu."
+              : "Lance des campagnes UGC, accède à des milliers de créateurs et ne paie que pour les vues générées par ta campagne."}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -62,10 +62,10 @@ export default function Hero({ mode, setMode }) {
               onClick={() => scrollTo("campaigns")}
               className="h-14 px-8 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03] flex items-center gap-2"
             >
-              {isCreator ? "Start Earning Now" : "Launch a Campaign"} <span aria-hidden>→</span>
+              {isCreator ? "Commencer à gagner" : "Lancer une campagne"} <span aria-hidden>→</span>
             </button>
             <button onClick={() => scrollTo("campaigns")} className="font-semibold text-slate-600 hover:text-slate-900 transition-colors">
-              Browse Campaigns
+              Parcourir les campagnes
             </button>
           </div>
         </div>

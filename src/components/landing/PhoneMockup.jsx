@@ -20,7 +20,7 @@ export default function PhoneMockup() {
           {/* Earned badge */}
           <div className="absolute top-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#EF4444] text-white rounded-full px-4 py-1.5 text-xs font-bold shadow-lg">
             <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[9px]">$</span>
-            $211 <span className="font-normal opacity-80 text-[10px]">earned</span>
+            211 $ <span className="font-normal opacity-80 text-[10px]">gagnés</span>
           </div>
           {/* Right rail */}
           <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 text-white">
@@ -36,8 +36,8 @@ export default function PhoneMockup() {
           <div className="absolute bottom-4 left-4 right-14 text-white space-y-1">
             <p className="text-xs font-bold">flamazerty</p>
             <p className="text-[10px] leading-snug opacity-90">Abonne toi ! Premier site web 100% gratuit avec le lien en bio ! #ia #viral #fyp #business</p>
-            <p className="text-[10px] flex items-center gap-1 opacity-90"><Eye className="w-3 h-3" /> <b>52.7K views</b> · Blink.new</p>
-            <p className="text-[10px] flex items-center gap-1 opacity-80"><Music className="w-3 h-3" /> Original sound — flamazerty</p>
+            <p className="text-[10px] flex items-center gap-1 opacity-90"><Eye className="w-3 h-3" /> <b>52,7K vues</b> · Blink.new</p>
+            <p className="text-[10px] flex items-center gap-1 opacity-80"><Music className="w-3 h-3" /> Son original — flamazerty</p>
           </div>
         </div>
       </div>
@@ -47,14 +47,14 @@ export default function PhoneMockup() {
         <div className="flex justify-between items-start">
           <div>
             <p className="font-bold text-sm">ReelDeal</p>
-            <p className="text-[9px] opacity-75">Top earning</p>
+            <p className="text-[9px] opacity-75">Meilleurs gains</p>
           </div>
           <span className="w-3 h-3 rounded-full bg-emerald-300 shadow shadow-emerald-300/60" />
         </div>
         <p className="text-[10px] tracking-widest opacity-80 mt-4 font-mono">•••• •••• •••• 4829</p>
         <div className="flex items-end justify-between mt-1">
           <p className="text-2xl font-extrabold">$2,347</p>
-          <p className="text-[9px] opacity-75 mb-1">earned</p>
+          <p className="text-[9px] opacity-75 mb-1">gagnés</p>
         </div>
       </div>
     </div>
