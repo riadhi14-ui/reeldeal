@@ -5,7 +5,8 @@ import { campaigns as allCampaigns } from "@/lib/campaignsData";
 
 const campaigns = allCampaigns.slice(0, 4);
 
-export default function Campaigns() {
+export default function Campaigns({ mode = "creator" }) {
+  const isBrand = mode === "brand";
   return (
     <section id="campaigns" className="py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -13,9 +14,9 @@ export default function Campaigns() {
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">Les mieux payées du moment</p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Les campagnes qui paient le plus</h2>
-          <p className="mt-4 text-lg text-slate-500">Des opportunités en direct classées par rémunération. Premier arrivé, premier servi.</p>
+          <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-3">{isBrand ? "Elles nous font confiance" : "Les mieux payées du moment"}</p>
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">{isBrand ? "Des campagnes comme la vôtre" : "Les campagnes qui paient le plus"}</h2>
+          <p className="mt-4 text-lg text-slate-500">{isBrand ? "Des marques de tous secteurs utilisent ReelDeal pour générer des millions de vues authentiques." : "Des opportunités en direct classées par rémunération. Premier arrivé, premier servi."}</p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -50,7 +51,7 @@ export default function Campaigns() {
             to="/campaigns"
             className="inline-flex items-center h-12 px-7 rounded-full border-2 border-slate-200 hover:border-[#EF4444] hover:text-[#DC2626] font-bold text-slate-700 transition-colors"
           >
-            Voir toutes les campagnes
+            {isBrand ? "Explorer les campagnes en cours" : "Voir toutes les campagnes"}
           </Link>
         </div>
       </div>
