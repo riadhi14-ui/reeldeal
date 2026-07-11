@@ -1,11 +1,19 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { base44 } from "@/api/base44Client";
 import PhoneMockup from "./PhoneMockup";
 import BrandMockup from "./BrandMockup";
 
 export default function Hero({ mode, setMode }) {
   const isCreator = mode === "creator";
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const handlePrimary = async () => {
+    if (!isCreator) { scrollTo("campaigns"); return; }
+    const authed = await base44.auth.isAuthenticated().catch(() => false);
+    if (authed) window.location.href = "/dashboard";
+    else window.location.href = "/register";
+  };
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
@@ -59,7 +67,7 @@ export default function Hero({ mode, setMode }) {
 
           <div className="mt-10 flex flex-wrap items-center gap-6">
             <button
-              onClick={() => scrollTo("campaigns")}
+              onClick={handlePrimary}
               className="h-14 px-8 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03] flex items-center gap-2"
             >
               {isCreator ? "Commencer à gagner" : "Lancer une campagne"} <span aria-hidden>→</span>
