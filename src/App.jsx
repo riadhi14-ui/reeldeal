@@ -21,6 +21,7 @@ import MyCampaignsPage from './pages/dashboard/MyCampaignsPage';
 import AvailableCampaignsPage from './pages/dashboard/AvailableCampaignsPage';
 import SubmissionsPage from './pages/dashboard/SubmissionsPage';
 import MessagesPage from './pages/dashboard/MessagesPage';
+import SettingsPage from './pages/dashboard/SettingsPage';
 import BrandDashboard from './pages/BrandDashboard';
 import Profile from './pages/Profile';
 
@@ -65,6 +66,7 @@ const AuthenticatedApp = () => {
           <Route path="available" element={<AvailableCampaignsPage />} />
           <Route path="submissions" element={<SubmissionsPage />} />
           <Route path="messages" element={<MessagesPage />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
         <Route path="/brand" element={<BrandDashboard />} />
         <Route path="/profile" element={<Profile />} />

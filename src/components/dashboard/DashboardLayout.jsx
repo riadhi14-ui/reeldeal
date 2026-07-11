@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createContext, useContext } fr
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { campaigns } from "@/lib/campaignsData";
-import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Store, Home } from "lucide-react";
+import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Store, Home, Settings } from "lucide-react";
 
 const DashboardContext = createContext(null);
 export const useDashboard = () => useContext(DashboardContext);
@@ -105,6 +105,9 @@ export default function DashboardLayout() {
           </nav>
 
           <div className="p-3 border-t border-slate-100 space-y-1">
+            <NavLink to="/dashboard/settings" className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${isActive ? "bg-red-50 text-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
+              <Settings className="w-4 h-4" /> Réglages
+            </NavLink>
             <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
               <UserRound className="w-4 h-4" /> Mon profil
             </NavLink>
