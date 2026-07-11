@@ -92,33 +92,3 @@
     @apply bg-background text-foreground font-body;
   }
 }
-
-/* ---- Dark mode overrides for the light utility palette ---- */
-.dark .bg-white { background-color: #0f172a; }
-.dark .bg-white\/70 { background-color: rgba(15, 23, 42, 0.75); }
-.dark .bg-white\/90 { background-color: rgba(15, 23, 42, 0.9); }
-.dark .bg-\[\#F8FAFC\] { background-color: #020617; }
-.dark .bg-slate-50 { background-color: #1e293b; }
-.dark .bg-slate-50\/60 { background-color: rgba(30, 41, 59, 0.6); }
-.dark .bg-slate-100 { background-color: #1e293b; }
-.dark .bg-red-50 { background-color: rgba(220, 38, 38, 0.15); }
-.dark .bg-green-50 { background-color: rgba(22, 163, 74, 0.15); }
-.dark .bg-emerald-50 { background-color: rgba(16, 185, 129, 0.15); }
-
-.dark .text-slate-900 { color: #f1f5f9; }
-.dark .text-slate-800 { color: #e2e8f0; }
-.dark .text-slate-700 { color: #cbd5e1; }
-.dark .text-slate-600 { color: #94a3b8; }
-.dark .text-slate-500 { color: #94a3b8; }
-.dark .text-slate-400 { color: #64748b; }
-
-.dark .hover\:bg-slate-50:hover { background-color: #1e293b; }
-.dark .hover\:bg-slate-200:hover { background-color: #334155; }
-.dark .hover\:bg-red-50:hover { background-color: rgba(220, 38, 38, 0.2); }
-.dark .hover\:text-slate-900:hover { color: #f1f5f9; }
-
-.dark .ring-slate-100 { --tw-ring-color: #1e293b; }
-.dark .ring-slate-200 { --tw-ring-color: #334155; }
-.dark .border-slate-100 { border-color: #1e293b; }
-.dark .border-slate-200 { border-color: #334155; }
-.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: #1e293b; }

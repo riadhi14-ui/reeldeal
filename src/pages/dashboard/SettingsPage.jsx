@@ -4,7 +4,6 @@ import { useDashboard } from "@/components/dashboard/DashboardLayout";
 import { useToast } from "@/components/ui/use-toast";
 import ProfilePrefsCard from "@/components/settings/ProfilePrefsCard";
 import LanguageSelector from "@/components/settings/LanguageSelector";
-import DarkModeCard from "@/components/settings/DarkModeCard";
 import AccountInfoCard from "@/components/settings/AccountInfoCard";
 import ChangePasswordCard from "@/components/settings/ChangePasswordCard";
 import { LogOut, Loader2, Save } from "lucide-react";
@@ -76,11 +75,6 @@ export default function SettingsPage() {
         <section>
           <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Profil</p>
           <ProfilePrefsCard form={form} set={set} toggle={toggle} />
-        </section>
-
-        <section>
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Apparence</p>
-          <DarkModeCard />
         </section>
 
         <section>
