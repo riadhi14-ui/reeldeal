@@ -9,10 +9,9 @@ export default function Hero({ mode, setMode }) {
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const handlePrimary = async () => {
-    if (!isCreator) { scrollTo("campaigns"); return; }
     const authed = await base44.auth.isAuthenticated().catch(() => false);
-    if (authed) window.location.href = "/dashboard";
-    else window.location.href = "/register";
+    if (!authed) { window.location.href = "/register"; return; }
+    window.location.href = isCreator ? "/dashboard" : "/brand";
   };
 
   return (
