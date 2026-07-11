@@ -7,6 +7,7 @@ import StatsCards from "@/components/dashboard/StatsCards";
 import MyCampaigns from "@/components/dashboard/MyCampaigns";
 import AvailableCampaigns from "@/components/dashboard/AvailableCampaigns";
 import SubmissionsList from "@/components/dashboard/SubmissionsList";
+import CampaignMessages from "@/components/dashboard/CampaignMessages";
 import SubmitVideoDialog from "@/components/dashboard/SubmitVideoDialog";
 
 export default function Dashboard() {
@@ -89,6 +90,9 @@ export default function Dashboard() {
 
           <h2 className="text-xl font-extrabold text-slate-900 mt-12 mb-5">Mes soumissions</h2>
           <SubmissionsList submissions={submissions} />
+
+          <h2 className="text-xl font-extrabold text-slate-900 mt-12 mb-5">Messages</h2>
+          <CampaignMessages participations={participations} user={user} />
         </div>
       </main>
     </div>

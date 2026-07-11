@@ -1,0 +1,30 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "sender": {
+      "type": "string",
+      "enum": [
+        "creator",
+        "brand"
+      ],
+      "default": "creator"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "text"
+  ]
+}
