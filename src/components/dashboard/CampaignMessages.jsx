@@ -16,7 +16,7 @@ export default function CampaignMessages({ participations, user }) {
     if (!cid) return;
     setLoading(true);
     const rows = await base44.entities.Message.filter(
-      { campaign_id: cid, created_by_id: user.id },
+      { campaign_id: cid, creator_id: user.id },
       "created_date"
     );
     setMessages(rows);
@@ -38,6 +38,8 @@ export default function CampaignMessages({ participations, user }) {
       campaign_name: active.campaign_name,
       brand: active.brand,
       sender: "creator",
+      creator_id: user.id,
+      creator_name: user.full_name || user.email,
       text: text.trim(),
     });
     setMessages((prev) => [...prev, created]);

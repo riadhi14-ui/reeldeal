@@ -19,6 +19,12 @@
       ],
       "default": "creator"
     },
+    "creator_id": {
+      "type": "string"
+    },
+    "creator_name": {
+      "type": "string"
+    },
     "text": {
       "type": "string"
     }

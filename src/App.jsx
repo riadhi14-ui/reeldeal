@@ -23,7 +23,12 @@ import AvailableCampaignsPage from './pages/dashboard/AvailableCampaignsPage';
 import SubmissionsPage from './pages/dashboard/SubmissionsPage';
 import MessagesPage from './pages/dashboard/MessagesPage';
 import SettingsPage from './pages/dashboard/SettingsPage';
-import BrandDashboard from './pages/BrandDashboard';
+import BrandLayout from './components/brand/BrandLayout';
+import BrandHome from './pages/brand/BrandHome';
+import BrandCampaignsPage from './pages/brand/BrandCampaignsPage';
+import BrandSubmissionsPage from './pages/brand/BrandSubmissionsPage';
+import BrandMessagesPage from './pages/brand/BrandMessagesPage';
+import BrandSettingsPage from './pages/brand/BrandSettingsPage';
 import Profile from './pages/Profile';
 
 const AuthenticatedApp = () => {
@@ -69,7 +74,13 @@ const AuthenticatedApp = () => {
           <Route path="messages" element={<MessagesPage />} />
           <Route path="settings" element={<SettingsPage />} />
         </Route>
-        <Route path="/brand" element={<BrandDashboard />} />
+        <Route path="/brand" element={<BrandLayout />}>
+          <Route index element={<BrandHome />} />
+          <Route path="campaigns" element={<BrandCampaignsPage />} />
+          <Route path="submissions" element={<BrandSubmissionsPage />} />
+          <Route path="messages" element={<BrandMessagesPage />} />
+          <Route path="settings" element={<BrandSettingsPage />} />
+        </Route>
         <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
