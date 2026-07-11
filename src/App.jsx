@@ -15,7 +15,12 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
-import Dashboard from './pages/Dashboard';
+import DashboardLayout from './components/dashboard/DashboardLayout';
+import DashboardHome from './pages/dashboard/DashboardHome';
+import MyCampaignsPage from './pages/dashboard/MyCampaignsPage';
+import AvailableCampaignsPage from './pages/dashboard/AvailableCampaignsPage';
+import SubmissionsPage from './pages/dashboard/SubmissionsPage';
+import MessagesPage from './pages/dashboard/MessagesPage';
 import BrandDashboard from './pages/BrandDashboard';
 import Profile from './pages/Profile';
 
@@ -54,7 +59,13 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="campaigns" element={<MyCampaignsPage />} />
+          <Route path="available" element={<AvailableCampaignsPage />} />
+          <Route path="submissions" element={<SubmissionsPage />} />
+          <Route path="messages" element={<MessagesPage />} />
+        </Route>
         <Route path="/brand" element={<BrandDashboard />} />
         <Route path="/profile" element={<Profile />} />
       </Route>
