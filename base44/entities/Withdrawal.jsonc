@@ -1,0 +1,35 @@
+{
+  "name": "Withdrawal",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "Virement Bancaire",
+        "PayPal",
+        "Wise"
+      ],
+      "default": "Virement Bancaire"
+    },
+    "destination": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "amount",
+    "method",
+    "destination"
+  ]
+}

@@ -20,24 +20,35 @@ export default function DashboardLayout() {
   const [user, setUser] = useState(null);
   const [participations, setParticipations] = useState([]);
   const [submissions, setSubmissions] = useState([]);
+  const [withdrawals, setWithdrawals] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
     const me = await base44.auth.me();
     setUser(me);
-    const [parts, subs] = await Promise.all([
+    const [parts, subs, wds] = await Promise.all([
       base44.entities.Participation.filter({ created_by_id: me.id }, "-created_date"),
       base44.entities.Submission.filter({ created_by_id: me.id }, "-created_date"),
+      base44.entities.Withdrawal.filter({ created_by_id: me.id }, "-created_date"),
     ]);
     setParticipations(parts);
     setSubmissions(subs);
+    setWithdrawals(wds);
     setLoading(false);
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
 
+  const earnedTotal = submissions.filter((s) => s.status === "approved").reduce((sum, s) => sum + (s.earnings || 0), 0);
+  const withdrawnTotal = withdrawals.filter((w) => w.status === "completed").reduce((sum, w) => sum + (w.amount || 0), 0);
+  const withdrawalPending = withdrawals.filter((w) => w.status === "pending").reduce((sum, w) => sum + (w.amount || 0), 0);
+
   const stats = {
-    total: submissions.filter((s) => s.status === "approved").reduce((sum, s) => sum + (s.earnings || 0), 0),
+    total: earnedTotal,
+    earned: earnedTotal,
+    withdrawn: withdrawnTotal,
+    available: Math.max(earnedTotal - withdrawnTotal - withdrawalPending, 0),
+    withdrawalPending,
     pending: submissions.filter((s) => s.status === "pending").reduce((sum, s) => sum + (s.earnings || 0), 0),
     views: submissions.reduce((sum, s) => sum + (s.views || 0), 0),
     videos: submissions.length,
@@ -63,7 +74,7 @@ export default function DashboardLayout() {
   const initial = name.charAt(0).toUpperCase();
 
   return (
-    <DashboardContext.Provider value={{ user, participations, submissions, stats, loadData }}>
+    <DashboardContext.Provider value={{ user, participations, submissions, withdrawals, stats, loadData }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
