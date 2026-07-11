@@ -5,6 +5,7 @@ import { LogOut, UserRound } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import StatsCards from "@/components/dashboard/StatsCards";
 import MyCampaigns from "@/components/dashboard/MyCampaigns";
+import AvailableCampaigns from "@/components/dashboard/AvailableCampaigns";
 import SubmissionsList from "@/components/dashboard/SubmissionsList";
 import SubmitVideoDialog from "@/components/dashboard/SubmitVideoDialog";
 
@@ -79,6 +80,12 @@ export default function Dashboard() {
 
           <h2 className="text-xl font-extrabold text-slate-900 mt-12 mb-5">Mes campagnes</h2>
           <MyCampaigns participations={participations} />
+
+          <div className="flex items-baseline justify-between mt-12 mb-5">
+            <h2 className="text-xl font-extrabold text-slate-900">Campagnes disponibles</h2>
+            <Link to="/campaigns" className="text-sm font-bold text-[#DC2626] hover:underline">Voir tout</Link>
+          </div>
+          <AvailableCampaigns participations={participations} />
 
           <h2 className="text-xl font-extrabold text-slate-900 mt-12 mb-5">Mes soumissions</h2>
           <SubmissionsList submissions={submissions} />
