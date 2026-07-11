@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { CheckCircle2, Link2, Loader2, Sparkles } from "lucide-react";
+import { CheckCircle2, Link2, Loader2, Sparkles, PartyPopper } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import ScenariosSheet from "@/components/campaign/ScenariosSheet";
 
-export default function JoinedActions({ campaign, onSubmitted }) {
+export default function JoinedActions({ campaign, onSubmitted, justJoined = false }) {
   const [videoUrl, setVideoUrl] = useState("");
   const [platform, setPlatform] = useState("TikTok");
   const [submitting, setSubmitting] = useState(false);
@@ -31,9 +31,15 @@ export default function JoinedActions({ campaign, onSubmitted }) {
 
   return (
     <div className="mt-8 rounded-3xl ring-1 ring-slate-100 bg-slate-50/60 p-6">
-      <div className="flex items-center gap-2 text-[#DC2626] font-bold text-sm mb-1">
-        <CheckCircle2 className="w-4 h-4" /> Tu participes déjà à cette campagne
-      </div>
+      {justJoined ? (
+        <div className="flex items-center gap-2 rounded-2xl bg-red-50 text-[#DC2626] px-4 py-3 text-sm font-bold mb-4">
+          <PartyPopper className="w-4 h-4" /> Bienvenue dans la campagne ! Tu peux maintenant soumettre tes vidéos.
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 text-slate-500 font-semibold text-sm mb-1">
+          <CheckCircle2 className="w-4 h-4 text-[#DC2626]" /> Tu participes à cette campagne
+        </div>
+      )}
       <h3 className="text-lg font-extrabold text-slate-900 mb-4">Soumets ta vidéo</h3>
 
       {done ? (

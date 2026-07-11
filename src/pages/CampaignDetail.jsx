@@ -17,6 +17,7 @@ export default function CampaignDetail() {
   const [campaign, setCampaign] = useState(staticCampaign || null);
   const [loadingCampaign, setLoadingCampaign] = useState(!staticCampaign);
   const [joined, setJoined] = useState(false);
+  const [justJoined, setJustJoined] = useState(false);
 
   useEffect(() => {
     if (!staticCampaign) {
@@ -57,6 +58,7 @@ export default function CampaignDetail() {
       });
     }
     setJoined(true);
+    setJustJoined(true);
     setJoining(false);
   };
 
@@ -135,7 +137,7 @@ export default function CampaignDetail() {
               </div>
 
               {joined ? (
-                <JoinedActions campaign={campaign} />
+                <JoinedActions campaign={campaign} justJoined={justJoined} />
               ) : (
                 <button
                   onClick={handleJoin}
