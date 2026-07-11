@@ -5,6 +5,7 @@ import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import JoinedActions from "@/components/campaign/JoinedActions";
+import ExampleVideos from "@/components/campaign/ExampleVideos";
 import { getCampaign } from "@/lib/campaignsData";
 
 export default function CampaignDetail() {
@@ -158,6 +159,8 @@ export default function CampaignDetail() {
               ))}
             </div>
           </div>
+
+          <ExampleVideos campaign={campaign} />
         </div>
       </main>
 
