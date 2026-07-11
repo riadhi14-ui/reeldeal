@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import ScenariosSheet from "@/components/campaign/ScenariosSheet";
 
 export default function JoinedActions({ campaign, onSubmitted }) {
   const [videoUrl, setVideoUrl] = useState("");
   const [platform, setPlatform] = useState("TikTok");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [scenariosOpen, setScenariosOpen] = useState(false);
 
   const handleSubmit = async () => {
     if (!videoUrl.trim()) return;
@@ -68,15 +70,15 @@ export default function JoinedActions({ campaign, onSubmitted }) {
         >
           {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Envoi...</> : "Soumettre le lien"}
         </button>
-        <a
-          href={campaign.contentUrl || "https://www.tiktok.com/upload"}
-          target="_blank"
-          rel="noreferrer"
+        <button
+          onClick={() => setScenariosOpen(true)}
           className="inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626] font-bold transition-colors"
         >
           <Sparkles className="w-4 h-4" /> Créer du contenu
-        </a>
+        </button>
       </div>
+
+      <ScenariosSheet open={scenariosOpen} onOpenChange={setScenariosOpen} campaign={campaign} />
     </div>
   );
 }
