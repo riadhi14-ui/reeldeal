@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { ChevronRight, ArrowLeft, Copy, Check, User } from "lucide-react";
+import { ChevronRight, User } from "lucide-react";
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription,
 } from "@/components/ui/sheet";
+import ScenarioDetail from "@/components/campaign/ScenarioDetail";
 
 const FALLBACK_SCENARIOS = [
   { handle: "@ugc_eka", views: "248K", earnings: "0,21 $", script: "J'ai enregistré cette vidéo il y a quelques jours et je gagne déjà de l'argent avec l'app. Voici comment je fais pour transformer mes vues en revenus, étape par étape." },
@@ -16,15 +17,8 @@ const FALLBACK_SCENARIOS = [
 export default function ScenariosSheet({ open, onOpenChange, campaign }) {
   const scenarios = campaign?.scenarios?.length ? campaign.scenarios : FALLBACK_SCENARIOS;
   const [selected, setSelected] = useState(null);
-  const [copied, setCopied] = useState(false);
 
-  const copyScript = async () => {
-    await navigator.clipboard.writeText(selected.script);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
-  };
-
-  const close = (v) => { onOpenChange(v); if (!v) { setSelected(null); setCopied(false); } };
+  const close = (v) => { onOpenChange(v); if (!v) setSelected(null); };
 
   return (
     <Sheet open={open} onOpenChange={close}>
@@ -59,34 +53,7 @@ export default function ScenariosSheet({ open, onOpenChange, campaign }) {
             </div>
           </>
         ) : (
-          <div className="flex flex-col h-full">
-            <div className="p-6 pb-4 border-b border-slate-100">
-              <button onClick={() => setSelected(null)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 mb-4">
-                <ArrowLeft className="w-4 h-4" /> Tous les scénarios
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden">
-                  {selected.avatar ? <img src={selected.avatar} alt={selected.handle} className="w-full h-full object-cover" /> : <User className="w-5 h-5 text-slate-400" />}
-                </div>
-                <div>
-                  <p className="font-extrabold text-slate-900">{selected.handle}</p>
-                  <p className="text-xs text-slate-500">{selected.views} vues · <span className="text-green-600 font-bold">{selected.earnings}</span></p>
-                </div>
-              </div>
-            </div>
-            <div className="flex-1 overflow-y-auto p-6">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#DC2626] mb-2">Script</p>
-              <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{selected.script}</p>
-            </div>
-            <div className="p-6 border-t border-slate-100">
-              <button
-                onClick={copyScript}
-                className="w-full h-12 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-lg shadow-red-500/25 transition-colors flex items-center justify-center gap-2"
-              >
-                {copied ? <><Check className="w-4 h-4" /> Copié</> : <><Copy className="w-4 h-4" /> Copier le script</>}
-              </button>
-            </div>
-          </div>
+          <ScenarioDetail scenario={selected} onBack={() => setSelected(null)} />
         )}
       </SheetContent>
     </Sheet>
