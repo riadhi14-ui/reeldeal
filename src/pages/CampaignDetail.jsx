@@ -4,6 +4,7 @@ import { ArrowLeft, CheckCircle2, Wallet, Video, Share2, Loader2 } from "lucide-
 import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import JoinedActions from "@/components/campaign/JoinedActions";
 import { getCampaign } from "@/lib/campaignsData";
 
 export default function CampaignDetail() {
@@ -14,6 +15,7 @@ export default function CampaignDetail() {
   const staticCampaign = getCampaign(id);
   const [campaign, setCampaign] = useState(staticCampaign || null);
   const [loadingCampaign, setLoadingCampaign] = useState(!staticCampaign);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     if (!staticCampaign) {
@@ -23,6 +25,17 @@ export default function CampaignDetail() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  useEffect(() => {
+    const cid = campaign?.id;
+    if (!cid) return;
+    base44.auth.isAuthenticated().then(async (authed) => {
+      if (!authed) return;
+      const user = await base44.auth.me();
+      const existing = await base44.entities.Participation.filter({ campaign_id: cid, created_by_id: user.id });
+      setJoined(existing.length > 0);
+    }).catch(() => {});
+  }, [campaign?.id]);
 
   const handleJoin = async () => {
     setJoining(true);
@@ -42,7 +55,8 @@ export default function CampaignDetail() {
         img: campaign.img,
       });
     }
-    navigate("/dashboard");
+    setJoined(true);
+    setJoining(false);
   };
 
   if (loadingCampaign) {
@@ -119,13 +133,17 @@ export default function CampaignDetail() {
                 ))}
               </div>
 
-              <button
-                onClick={handleJoin}
-                disabled={joining}
-                className="mt-10 inline-flex h-14 px-10 items-center gap-2 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03] disabled:opacity-60"
-              >
-                {joining ? <><Loader2 className="w-5 h-5 animate-spin" /> Inscription...</> : "Rejoindre cette campagne →"}
-              </button>
+              {joined ? (
+                <JoinedActions campaign={campaign} />
+              ) : (
+                <button
+                  onClick={handleJoin}
+                  disabled={joining}
+                  className="mt-10 inline-flex h-14 px-10 items-center gap-2 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold shadow-xl shadow-red-500/30 transition-all hover:scale-[1.03] disabled:opacity-60"
+                >
+                  {joining ? <><Loader2 className="w-5 h-5 animate-spin" /> Inscription...</> : "Rejoindre cette campagne →"}
+                </button>
+              )}
             </div>
           </div>
 
