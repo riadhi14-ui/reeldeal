@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+import ProfileButton from "@/components/landing/ProfileButton";
 
 export default function Navbar({ mode = "creator", setMode = () => {} }) {
   const navigate = useNavigate();
@@ -58,12 +59,15 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
             </button>
           </div>
           {authed ? (
-            <button
-              onClick={() => navigate(mode === "brand" ? "/brand" : "/dashboard")}
-              className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
-            >
-              Mon espace <span aria-hidden>→</span>
-            </button>
+            <>
+              <button
+                onClick={() => navigate(mode === "brand" ? "/brand" : "/dashboard")}
+                className="hidden sm:flex h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all items-center gap-1.5"
+              >
+                Mon espace <span aria-hidden>→</span>
+              </button>
+              <ProfileButton mode={mode} />
+            </>
           ) : (
             <button
               onClick={() => navigate("/campaigns")}
