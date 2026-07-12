@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { campaigns as allCampaigns } from "@/lib/campaignsData";
-
-const campaigns = allCampaigns.slice(0, 4);
+import { base44 } from "@/api/base44Client";
+import { campaigns as staticCampaigns } from "@/lib/campaignsData";
 
 export default function Campaigns({ mode = "creator" }) {
   const isBrand = mode === "brand";
+  const [dbCampaigns, setDbCampaigns] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Campaign.filter({ status: "active" }).then(setDbCampaigns).catch(() => setDbCampaigns([]));
+  }, []);
+
+  const campaigns = [...dbCampaigns, ...staticCampaigns]
+    .sort((a, b) => b.rate - a.rate)
+    .map((c, i) => ({ ...c, rank: i + 1 }))
+    .slice(0, 4);
   return (
     <section id="campaigns" className="py-32">
       <div className="max-w-7xl mx-auto px-6">
