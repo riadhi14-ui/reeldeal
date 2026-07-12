@@ -36,7 +36,7 @@ export default function Footer() {
             <button onClick={() => scrollTo("how-it-works")} className="hover:text-white transition-colors">Comment ça marche</button>
             <button onClick={() => scrollTo("campaigns")} className="hover:text-white transition-colors">Campagnes</button>
             <button onClick={() => scrollTo("faq")} className="hover:text-white transition-colors">FAQ</button>
-            <a href="mailto:support@reeldeal.sh" className="hover:text-white transition-colors">Contacter le support</a>
+            <a href="mailto:contact@reeldeal.fr" className="hover:text-white transition-colors">contact@reeldeal.fr</a>
           </nav>
           <p>© {new Date().getFullYear()} ReelDeal. Tous droits réservés.</p>
         </div>

@@ -1,0 +1,83 @@
+{
+  "name": "BrandRequest",
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "payment_model": {
+      "type": "string",
+      "enum": [
+        "par_1000_vues",
+        "fixe_par_video"
+      ],
+      "default": "par_1000_vues"
+    },
+    "payment_amount": {
+      "type": "string"
+    },
+    "budget": {
+      "type": "string"
+    },
+    "best_time_to_call": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "closed"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "company",
+    "contact_name",
+    "email"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

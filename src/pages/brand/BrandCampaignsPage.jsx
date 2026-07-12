@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { useBrand } from "@/components/brand/BrandLayout";
 import BrandCampaignsList from "@/components/brand/BrandCampaignsList";
-import CreateCampaignDialog from "@/components/brand/CreateCampaignDialog";
+import BrandRequestForm from "@/components/brand/BrandRequestForm";
 
 export default function BrandCampaignsPage() {
-  const { campaigns, submissionCounts, loadData } = useBrand();
-  const [draft, setDraft] = useState(null);
+  const { campaigns, submissionCounts } = useBrand();
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-8"><h1 className="text-2xl font-extrabold tracking-tight">Mes campagnes</h1><CreateCampaignDialog onCreated={loadData} /></div>
-      <BrandCampaignsList campaigns={campaigns} submissionCounts={submissionCounts} onEditDraft={setDraft} />
-      {draft && <CreateCampaignDialog campaign={draft} open={Boolean(draft)} onOpenChange={(open) => !open && setDraft(null)} onCreated={async () => { setDraft(null); await loadData(); }} />}
+    <div className="space-y-12">
+      <div>
+        <h1 className="text-2xl font-extrabold tracking-tight mb-8">Demander une campagne</h1>
+        <BrandRequestForm />
+      </div>
+      {campaigns.length > 0 && (
+        <div>
+          <h2 className="text-xl font-extrabold tracking-tight mb-6">Mes campagnes</h2>
+          <BrandCampaignsList campaigns={campaigns} submissionCounts={submissionCounts} />
+        </div>
+      )}
     </div>
   );
 }
