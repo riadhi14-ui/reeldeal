@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import ProfileButton from "@/components/landing/ProfileButton";
-import ThemeToggle from "@/components/landing/ThemeToggle";
 
 export default function Navbar({ mode = "creator", setMode = () => {} }) {
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
         </nav>
 
         <div className="flex items-center gap-4">
-          <ThemeToggle />
           <div className="hidden sm:flex items-center gap-1.5 text-sm font-semibold">
             <button
               onClick={() => setMode("creator")}
