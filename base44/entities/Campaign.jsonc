@@ -41,6 +41,7 @@
     "status": {
       "type": "string",
       "enum": [
+        "draft",
         "active",
         "closed"
       ],
@@ -58,7 +59,7 @@
         "role": "admin"
       }
     },
-    "read": null,
+    "read": {},
     "update": {
       "$or": [
         {

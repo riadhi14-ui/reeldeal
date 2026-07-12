@@ -25,8 +25,8 @@ export default function BrandCampaignsList({ campaigns, submissionCounts }) {
           <div className="p-4">
             <div className="flex items-center justify-between gap-2">
               <p className="font-bold text-slate-900 truncate">{c.name}</p>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${c.status === "active" ? "bg-emerald-50 text-emerald-600" : "bg-slate-100 text-slate-500"}`}>
-                {c.status === "active" ? "Active" : "Fermée"}
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${c.status === "active" ? "bg-emerald-50 text-emerald-600" : c.status === "draft" ? "bg-amber-50 text-amber-600" : "bg-slate-100 text-slate-500"}`}>
+                {c.status === "active" ? "Active" : c.status === "draft" ? "Brouillon" : "Fermée"}
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">{c.category} · {c.budget}</p>

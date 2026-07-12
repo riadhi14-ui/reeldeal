@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Save } from "lucide-react";
 
 const PLATFORMS = ["TikTok", "Instagram Reels", "YouTube Shorts"];
 const DEFAULT_IMG = "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&h=800&fit=crop";
@@ -23,11 +23,14 @@ export default function CreateCampaignDialog({ onCreated }) {
   const togglePlatform = (p) =>
     setPlatforms((prev) => (prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]));
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const save = async (status) => {
     setError("");
-    if (platforms.length === 0) {
+    if (status === "active" && platforms.length === 0) {
       setError("Choisis au moins une plateforme.");
+      return;
+    }
+    if (status === "draft" && !form.name.trim()) {
+      setError("Ajoute au moins un nom pour enregistrer le brouillon.");
       return;
     }
     setLoading(true);
@@ -36,24 +39,29 @@ export default function CreateCampaignDialog({ onCreated }) {
         name: form.name,
         brand: form.brand,
         category: form.category || "Autre",
-        rate: Number(form.rate),
+        rate: Number(form.rate) || 0,
         budget: form.budget,
         maxPerVideo: form.maxPerVideo,
         platforms,
         description: form.description,
         brief: form.brief.split("\n").map((l) => l.trim()).filter(Boolean),
         img: form.img || DEFAULT_IMG,
-        status: "active",
+        status,
       });
       setOpen(false);
       setForm({ name: "", brand: "", category: "", rate: "", budget: "", maxPerVideo: "", description: "", brief: "", img: "" });
       setPlatforms(["TikTok"]);
       onCreated();
     } catch (err) {
-      setError(err.message || "Échec de la création");
+      setError(err.message || "Échec de l'enregistrement");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    save("active");
   };
 
   return (
@@ -122,9 +130,14 @@ export default function CreateCampaignDialog({ onCreated }) {
             <Label htmlFor="c_img">Image (URL, optionnel)</Label>
             <Input id="c_img" type="url" value={form.img} onChange={set("img")} placeholder="https://..." />
           </div>
-          <button type="submit" disabled={loading} className="w-full h-11 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
-            {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Création...</> : "Publier la campagne"}
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button type="button" onClick={() => save("draft")} disabled={loading} className="flex-1 h-11 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
+              <Save className="w-4 h-4" /> Enregistrer le brouillon
+            </button>
+            <button type="submit" disabled={loading} className="flex-1 h-11 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
+              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> ...</> : "Publier la campagne"}
+            </button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
