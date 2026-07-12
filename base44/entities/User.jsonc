@@ -7,6 +7,15 @@
         "admin",
         "user"
       ]
+    },
+    "account_type": {
+      "type": "string",
+      "description": "Whether the user signed up as a creator or a brand",
+      "enum": [
+        "creator",
+        "brand"
+      ],
+      "default": "creator"
     }
   },
   "required": [

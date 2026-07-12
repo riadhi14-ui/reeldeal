@@ -5,7 +5,7 @@ import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
-export default function ProfileButton({ mode = "creator" }) {
+export default function ProfileButton() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function ProfileButton({ mode = "creator" }) {
   }, []);
 
   const name = user?.full_name || user?.email?.split("@")[0] || "Mon compte";
-  const roleLabel = mode === "brand" ? "Marque" : "Créateur";
+  const roleLabel = user?.account_type === "brand" ? "Marque" : "Créateur";
   const avatar = user?.profile_image || user?.brand_logo;
   const initial = name.charAt(0).toUpperCase();
 

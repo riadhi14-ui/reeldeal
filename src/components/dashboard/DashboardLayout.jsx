@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createContext, useContext } fr
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { campaigns } from "@/lib/campaignsData";
-import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Store, Home, Settings } from "lucide-react";
+import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const DashboardContext = createContext(null);
 export const useDashboard = () => useContext(DashboardContext);
@@ -25,6 +25,13 @@ export default function DashboardLayout() {
 
   const loadData = useCallback(async () => {
     const me = await base44.auth.me();
+    // Apply the account type chosen before a Google sign-up, if any.
+    const pending = localStorage.getItem("pending_account_type");
+    if (pending && !me?.account_type) {
+      localStorage.removeItem("pending_account_type");
+      try { await base44.auth.updateMe({ account_type: pending }); me.account_type = pending; } catch { /* ignore */ }
+    }
+    if (me?.account_type === "brand") { navigate("/brand", { replace: true }); return; }
     setUser(me);
     const [parts, subs, wds] = await Promise.all([
       base44.entities.Participation.filter({ created_by_id: me.id }, "-created_date"),
@@ -38,6 +45,8 @@ export default function DashboardLayout() {
   }, []);
 
   useEffect(() => { loadData(); }, [loadData]);
+
+  if (!user && !loading) return null;
 
   const earnedTotal = submissions.filter((s) => s.status === "approved").reduce((sum, s) => sum + (s.earnings || 0), 0);
   const withdrawnTotal = withdrawals.filter((w) => w.status === "completed").reduce((sum, w) => sum + (w.amount || 0), 0);
@@ -111,9 +120,6 @@ export default function DashboardLayout() {
             <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
               <UserRound className="w-4 h-4" /> Mon profil
             </NavLink>
-            <button onClick={() => navigate("/brand")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <Store className="w-4 h-4" /> Basculer côté Marque
-            </button>
             <button onClick={() => navigate("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
               <Home className="w-4 h-4" /> Retour à l'accueil
             </button>

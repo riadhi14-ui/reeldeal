@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
+import { goToMySpace } from "@/lib/accountType";
 import PhoneMockup from "./PhoneMockup";
 import BrandMockup from "./BrandMockup";
 
@@ -11,7 +12,7 @@ export default function Hero({ mode, setMode }) {
   const handlePrimary = async () => {
     const authed = await base44.auth.isAuthenticated().catch(() => false);
     if (!authed) { window.location.href = "/register"; return; }
-    window.location.href = isCreator ? "/dashboard" : "/brand";
+    goToMySpace();
   };
 
   return (

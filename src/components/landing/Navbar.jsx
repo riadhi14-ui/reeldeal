@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+import { goToMySpace } from "@/lib/accountType";
 import ProfileButton from "@/components/landing/ProfileButton";
 
 export default function Navbar({ mode = "creator", setMode = () => {} }) {
@@ -61,12 +62,12 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
           {authed ? (
             <>
               <button
-                onClick={() => navigate(mode === "brand" ? "/brand" : "/dashboard")}
+                onClick={goToMySpace}
                 className="hidden sm:flex h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all items-center gap-1.5"
               >
                 Mon espace <span aria-hidden>→</span>
               </button>
-              <ProfileButton mode={mode} />
+              <ProfileButton />
             </>
           ) : (
             <button

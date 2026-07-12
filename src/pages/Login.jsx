@@ -20,7 +20,9 @@ export default function Login() {
     setLoading(true);
     try {
       await base44.auth.loginViaEmailPassword(email, password);
-      window.location.href = "/";
+      let me = null;
+      try { me = await base44.auth.me(); } catch { /* ignore */ }
+      window.location.href = me?.account_type === "brand" ? "/brand" : "/dashboard";
     } catch (err) {
       setError(err.message || "Email ou mot de passe invalide");
     } finally {

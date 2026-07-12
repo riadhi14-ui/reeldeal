@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UserPlus, Mail, Lock, Loader2 } from "lucide-react";
+import { UserPlus, Mail, Lock, Loader2, Video, Store } from "lucide-react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
@@ -18,6 +18,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
   const [otpCode, setOtpCode] = useState("");
+  const [accountType, setAccountType] = useState("creator");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +46,8 @@ export default function Register() {
       if (result?.access_token) {
         base44.auth.setToken(result.access_token);
       }
-      window.location.href = "/";
+      try { await base44.auth.updateMe({ account_type: accountType }); } catch { /* ignore */ }
+      window.location.href = accountType === "brand" ? "/brand" : "/dashboard";
     } catch (err) {
       setError(err.message || "Code de vérification invalide");
     } finally {
@@ -67,7 +69,8 @@ export default function Register() {
   };
 
   const handleGoogle = () => {
-    base44.auth.loginWithProvider("google", "/");
+    localStorage.setItem("pending_account_type", accountType);
+    base44.auth.loginWithProvider("google", accountType === "brand" ? "/brand" : "/dashboard");
   };
 
   if (showOtp) {
@@ -138,6 +141,26 @@ export default function Register() {
         </>
       }
     >
+      <div className="mb-6">
+        <p className="text-sm font-medium mb-2">Je m'inscris en tant que</p>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={() => setAccountType("creator")}
+            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 text-sm font-bold transition-colors ${accountType === "creator" ? "border-[#EF4444] bg-red-50 text-[#DC2626]" : "border-border text-muted-foreground hover:border-slate-300"}`}
+          >
+            <Video className="w-5 h-5" /> Créateur
+          </button>
+          <button
+            type="button"
+            onClick={() => setAccountType("brand")}
+            className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-4 text-sm font-bold transition-colors ${accountType === "brand" ? "border-[#EF4444] bg-red-50 text-[#DC2626]" : "border-border text-muted-foreground hover:border-slate-300"}`}
+          >
+            <Store className="w-5 h-5" /> Marque
+          </button>
+        </div>
+      </div>
+
       <Button
         variant="outline"
         className="w-full h-12 text-sm font-medium mb-6"

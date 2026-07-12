@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, createContext, useContext } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { LayoutDashboard, Briefcase, Video, MessageCircle, LogOut, UserRound, Clapperboard, Home, Settings } from "lucide-react";
+import { LayoutDashboard, Briefcase, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const BrandContext = createContext(null);
 export const useBrand = () => useContext(BrandContext);
@@ -32,6 +32,13 @@ export default function BrandLayout() {
       navigate("/login", { replace: true });
       return;
     }
+    // Apply the account type chosen before a Google sign-up, if any.
+    const pending = localStorage.getItem("pending_account_type");
+    if (pending && !me.account_type) {
+      localStorage.removeItem("pending_account_type");
+      try { await base44.auth.updateMe({ account_type: pending }); me.account_type = pending; } catch { /* ignore */ }
+    }
+    if (me.account_type !== "brand") { navigate("/dashboard", { replace: true }); return; }
     setUser(me);
     const myCampaigns = await base44.entities.Campaign.filter({ created_by_id: me.id }, "-created_date");
     setCampaigns(myCampaigns);
@@ -113,9 +120,6 @@ export default function BrandLayout() {
             <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
               <UserRound className="w-4 h-4" /> Mon profil
             </NavLink>
-            <button onClick={() => navigate("/dashboard")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <Clapperboard className="w-4 h-4" /> Basculer côté Créateur
-            </button>
             <button onClick={() => navigate("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
               <Home className="w-4 h-4" /> Retour à l'accueil
             </button>
