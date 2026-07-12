@@ -44,21 +44,23 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
         </nav>
 
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-1.5 text-sm font-semibold">
-            <button
-              onClick={() => setMode("creator")}
-              className={`pb-0.5 border-b-2 transition-colors ${mode === "creator" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
-            >
-              Créateur
-            </button>
-            <span className="text-slate-300">/</span>
-            <button
-              onClick={() => setMode("brand")}
-              className={`pb-0.5 border-b-2 transition-colors ${mode === "brand" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
-            >
-              Marque
-            </button>
-          </div>
+          {!authed && (
+            <div className="hidden sm:flex items-center gap-1.5 text-sm font-semibold">
+              <button
+                onClick={() => setMode("creator")}
+                className={`pb-0.5 border-b-2 transition-colors ${mode === "creator" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
+              >
+                Créateur
+              </button>
+              <span className="text-slate-300">/</span>
+              <button
+                onClick={() => setMode("brand")}
+                className={`pb-0.5 border-b-2 transition-colors ${mode === "brand" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
+              >
+                Marque
+              </button>
+            </div>
+          )}
           {authed ? (
             <>
               <button

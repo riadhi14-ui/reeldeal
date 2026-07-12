@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { UserRound } from "lucide-react";
 
-export default function PersonalCard({ form, set, email }) {
+export default function PersonalCard({ form, set, email, isBrand }) {
   return (
     <div className="rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm p-6">
       <div className="flex items-center gap-2 mb-5">
@@ -17,12 +17,12 @@ export default function PersonalCard({ form, set, email }) {
           <Input value={email} disabled className="bg-slate-50" />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="display_name">Nom d'affichage</Label>
-          <Input id="display_name" value={form.display_name} onChange={set("display_name")} placeholder="Ton nom de créateur" />
+          <Label htmlFor="display_name">{isBrand ? "Nom de la marque" : "Nom d'affichage"}</Label>
+          <Input id="display_name" value={form.display_name} onChange={set("display_name")} placeholder={isBrand ? "Nom de ta marque" : "Ton nom de créateur"} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="bio">Bio</Label>
-          <Textarea id="bio" value={form.bio} onChange={set("bio")} rows={3} placeholder="Parle-nous de toi et de ton contenu..." />
+          <Label htmlFor="bio">{isBrand ? "Présentation de la marque" : "Bio"}</Label>
+          <Textarea id="bio" value={form.bio} onChange={set("bio")} rows={3} placeholder={isBrand ? "Décris ta marque et ce que tu proposes..." : "Parle-nous de toi et de ton contenu..."} />
         </div>
       </div>
     </div>

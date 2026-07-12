@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { ArrowLeft, Loader2, Check } from "lucide-react";
+import { goToMySpace } from "@/lib/accountType";
 import Navbar from "@/components/landing/Navbar";
 import PersonalCard from "@/components/profile/PersonalCard";
 import SocialsCard from "@/components/profile/SocialsCard";
@@ -35,6 +36,8 @@ export default function Profile() {
   const set = (key) => (e) => { setForm({ ...form, [key]: e.target.value }); setSaved(false); };
   const setField = (key, value) => { setForm({ ...form, [key]: value }); setSaved(false); };
 
+  const isBrand = user?.account_type === "brand";
+
   const handleSave = async () => {
     setSaving(true);
     await base44.auth.updateMe(form);
@@ -56,9 +59,9 @@ export default function Profile() {
 
       <main className="pt-28 pb-24">
         <div className="max-w-3xl mx-auto px-6">
-          <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-6">
+          <button onClick={goToMySpace} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors mb-6">
             <ArrowLeft className="w-4 h-4" /> Mon espace
-          </Link>
+          </button>
 
           <div className="mb-10">
             <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-1">Paramètres</p>
@@ -66,9 +69,9 @@ export default function Profile() {
           </div>
 
           <div className="space-y-6">
-            <PersonalCard form={form} set={set} email={user?.email || ""} />
-            <SocialsCard form={form} set={set} />
-            <PaymentCard form={form} set={set} setField={setField} />
+            <PersonalCard form={form} set={set} email={user?.email || ""} isBrand={isBrand} />
+            {!isBrand && <SocialsCard form={form} set={set} />}
+            {!isBrand && <PaymentCard form={form} set={set} setField={setField} />}
           </div>
 
           <button
