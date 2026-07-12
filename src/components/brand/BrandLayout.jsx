@@ -21,7 +21,17 @@ export default function BrandLayout() {
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
-    const me = await base44.auth.me();
+    let me;
+    try {
+      me = await base44.auth.me();
+    } catch {
+      navigate("/login", { replace: true });
+      return;
+    }
+    if (!me) {
+      navigate("/login", { replace: true });
+      return;
+    }
     setUser(me);
     const myCampaigns = await base44.entities.Campaign.filter({ created_by_id: me.id }, "-created_date");
     setCampaigns(myCampaigns);
@@ -31,7 +41,7 @@ export default function BrandLayout() {
       : [];
     setSubmissions(subs);
     setLoading(false);
-  }, []);
+  }, [navigate]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
