@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { campaigns } from "@/lib/campaignsData";
+import { campaigns as staticCampaigns } from "@/lib/campaignsData";
 
-export default function AvailableCampaigns({ participations }) {
+export default function AvailableCampaigns({ participations, campaigns }) {
+  const list = campaigns || staticCampaigns;
   const joinedIds = new Set(participations.map((p) => p.campaign_id));
-  const available = campaigns.filter((c) => !joinedIds.has(c.id));
+  const available = list.filter((c) => !joinedIds.has(c.id));
 
   if (available.length === 0) {
     return (

@@ -22,6 +22,7 @@ export default function DashboardLayout() {
   const [participations, setParticipations] = useState([]);
   const [submissions, setSubmissions] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
+  const [dbCampaigns, setDbCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
@@ -34,14 +35,16 @@ export default function DashboardLayout() {
     }
     if (me?.account_type === "brand") { navigate("/brand", { replace: true }); return; }
     setUser(me);
-    const [parts, subs, wds] = await Promise.all([
+    const [parts, subs, wds, activeCampaigns] = await Promise.all([
       base44.entities.Participation.filter({ created_by_id: me.id }, "-created_date"),
       base44.entities.Submission.filter({ created_by_id: me.id }, "-created_date"),
       base44.entities.Withdrawal.filter({ created_by_id: me.id }, "-created_date"),
+      base44.entities.Campaign.filter({ status: "active" }).catch(() => []),
     ]);
     setParticipations(parts);
     setSubmissions(subs);
     setWithdrawals(wds);
+    setDbCampaigns(activeCampaigns);
     setLoading(false);
   }, []);
 
@@ -64,8 +67,9 @@ export default function DashboardLayout() {
     videos: submissions.length,
   };
 
+  const allCampaigns = [...dbCampaigns, ...campaigns];
   const joinedIds = new Set(participations.map((p) => p.campaign_id));
-  const availableCount = campaigns.filter((c) => !joinedIds.has(c.id)).length;
+  const availableCount = allCampaigns.filter((c) => !joinedIds.has(c.id)).length;
   const counts = {
     "/dashboard/campaigns": participations.length,
     "/dashboard/available": availableCount,
@@ -86,7 +90,7 @@ export default function DashboardLayout() {
   const avatarEmoji = getAvatarEmoji(user);
 
   return (
-    <DashboardContext.Provider value={{ user, participations, submissions, withdrawals, stats, loadData }}>
+    <DashboardContext.Provider value={{ user, participations, submissions, withdrawals, stats, allCampaigns, loadData }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
