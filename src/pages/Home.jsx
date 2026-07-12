@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
@@ -13,6 +14,12 @@ import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   const [mode, setMode] = useState("creator");
+
+  useEffect(() => {
+    base44.auth.me()
+      .then((me) => { if (me?.account_type === "brand") setMode("brand"); })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="bg-white text-slate-900 font-body">
