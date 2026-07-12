@@ -4,6 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { ArrowLeft, Loader2, Check } from "lucide-react";
 import { goToMySpace } from "@/lib/accountType";
 import Navbar from "@/components/landing/Navbar";
+import AvatarCard from "@/components/profile/AvatarCard";
 import PersonalCard from "@/components/profile/PersonalCard";
 import SocialsCard from "@/components/profile/SocialsCard";
 import PaymentCard from "@/components/profile/PaymentCard";
@@ -14,7 +15,7 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [form, setForm] = useState({
-    display_name: "", bio: "", tiktok: "", instagram: "", youtube: "", payment_method: "", payment_detail: "",
+    display_name: "", bio: "", profile_image: "", tiktok: "", instagram: "", youtube: "", payment_method: "", payment_detail: "",
   });
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function Profile() {
       setForm({
         display_name: me.display_name || me.full_name || "",
         bio: me.bio || "",
+        profile_image: me.profile_image || "",
         tiktok: me.tiktok || "",
         instagram: me.instagram || "",
         youtube: me.youtube || "",
@@ -69,6 +71,7 @@ export default function Profile() {
           </div>
 
           <div className="space-y-6">
+            <AvatarCard value={form.profile_image} name={form.display_name || user?.full_name} onChange={(v) => setField("profile_image", v)} />
             <PersonalCard form={form} set={set} email={user?.email || ""} isBrand={isBrand} />
             {!isBrand && <SocialsCard form={form} set={set} />}
             {!isBrand && <PaymentCard form={form} set={set} setField={setField} />}

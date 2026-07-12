@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, createContext, useContext } fr
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { campaigns } from "@/lib/campaignsData";
+import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
 import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const DashboardContext = createContext(null);
@@ -81,13 +82,15 @@ export default function DashboardLayout() {
 
   const name = user?.full_name || "Créateur";
   const initial = name.charAt(0).toUpperCase();
+  const avatarUrl = getAvatarImageUrl(user);
+  const avatarEmoji = getAvatarEmoji(user);
 
   return (
     <DashboardContext.Provider value={{ user, participations, submissions, withdrawals, stats, loadData }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
-            <span className="w-9 h-9 rounded-xl bg-[#EF4444] text-white flex items-center justify-center font-bold">{initial}</span>
+            <span className="w-9 h-9 rounded-xl bg-[#EF4444] text-white flex items-center justify-center font-bold overflow-hidden">{avatarUrl ? <img src={avatarUrl} alt={name} className="w-full h-full object-cover" /> : avatarEmoji ? <span className="text-lg leading-none">{avatarEmoji}</span> : initial}</span>
             <div className="min-w-0">
               <p className="text-sm font-bold truncate">{name}</p>
               <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">Créateur</p>

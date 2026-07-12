@@ -4,6 +4,7 @@ import { base44 } from "@/api/base44Client";
 import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
 
 export default function ProfileButton() {
   const [user, setUser] = useState(null);
@@ -14,7 +15,8 @@ export default function ProfileButton() {
 
   const name = user?.full_name || user?.email?.split("@")[0] || "Mon compte";
   const roleLabel = user?.account_type === "brand" ? "Marque" : "Créateur";
-  const avatar = user?.profile_image || user?.brand_logo;
+  const avatar = getAvatarImageUrl(user);
+  const emoji = getAvatarEmoji(user);
   const initial = name.charAt(0).toUpperCase();
 
   return (
@@ -22,7 +24,7 @@ export default function ProfileButton() {
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-2 h-10 pl-1.5 pr-3 rounded-full bg-white ring-1 ring-slate-200 hover:ring-slate-300 transition-all">
           <span className="w-7 h-7 rounded-full bg-[#EF4444] text-white flex items-center justify-center text-sm font-bold overflow-hidden shrink-0">
-            {avatar ? <img src={avatar} alt={name} className="w-full h-full object-cover" /> : initial}
+            {avatar ? <img src={avatar} alt={name} className="w-full h-full object-cover" /> : emoji ? <span className="text-base leading-none">{emoji}</span> : initial}
           </span>
           <span className="hidden sm:flex flex-col items-start leading-tight">
             <span className="text-xs font-bold text-slate-900 max-w-[100px] truncate">{name}</span>
@@ -34,7 +36,7 @@ export default function ProfileButton() {
       <DropdownMenuContent align="end" className="w-56">
         <div className="flex items-center gap-3 px-2 py-2.5">
           <span className="w-9 h-9 rounded-full bg-[#EF4444] text-white flex items-center justify-center font-bold overflow-hidden shrink-0">
-            {avatar ? <img src={avatar} alt={name} className="w-full h-full object-cover" /> : initial}
+            {avatar ? <img src={avatar} alt={name} className="w-full h-full object-cover" /> : emoji ? <span className="text-xl leading-none">{emoji}</span> : initial}
           </span>
           <div className="min-w-0">
             <p className="text-sm font-bold text-slate-900 truncate">{name}</p>
