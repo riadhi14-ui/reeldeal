@@ -18,7 +18,7 @@ const Field = ({ label, hint, children }) => (
 
 const inputClass = "w-full h-11 px-4 rounded-xl bg-white ring-1 ring-slate-200 focus:ring-2 focus:ring-[#EF4444] outline-none text-sm";
 
-export default function BrandRequestForm() {
+export default function BrandRequestForm({ onSent }) {
   const [form, setForm] = useState(EMPTY);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

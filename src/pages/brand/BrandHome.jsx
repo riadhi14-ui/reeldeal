@@ -6,7 +6,7 @@ import BrandStats from "@/components/brand/BrandStats";
 import BrandQuickActions from "@/components/brand/BrandQuickActions";
 import BrandCampaignsList from "@/components/brand/BrandCampaignsList";
 import ReviewSubmissions from "@/components/brand/ReviewSubmissions";
-import CreateCampaignDialog from "@/components/brand/CreateCampaignDialog";
+import RequestCampaignDialog from "@/components/brand/RequestCampaignDialog";
 
 export default function BrandHome() {
   const { user, stats, campaigns, submissionCounts, pendingSubmissions, campaignsById, loadData } = useBrand();
@@ -19,7 +19,7 @@ export default function BrandHome() {
           <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-1">Espace marque</p>
           <h1 className="text-3xl font-extrabold tracking-tight">Salut, {user?.full_name || "marque"} 👋</h1>
         </div>
-        <CreateCampaignDialog onCreated={loadData} />
+        <RequestCampaignDialog />
       </div>
 
       {campaigns.length === 0 ? (
@@ -32,7 +32,7 @@ export default function BrandHome() {
             <h2 className="text-2xl font-extrabold">Lance ta première campagne</h2>
             <p className="text-white/60 mt-2 max-w-md mx-auto">Décris ta campagne, fixe ta rémunération et laisse les créateurs produire des vidéos pour ta marque.</p>
             <div className="mt-6 inline-flex">
-              <CreateCampaignDialog onCreated={loadData} />
+              <RequestCampaignDialog />
             </div>
           </div>
         </div>
