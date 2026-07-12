@@ -18,11 +18,19 @@ export default function ThemeToggle() {
     return () => clearInterval(id);
   }, [swing]);
 
+  // Rester synchro avec le réglage des paramètres
+  useEffect(() => {
+    const sync = () => setDark(localStorage.getItem("theme") === "dark");
+    window.addEventListener("themechange", sync);
+    return () => window.removeEventListener("themechange", sync);
+  }, []);
+
   const toggle = () => {
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
     localStorage.setItem("theme", next ? "dark" : "light");
+    window.dispatchEvent(new Event("themechange"));
     swing(28, 2);
   };
 

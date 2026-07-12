@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Moon } from "lucide-react";
 
 export default function DarkModeCard() {
   const [dark, setDark] = useState(() => localStorage.getItem("theme") === "dark");
 
+  useEffect(() => {
+    const sync = () => setDark(localStorage.getItem("theme") === "dark");
+    window.addEventListener("themechange", sync);
+    return () => window.removeEventListener("themechange", sync);
+  }, []);
+
   const toggle = (checked) => {
     setDark(checked);
     document.documentElement.classList.toggle("dark", checked);
     localStorage.setItem("theme", checked ? "dark" : "light");
+    window.dispatchEvent(new Event("themechange"));
   };
 
   return (
