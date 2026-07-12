@@ -35,7 +35,7 @@ export default function CreateCampaignDialog({ onCreated, campaign = null, open:
   const save = async (status) => {
     setError("");
     if (!form.name.trim()) return setError("Ajoute au moins un nom à la campagne.");
-    if (status === "active" && (!form.brand.trim() || !form.rate || !form.description.trim() || !form.budget.trim() || !form.maxPerVideo.trim() || platforms.length === 0)) return setError("Complète les informations principales et choisis au moins une plateforme avant de publier.");
+    if (status === "pending" && (!form.brand.trim() || !form.rate || !form.description.trim() || !form.budget.trim() || !form.maxPerVideo.trim() || platforms.length === 0)) return setError("Complète les informations principales et choisis au moins une plateforme avant de publier.");
     setLoading(true);
     const data = { name: form.name, brand: form.brand, category: form.category || "Autre", rate: Number(form.rate) || 0, budget: form.budget, maxPerVideo: form.maxPerVideo, platforms, description: form.description, brief: lines(form.dos), do_list: lines(form.dos), dont_list: lines(form.donts), img: form.img, example_videos: form.exampleVideos, status };
     try {
@@ -51,7 +51,7 @@ export default function CreateCampaignDialog({ onCreated, campaign = null, open:
       {!campaign && <DialogTrigger asChild><button className="h-11 px-6 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 flex items-center gap-2"><Plus className="w-4 h-4" /> Créer une campagne</button></DialogTrigger>}
       <DialogContent className="sm:max-w-3xl rounded-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader><DialogTitle>{campaign ? "Reprendre le brouillon" : "Créer une campagne"}</DialogTitle></DialogHeader>
-        <form onSubmit={(event) => { event.preventDefault(); save("active"); }} className="space-y-5">
+        <form onSubmit={(event) => { event.preventDefault(); save(campaign?.status === "active" ? "active" : "pending"); }} className="space-y-5">
           {error && <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</div>}
           <CampaignBasicsFields form={form} setField={setField} />
           <section className="space-y-3 rounded-2xl border border-slate-200 p-4"><div><h3 className="font-bold text-slate-900">Plateformes de diffusion</h3><p className="text-xs text-slate-500">Sélectionne toutes les plateformes autorisées.</p></div><div className="flex flex-wrap gap-2">{PLATFORMS.map((platform) => <button key={platform} type="button" onClick={() => togglePlatform(platform)} className={`h-9 px-4 rounded-full text-xs font-bold ${platforms.includes(platform) ? "bg-[#EF4444] text-white" : "bg-slate-100 text-slate-600"}`}>{platform}</button>)}</div></section>
@@ -59,8 +59,9 @@ export default function CreateCampaignDialog({ onCreated, campaign = null, open:
           <CampaignMediaFields image={form.img} videos={form.exampleVideos} onImage={(img) => setForm((current) => ({ ...current, img }))} onVideos={(exampleVideos) => setForm((current) => ({ ...current, exampleVideos }))} onUploading={setUploading} onError={setError} />
           <div className="sticky bottom-0 flex flex-col sm:flex-row gap-3 bg-white pt-3">
             <button type="button" onClick={() => save("draft")} disabled={loading || uploading} className="flex-1 h-11 rounded-full bg-slate-100 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-60"><Save className="w-4 h-4" /> Enregistrer le brouillon</button>
-            <button type="submit" disabled={loading || uploading} className="flex-1 h-11 rounded-full bg-[#EF4444] text-white text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-60">{loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Enregistrement...</> : "Publier la campagne"}</button>
+            <button type="submit" disabled={loading || uploading} className="flex-1 h-11 rounded-full bg-[#EF4444] text-white text-sm font-bold flex items-center justify-center gap-2 disabled:opacity-60">{loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Enregistrement...</> : campaign?.status === "active" ? "Enregistrer les modifications" : "Soumettre pour validation"}</button>
           </div>
+          {campaign?.status !== "active" && <p className="text-xs text-slate-400 text-center">Ta campagne sera examinée par la plateforme avant d'être mise en ligne.</p>}
         </form>
       </DialogContent>
     </Dialog>

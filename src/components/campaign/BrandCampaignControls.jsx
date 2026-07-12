@@ -20,6 +20,7 @@ export default function BrandCampaignControls({ campaign, onUpdated }) {
   const totalViews = submissions.reduce((sum, s) => sum + (s.views || 0), 0);
   const approved = submissions.filter((s) => s.status === "approved").length;
   const paused = status === "closed";
+  const pending = status === "pending";
 
   const toggleStatus = async () => {
     setUpdating(true);
@@ -43,10 +44,16 @@ export default function BrandCampaignControls({ campaign, onUpdated }) {
       </div>
       <div className="flex items-center justify-between gap-3 mb-5">
         <h3 className="text-lg font-extrabold text-slate-900">Pilotage de la campagne</h3>
-        <span className={`text-xs font-bold px-3 py-1 rounded-full ${paused ? "bg-slate-200 text-slate-600" : "bg-emerald-100 text-emerald-700"}`}>
-          {paused ? "En pause" : "Active"}
+        <span className={`text-xs font-bold px-3 py-1 rounded-full ${pending ? "bg-blue-100 text-blue-700" : paused ? "bg-slate-200 text-slate-600" : "bg-emerald-100 text-emerald-700"}`}>
+          {pending ? "En validation" : paused ? "En pause" : "En ligne"}
         </span>
       </div>
+
+      {pending && (
+        <div className="rounded-2xl bg-blue-50 text-blue-700 px-4 py-3 text-sm font-semibold mb-5">
+          Ta campagne est en attente de validation par la plateforme. Elle sera visible publiquement une fois approuvée.
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-3 mb-5">
         {stats.map(({ icon: Icon, label, value }) => (
@@ -59,14 +66,16 @@ export default function BrandCampaignControls({ campaign, onUpdated }) {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <button
-          onClick={toggleStatus}
-          disabled={updating}
-          className={`inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full font-bold shadow-lg transition-colors disabled:opacity-50 ${paused ? "bg-[#EF4444] hover:bg-[#DC2626] text-white shadow-red-500/25" : "bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626]"}`}
-        >
-          {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-          {paused ? "Reprendre la campagne" : "Mettre en pause"}
-        </button>
+        {!pending && (
+          <button
+            onClick={toggleStatus}
+            disabled={updating}
+            className={`inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full font-bold shadow-lg transition-colors disabled:opacity-50 ${paused ? "bg-[#EF4444] hover:bg-[#DC2626] text-white shadow-red-500/25" : "bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626]"}`}
+          >
+            {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+            {paused ? "Reprendre la campagne" : "Mettre en pause"}
+          </button>
+        )}
         <button
           onClick={() => setEditOpen(true)}
           className="inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626] font-bold transition-colors"

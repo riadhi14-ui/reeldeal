@@ -60,10 +60,11 @@
       "type": "string",
       "enum": [
         "draft",
+        "pending",
         "active",
         "closed"
       ],
-      "default": "active"
+      "default": "pending"
     }
   },
   "required": [

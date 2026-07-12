@@ -31,6 +31,7 @@ import BrandSubmissionsPage from './pages/brand/BrandSubmissionsPage';
 import BrandMessagesPage from './pages/brand/BrandMessagesPage';
 import BrandSettingsPage from './pages/brand/BrandSettingsPage';
 import Profile from './pages/Profile';
+import AdminCampaigns from './pages/AdminCampaigns';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -83,6 +84,7 @@ const AuthenticatedApp = () => {
           <Route path="settings" element={<BrandSettingsPage />} />
         </Route>
         <Route path="/profile" element={<Profile />} />
+        <Route path="/admin/campaigns" element={<AdminCampaigns />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
