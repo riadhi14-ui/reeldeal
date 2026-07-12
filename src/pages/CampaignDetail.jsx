@@ -5,6 +5,7 @@ import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import JoinedActions from "@/components/campaign/JoinedActions";
+import BrandCampaignControls from "@/components/campaign/BrandCampaignControls";
 import ExampleVideos from "@/components/campaign/ExampleVideos";
 import { getCampaign } from "@/lib/campaignsData";
 
@@ -18,6 +19,10 @@ export default function CampaignDetail() {
   const [loadingCampaign, setLoadingCampaign] = useState(!staticCampaign);
   const [joined, setJoined] = useState(false);
   const [justJoined, setJustJoined] = useState(false);
+  const [me, setMe] = useState(null);
+
+  const isOwner = me && campaign && (campaign.created_by_id === me.id);
+  const isBrand = me?.account_type === "brand";
 
   useEffect(() => {
     if (!staticCampaign) {
@@ -34,6 +39,7 @@ export default function CampaignDetail() {
     base44.auth.isAuthenticated().then(async (authed) => {
       if (!authed) return;
       const user = await base44.auth.me();
+      setMe(user);
       const existing = await base44.entities.Participation.filter({ campaign_id: cid, created_by_id: user.id });
       setJoined(existing.length > 0);
     }).catch(() => {});
@@ -88,7 +94,7 @@ export default function CampaignDetail() {
 
   return (
     <div className="bg-white text-slate-900 font-body min-h-screen">
-      <Navbar mode={mode} setMode={setMode} />
+      <Navbar mode={isBrand ? "brand" : mode} setMode={setMode} />
 
       <main className="pt-28 pb-24">
         <div className="max-w-6xl mx-auto px-6">
@@ -136,7 +142,12 @@ export default function CampaignDetail() {
                 ))}
               </div>
 
-              {joined ? (
+              {isOwner ? (
+                <BrandCampaignControls
+                  campaign={campaign}
+                  onUpdated={() => base44.entities.Campaign.filter({ id }).then((r) => r[0] && setCampaign(r[0]))}
+                />
+              ) : isBrand ? null : joined ? (
                 <JoinedActions campaign={campaign} justJoined={justJoined} />
               ) : (
                 <button
