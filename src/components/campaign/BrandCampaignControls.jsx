@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Pause, Play, Eye, Video, Loader2, BarChart3, CheckCircle2 } from "lucide-react";
+import { Pause, Play, Eye, Video, Loader2, BarChart3, CheckCircle2, Pencil } from "lucide-react";
+import CreateCampaignDialog from "@/components/brand/CreateCampaignDialog";
 
 export default function BrandCampaignControls({ campaign, onUpdated }) {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [status, setStatus] = useState(campaign.status || "active");
 
   useEffect(() => {
@@ -56,14 +58,29 @@ export default function BrandCampaignControls({ campaign, onUpdated }) {
         ))}
       </div>
 
-      <button
-        onClick={toggleStatus}
-        disabled={updating}
-        className={`inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full font-bold shadow-lg transition-colors disabled:opacity-50 ${paused ? "bg-[#EF4444] hover:bg-[#DC2626] text-white shadow-red-500/25" : "bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626]"}`}
-      >
-        {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-        {paused ? "Reprendre la campagne" : "Mettre en pause"}
-      </button>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <button
+          onClick={toggleStatus}
+          disabled={updating}
+          className={`inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full font-bold shadow-lg transition-colors disabled:opacity-50 ${paused ? "bg-[#EF4444] hover:bg-[#DC2626] text-white shadow-red-500/25" : "bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626]"}`}
+        >
+          {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+          {paused ? "Reprendre la campagne" : "Mettre en pause"}
+        </button>
+        <button
+          onClick={() => setEditOpen(true)}
+          className="inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-white ring-1 ring-slate-200 hover:ring-[#EF4444] text-slate-700 hover:text-[#DC2626] font-bold transition-colors"
+        >
+          <Pencil className="w-4 h-4" /> Modifier la campagne
+        </button>
+      </div>
+
+      <CreateCampaignDialog
+        campaign={campaign}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        onCreated={onUpdated}
+      />
     </div>
   );
 }
