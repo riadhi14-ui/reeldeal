@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { Loader2, CheckCircle2, Phone } from "lucide-react";
+import { Loader2, CheckCircle2, Phone, Mail } from "lucide-react";
 
 const EMPTY = {
   company: "", contact_name: "", email: "", phone: "", website: "",
@@ -104,6 +104,11 @@ export default function BrandRequestForm({ onSent }) {
         {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Envoi...</> : <><Phone className="w-4 h-4" /> Envoyer ma demande</>}
       </button>
       <p className="text-xs text-slate-400 text-center">On te recontacte par email ou téléphone pour finaliser ta campagne.</p>
+
+      <div className="flex items-center gap-2 justify-center pt-2 border-t border-slate-100 text-sm text-slate-500">
+        <Mail className="w-4 h-4 text-[#DC2626]" />
+        <span>Tu préfères écrire directement ? <a href="mailto:contact@reeldeal.fr" className="font-bold text-[#DC2626] hover:underline">contact@reeldeal.fr</a></span>
+      </div>
     </form>
   );
 }
