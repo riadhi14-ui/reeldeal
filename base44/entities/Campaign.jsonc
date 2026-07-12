@@ -35,6 +35,24 @@
         "type": "string"
       }
     },
+    "do_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dont_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "example_videos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "img": {
       "type": "string"
     },

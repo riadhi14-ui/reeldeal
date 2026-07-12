@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, Wallet, Video, Share2, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Wallet, Video, Share2, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -151,14 +151,10 @@ export default function CampaignDetail() {
           </div>
 
           <div className="mt-16 max-w-3xl">
-            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Brief de la campagne</h2>
-            <div className="space-y-4">
-              {(campaign.brief || []).map((item, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-                  <CheckCircle2 className="w-5 h-5 text-[#DC2626] mt-0.5 shrink-0" />
-                  <p className="text-slate-600">{item}</p>
-                </div>
-              ))}
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Consignes de la campagne</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div><h3 className="font-bold text-emerald-600 mb-3">À faire</h3><div className="space-y-3">{(campaign.do_list || campaign.brief || []).map((item, i) => <div key={i} className="flex items-start gap-3 rounded-2xl bg-emerald-50 p-4"><CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" /><p className="text-slate-600">{item}</p></div>)}</div></div>
+              <div><h3 className="font-bold text-red-600 mb-3">À ne pas faire</h3><div className="space-y-3">{(campaign.dont_list || []).map((item, i) => <div key={i} className="flex items-start gap-3 rounded-2xl bg-red-50 p-4"><XCircle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" /><p className="text-slate-600">{item}</p></div>)}</div></div>
             </div>
           </div>
 

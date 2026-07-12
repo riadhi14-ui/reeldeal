@@ -1,42 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function BrandCampaignsList({ campaigns, submissionCounts }) {
-  if (campaigns.length === 0) {
-    return (
-      <div className="rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm p-10 text-center">
-        <p className="font-bold text-slate-900">Aucune campagne pour le moment</p>
-        <p className="text-sm text-slate-500 mt-1">Crée ta première campagne pour recevoir des vidéos de créateurs.</p>
-      </div>
-    );
-  }
+function CampaignCard({ campaign, count }) {
+  return <><div className="h-28 overflow-hidden bg-slate-100">{campaign.img ? <img src={campaign.img} alt={campaign.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="h-full flex items-center justify-center text-xs text-slate-400">Aucune image</div>}</div><div className="p-4"><div className="flex items-center justify-between gap-2"><p className="font-bold text-slate-900 truncate">{campaign.name}</p><span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${campaign.status === "active" ? "bg-emerald-50 text-emerald-600" : campaign.status === "draft" ? "bg-amber-50 text-amber-600" : "bg-slate-100 text-slate-500"}`}>{campaign.status === "active" ? "Active" : campaign.status === "draft" ? "Brouillon" : "Fermée"}</span></div><p className="text-xs text-slate-400 mt-0.5">{campaign.category} · {campaign.budget}</p><div className="mt-3 flex items-center justify-between"><span className="text-xs font-extrabold text-[#DC2626] font-mono">${campaign.rate?.toFixed(2)}/1K vues</span><span className="text-xs font-semibold text-slate-500">{count || 0} vidéo(s)</span></div>{campaign.status === "draft" && <p className="mt-3 text-xs font-bold text-[#DC2626]">Reprendre et publier →</p>}</div></>;
+}
 
-  return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {campaigns.map((c) => (
-        <Link
-          key={c.id}
-          to={`/campaign/${c.id}`}
-          className="group rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm hover:shadow-lg hover:shadow-red-500/10 transition-all overflow-hidden"
-        >
-          <div className="h-28 overflow-hidden">
-            <img src={c.img} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div className="p-4">
-            <div className="flex items-center justify-between gap-2">
-              <p className="font-bold text-slate-900 truncate">{c.name}</p>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${c.status === "active" ? "bg-emerald-50 text-emerald-600" : c.status === "draft" ? "bg-amber-50 text-amber-600" : "bg-slate-100 text-slate-500"}`}>
-                {c.status === "active" ? "Active" : c.status === "draft" ? "Brouillon" : "Fermée"}
-              </span>
-            </div>
-            <p className="text-xs text-slate-400 mt-0.5">{c.category} · {c.budget}</p>
-            <div className="mt-3 flex items-center justify-between">
-              <span className="text-xs font-extrabold text-[#DC2626] font-mono">${c.rate?.toFixed(2)}/1K vues</span>
-              <span className="text-xs font-semibold text-slate-500">{submissionCounts[c.id] || 0} vidéo(s)</span>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
+export default function BrandCampaignsList({ campaigns, submissionCounts, onEditDraft }) {
+  if (campaigns.length === 0) return <div className="rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm p-10 text-center"><p className="font-bold text-slate-900">Aucune campagne pour le moment</p><p className="text-sm text-slate-500 mt-1">Crée ta première campagne pour recevoir des vidéos de créateurs.</p></div>;
+  const cardClass = "group text-left rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm hover:shadow-lg hover:shadow-red-500/10 transition-all overflow-hidden";
+  return <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">{campaigns.map((campaign) => campaign.status === "draft" ? <button key={campaign.id} type="button" onClick={() => onEditDraft(campaign)} className={cardClass}><CampaignCard campaign={campaign} count={submissionCounts[campaign.id]} /></button> : <Link key={campaign.id} to={`/campaign/${campaign.id}`} className={cardClass}><CampaignCard campaign={campaign} count={submissionCounts[campaign.id]} /></Link>)}</div>;
 }
