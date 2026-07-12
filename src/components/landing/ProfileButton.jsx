@@ -13,7 +13,7 @@ export default function ProfileButton() {
     base44.auth.me().then(setUser).catch(() => setUser(null));
   }, []);
 
-  const name = user?.full_name || user?.email?.split("@")[0] || "Mon compte";
+  const name = user?.display_name || user?.full_name || user?.email?.split("@")[0] || "Mon compte";
   const roleLabel = user?.account_type === "brand" ? "Marque" : "Créateur";
   const avatar = getAvatarImageUrl(user);
   const emoji = getAvatarEmoji(user);

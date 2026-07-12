@@ -80,7 +80,7 @@ export default function DashboardLayout() {
     );
   }
 
-  const name = user?.full_name || "Créateur";
+  const name = user?.display_name || user?.full_name || "Créateur";
   const initial = name.charAt(0).toUpperCase();
   const avatarUrl = getAvatarImageUrl(user);
   const avatarEmoji = getAvatarEmoji(user);

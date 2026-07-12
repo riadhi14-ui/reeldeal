@@ -80,7 +80,7 @@ export default function BrandLayout() {
     );
   }
 
-  const name = user?.full_name || "Marque";
+  const name = user?.display_name || user?.full_name || "Marque";
   const initial = name.charAt(0).toUpperCase();
   const avatarUrl = getAvatarImageUrl(user);
   const avatarEmoji = getAvatarEmoji(user);
