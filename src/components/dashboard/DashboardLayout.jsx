@@ -3,21 +3,23 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { campaigns } from "@/lib/campaignsData";
 import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
+import { useLang } from "@/i18n/LanguageContext";
 import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const DashboardContext = createContext(null);
 export const useDashboard = () => useContext(DashboardContext);
 
 const navItems = [
-  { to: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard, end: true },
-  { to: "/dashboard/campaigns", label: "Mes campagnes", icon: Briefcase },
-  { to: "/dashboard/available", label: "Campagnes disponibles", icon: Compass },
-  { to: "/dashboard/submissions", label: "Mes soumissions", icon: Video },
-  { to: "/dashboard/messages", label: "Messages", icon: MessageCircle },
+  { to: "/dashboard", labelKey: "nav_dashboard", icon: LayoutDashboard, end: true },
+  { to: "/dashboard/campaigns", labelKey: "nav_my_campaigns", icon: Briefcase },
+  { to: "/dashboard/available", labelKey: "nav_available", icon: Compass },
+  { to: "/dashboard/submissions", labelKey: "nav_my_submissions", icon: Video },
+  { to: "/dashboard/messages", labelKey: "nav_messages", icon: MessageCircle },
 ];
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
+  const { t, setLang } = useLang();
   const [user, setUser] = useState(null);
   const [participations, setParticipations] = useState([]);
   const [submissions, setSubmissions] = useState([]);
@@ -34,6 +36,7 @@ export default function DashboardLayout() {
       try { await base44.auth.updateMe({ account_type: pending }); me.account_type = pending; } catch { /* ignore */ }
     }
     if (me?.account_type === "brand") { navigate("/brand", { replace: true }); return; }
+    if (me?.language) setLang(me.language);
     setUser(me);
     const [parts, subs, wds, activeCampaigns] = await Promise.all([
       base44.entities.Participation.filter({ created_by_id: me.id }, "-created_date"),
@@ -46,7 +49,7 @@ export default function DashboardLayout() {
     setWithdrawals(wds);
     setDbCampaigns(activeCampaigns);
     setLoading(false);
-  }, []);
+  }, [navigate, setLang]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -97,12 +100,12 @@ export default function DashboardLayout() {
             <span className="w-9 h-9 rounded-xl bg-[#EF4444] text-white flex items-center justify-center font-bold overflow-hidden">{avatarUrl ? <img src={avatarUrl} alt={name} className="w-full h-full object-cover" /> : avatarEmoji ? <span className="text-lg leading-none">{avatarEmoji}</span> : initial}</span>
             <div className="min-w-0">
               <p className="text-sm font-bold truncate">{name}</p>
-              <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">Créateur</p>
+              <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">{t("role_creator")}</p>
             </div>
           </div>
 
           <nav className="flex-1 p-3 space-y-1">
-            {navItems.map(({ to, label, icon: Icon, end }) => (
+            {navItems.map(({ to, labelKey, icon: Icon, end }) => (
               <NavLink
                 key={to}
                 to={to}
@@ -112,7 +115,7 @@ export default function DashboardLayout() {
                 }
               >
                 <Icon className="w-4 h-4 shrink-0" />
-                <span className="flex-1">{label}</span>
+                <span className="flex-1">{t(labelKey)}</span>
                 {counts[to] > 0 && (
                   <span className="text-[10px] font-bold bg-slate-100 text-slate-500 rounded-full px-2 py-0.5">{counts[to]}</span>
                 )}
@@ -122,23 +125,23 @@ export default function DashboardLayout() {
 
           <div className="p-3 border-t border-slate-100 space-y-1">
             <NavLink to="/dashboard/settings" className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${isActive ? "bg-red-50 text-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
-              <Settings className="w-4 h-4" /> Réglages
+              <Settings className="w-4 h-4" /> {t("nav_settings")}
             </NavLink>
             <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <UserRound className="w-4 h-4" /> Mon profil
+              <UserRound className="w-4 h-4" /> {t("nav_profile")}
             </NavLink>
             <button onClick={() => navigate("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <Home className="w-4 h-4" /> Retour à l'accueil
+              <Home className="w-4 h-4" /> {t("nav_back_home")}
             </button>
             <button onClick={() => base44.auth.logout("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-[#DC2626] hover:bg-red-50 transition-colors">
-              <LogOut className="w-4 h-4" /> Déconnexion
+              <LogOut className="w-4 h-4" /> {t("nav_logout")}
             </button>
           </div>
         </aside>
 
         {/* Mobile nav */}
         <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-100 flex justify-around px-2 py-2">
-          {navItems.map(({ to, label, icon: Icon, end }) => (
+          {navItems.map(({ to, labelKey, icon: Icon, end }) => (
             <NavLink
               key={to}
               to={to}
@@ -146,7 +149,7 @@ export default function DashboardLayout() {
               className={({ isActive }) => `flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[10px] font-semibold ${isActive ? "text-[#DC2626]" : "text-slate-400"}`}
             >
               <Icon className="w-5 h-5" />
-              {label.split(" ")[0]}
+              {t(labelKey).split(" ")[0]}
             </NavLink>
           ))}
         </div>

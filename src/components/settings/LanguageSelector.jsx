@@ -2,12 +2,8 @@ import React from "react";
 import { Check } from "lucide-react";
 
 const LANGUAGES = [
-  { code: "en", label: "Anglais", flag: "🇬🇧" },
   { code: "fr", label: "Français", flag: "🇫🇷" },
-  { code: "es", label: "Espagnol", flag: "🇪🇸" },
-  { code: "pt", label: "Portugais", flag: "🇵🇹" },
-  { code: "it", label: "Italien", flag: "🇮🇹" },
-  { code: "de", label: "Allemand", flag: "🇩🇪" },
+  { code: "en", label: "English", flag: "🇬🇧" },
 ];
 
 export default function LanguageSelector({ value, onChange }) {

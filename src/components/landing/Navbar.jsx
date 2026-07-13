@@ -3,10 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { goToMySpace } from "@/lib/accountType";
 import ProfileButton from "@/components/landing/ProfileButton";
+import { useLang } from "@/i18n/LanguageContext";
 
 export default function Navbar({ mode = "creator", setMode = () => {} }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLang();
   const [authed, setAuthed] = useState(false);
 
   useEffect(() => {
@@ -38,9 +40,9 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
         </button>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
-          <button onClick={() => scrollTo("how-it-works")} className="hover:text-slate-900 transition-colors">Comment ça marche</button>
-          <button onClick={() => scrollTo("campaigns")} className="hover:text-slate-900 transition-colors">Campagnes</button>
-          <button onClick={() => scrollTo("faq")} className="hover:text-slate-900 transition-colors">FAQ</button>
+          <button onClick={() => scrollTo("how-it-works")} className="hover:text-slate-900 transition-colors">{t("navbar_how")}</button>
+          <button onClick={() => scrollTo("campaigns")} className="hover:text-slate-900 transition-colors">{t("navbar_campaigns")}</button>
+          <button onClick={() => scrollTo("faq")} className="hover:text-slate-900 transition-colors">{t("navbar_faq")}</button>
         </nav>
 
         <div className="flex items-center gap-4">
@@ -50,14 +52,14 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
                 onClick={() => setMode("creator")}
                 className={`pb-0.5 border-b-2 transition-colors ${mode === "creator" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
               >
-                Créateur
+                {t("role_creator")}
               </button>
               <span className="text-slate-300">/</span>
               <button
                 onClick={() => setMode("brand")}
                 className={`pb-0.5 border-b-2 transition-colors ${mode === "brand" ? "text-[#DC2626] border-[#DC2626]" : "text-slate-400 border-transparent hover:text-slate-600"}`}
               >
-                Marque
+                {t("role_brand")}
               </button>
             </div>
           )}
@@ -67,7 +69,7 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
                 onClick={goToMySpace}
                 className="hidden sm:flex h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all items-center gap-1.5"
               >
-                Mon espace <span aria-hidden>→</span>
+                {t("navbar_my_space")} <span aria-hidden>→</span>
               </button>
               <ProfileButton />
             </>
@@ -76,7 +78,7 @@ export default function Navbar({ mode = "creator", setMode = () => {} }) {
               onClick={() => navigate("/register")}
               className="h-10 px-5 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-all flex items-center gap-1.5"
             >
-              {mode === "creator" ? "Commencer à gagner" : "Lancer une campagne"} <span aria-hidden>→</span>
+              {mode === "creator" ? t("navbar_start_earning") : t("navbar_launch_campaign")} <span aria-hidden>→</span>
             </button>
           )}
         </div>

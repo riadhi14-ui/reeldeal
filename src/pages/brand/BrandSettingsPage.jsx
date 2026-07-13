@@ -6,10 +6,12 @@ import LanguageSelector from "@/components/settings/LanguageSelector";
 import AccountInfoCard from "@/components/settings/AccountInfoCard";
 import ChangePasswordCard from "@/components/settings/ChangePasswordCard";
 import { LogOut, Loader2, Save } from "lucide-react";
+import { useLang } from "@/i18n/LanguageContext";
 
 export default function BrandSettingsPage() {
   const { user } = useBrand();
   const { toast } = useToast();
+  const { t, setLang: applyLang } = useLang();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ first_name: "", last_name: "", phone: "", language: "fr" });
 
@@ -26,7 +28,7 @@ export default function BrandSettingsPage() {
   }, [user]);
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
-  const setLanguage = (language) => setForm((f) => ({ ...f, language }));
+  const setLanguage = (language) => { setForm((f) => ({ ...f, language })); applyLang(language); };
 
   const handleSave = async () => {
     setSaving(true);
@@ -38,9 +40,9 @@ export default function BrandSettingsPage() {
         phone: form.phone,
         language: form.language,
       });
-      toast({ title: "Réglages enregistrés", description: "Vos préférences ont été mises à jour." });
+      toast({ title: t("settings_saved_title"), description: t("settings_saved_desc") });
     } catch (err) {
-      toast({ title: "Erreur", description: err.message || "Impossible d'enregistrer.", variant: "destructive" });
+      toast({ title: t("settings_error_title"), description: err.message || t("settings_error_desc"), variant: "destructive" });
     } finally {
       setSaving(false);
     }
@@ -49,20 +51,20 @@ export default function BrandSettingsPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-extrabold tracking-tight">Réglages</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">{t("settings_title")}</h1>
         <button onClick={handleSave} disabled={saving} className="h-11 px-6 rounded-full bg-[#EF4444] hover:bg-[#DC2626] text-white text-sm font-bold shadow-lg shadow-red-500/25 transition-colors flex items-center gap-2 disabled:opacity-60">
-          {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Enregistrement...</> : <><Save className="w-4 h-4" /> Enregistrer</>}
+          {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("settings_saving")}</> : <><Save className="w-4 h-4" /> {t("settings_save")}</>}
         </button>
       </div>
 
       <div className="space-y-8">
         <section>
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Langue</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">{t("settings_language")}</p>
           <LanguageSelector value={form.language} onChange={setLanguage} />
         </section>
 
         <section>
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Compte</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">{t("settings_account")}</p>
           <div className="space-y-4">
             <AccountInfoCard form={form} set={set} email={user?.email} />
             <ChangePasswordCard email={user?.email} />
@@ -73,8 +75,8 @@ export default function BrandSettingsPage() {
           <button onClick={() => base44.auth.logout("/")} className="w-full flex items-center gap-3 px-6 py-4 rounded-3xl bg-white ring-1 ring-red-100 text-[#DC2626] font-bold hover:bg-red-50 transition-colors">
             <LogOut className="w-5 h-5" />
             <div className="text-left">
-              <p>Se déconnecter</p>
-              <p className="text-xs font-normal text-red-400">Se déconnecter de votre compte</p>
+              <p>{t("settings_logout")}</p>
+              <p className="text-xs font-normal text-red-400">{t("settings_logout_sub")}</p>
             </div>
           </button>
         </section>

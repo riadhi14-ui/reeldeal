@@ -2,20 +2,22 @@ import React, { useState, useEffect, useCallback, createContext, useContext } fr
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
+import { useLang } from "@/i18n/LanguageContext";
 import { LayoutDashboard, Briefcase, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const BrandContext = createContext(null);
 export const useBrand = () => useContext(BrandContext);
 
 const navItems = [
-  { to: "/brand", label: "Tableau de bord", icon: LayoutDashboard, end: true },
-  { to: "/brand/campaigns", label: "Mes campagnes", icon: Briefcase },
-  { to: "/brand/submissions", label: "Soumissions", icon: Video },
-  { to: "/brand/messages", label: "Messages", icon: MessageCircle },
+  { to: "/brand", labelKey: "nav_dashboard", icon: LayoutDashboard, end: true },
+  { to: "/brand/campaigns", labelKey: "nav_my_campaigns", icon: Briefcase },
+  { to: "/brand/submissions", labelKey: "nav_submissions", icon: Video },
+  { to: "/brand/messages", labelKey: "nav_messages", icon: MessageCircle },
 ];
 
 export default function BrandLayout() {
   const navigate = useNavigate();
+  const { t, setLang } = useLang();
   const [user, setUser] = useState(null);
   const [campaigns, setCampaigns] = useState([]);
   const [submissions, setSubmissions] = useState([]);
@@ -40,6 +42,7 @@ export default function BrandLayout() {
       try { await base44.auth.updateMe({ account_type: pending }); me.account_type = pending; } catch { /* ignore */ }
     }
     if (me.account_type !== "brand") { navigate("/dashboard", { replace: true }); return; }
+    if (me.language) setLang(me.language);
     setUser(me);
     const myCampaigns = await base44.entities.Campaign.filter({ created_by_id: me.id }, "-created_date");
     setCampaigns(myCampaigns);
@@ -49,7 +52,7 @@ export default function BrandLayout() {
       : [];
     setSubmissions(subs);
     setLoading(false);
-  }, [navigate]);
+  }, [navigate, setLang]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -93,12 +96,12 @@ export default function BrandLayout() {
             <span className="w-9 h-9 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold overflow-hidden">{avatarUrl ? <img src={avatarUrl} alt={name} className="w-full h-full object-cover" /> : avatarEmoji ? <span className="text-lg leading-none">{avatarEmoji}</span> : initial}</span>
             <div className="min-w-0">
               <p className="text-sm font-bold truncate">{name}</p>
-              <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">Marque</p>
+              <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">{t("role_brand")}</p>
             </div>
           </div>
 
           <nav className="flex-1 p-3 space-y-1">
-            {navItems.map(({ to, label, icon: Icon, end }) => (
+            {navItems.map(({ to, labelKey, icon: Icon, end }) => (
               <NavLink
                 key={to}
                 to={to}
@@ -108,7 +111,7 @@ export default function BrandLayout() {
                 }
               >
                 <Icon className="w-4 h-4 shrink-0" />
-                <span className="flex-1">{label}</span>
+                <span className="flex-1">{t(labelKey)}</span>
                 {counts[to] > 0 && (
                   <span className="text-[10px] font-bold bg-slate-100 text-slate-500 rounded-full px-2 py-0.5">{counts[to]}</span>
                 )}
@@ -118,23 +121,23 @@ export default function BrandLayout() {
 
           <div className="p-3 border-t border-slate-100 space-y-1">
             <NavLink to="/brand/settings" className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${isActive ? "bg-red-50 text-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
-              <Settings className="w-4 h-4" /> Réglages
+              <Settings className="w-4 h-4" /> {t("nav_settings")}
             </NavLink>
             <NavLink to="/profile" className="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <UserRound className="w-4 h-4" /> Mon profil
+              <UserRound className="w-4 h-4" /> {t("nav_profile")}
             </NavLink>
             <button onClick={() => navigate("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-              <Home className="w-4 h-4" /> Retour à l'accueil
+              <Home className="w-4 h-4" /> {t("nav_back_home")}
             </button>
             <button onClick={() => base44.auth.logout("/")} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold text-[#DC2626] hover:bg-red-50 transition-colors">
-              <LogOut className="w-4 h-4" /> Déconnexion
+              <LogOut className="w-4 h-4" /> {t("nav_logout")}
             </button>
           </div>
         </aside>
 
         {/* Mobile nav */}
         <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-100 flex justify-around px-2 py-2">
-          {navItems.map(({ to, label, icon: Icon, end }) => (
+          {navItems.map(({ to, labelKey, icon: Icon, end }) => (
             <NavLink
               key={to}
               to={to}
@@ -142,7 +145,7 @@ export default function BrandLayout() {
               className={({ isActive }) => `flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[10px] font-semibold ${isActive ? "text-[#DC2626]" : "text-slate-400"}`}
             >
               <Icon className="w-5 h-5" />
-              {label.split(" ")[0]}
+              {t(labelKey).split(" ")[0]}
             </NavLink>
           ))}
           <NavLink
@@ -150,7 +153,7 @@ export default function BrandLayout() {
             className={({ isActive }) => `flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[10px] font-semibold ${isActive ? "text-[#DC2626]" : "text-slate-400"}`}
           >
             <Settings className="w-5 h-5" />
-            Réglages
+            {t("nav_settings")}
           </NavLink>
         </div>
 
