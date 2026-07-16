@@ -9,9 +9,9 @@ const FALLBACK = [
 export default function ExampleVideos({ campaign }) {
   const examples = campaign.example_videos?.length ? campaign.example_videos : (campaign.examples?.length ? campaign.examples : FALLBACK);
   return (
-    <div className="mt-14 max-w-3xl">
+    <div className="mt-14 max-w-5xl">
       <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Vidéos exemplaires</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {examples.map((example, index) => typeof example === "string" ? (
           <video key={example} src={example} controls preload="metadata" className="aspect-[9/16] w-full rounded-2xl bg-slate-900 object-cover ring-1 ring-slate-100" aria-label={`Vidéo exemple ${index + 1}`} />
         ) : (
