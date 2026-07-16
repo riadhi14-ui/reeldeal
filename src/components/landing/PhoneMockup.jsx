@@ -19,8 +19,8 @@ export default function PhoneMockup() {
           </div>
           {/* Earned badge */}
           <div className="absolute top-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#EF4444] text-white rounded-full px-4 py-1.5 text-xs font-bold shadow-lg">
-            <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[9px]">$</span>
-            211 $ <span className="font-normal opacity-80 text-[10px]">gagnés</span>
+            <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[9px]">€</span>
+            211 € <span className="font-normal opacity-80 text-[10px]">gagnés</span>
           </div>
           {/* Right rail */}
           <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 text-white">
@@ -53,7 +53,7 @@ export default function PhoneMockup() {
         </div>
         <p className="text-[10px] tracking-widest opacity-80 mt-4 font-mono">•••• •••• •••• 4829</p>
         <div className="flex items-end justify-between mt-1">
-          <p className="text-2xl font-extrabold">$2,347</p>
+          <p className="text-2xl font-extrabold">2 347 €</p>
           <p className="text-[9px] opacity-75 mb-1">gagnés</p>
         </div>
       </div>

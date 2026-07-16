@@ -26,8 +26,8 @@ export default function HowItWorks() {
           <motion.div {...fadeUp} className="bg-white rounded-3xl p-8 shadow-sm ring-1 ring-slate-100 flex flex-col">
             <div className="space-y-3 mb-8">
               {[
-                { img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=400&fit=crop", name: "Game Launch Hype", brand: "Riot Games", price: "80,00 $" },
-                { img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop", name: "Streetwear Season", brand: "Supreme", price: "65,00 $" },
+                { img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=400&fit=crop", name: "Game Launch Hype", brand: "Riot Games", price: "80,00 €" },
+                { img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop", name: "Streetwear Season", brand: "Supreme", price: "65,00 €" },
               ].map((c) => (
                 <div key={c.name} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 hover:bg-red-50 transition-colors">
                   <img src={c.img} alt={c.name} className="w-12 h-12 rounded-xl object-cover" />
@@ -72,17 +72,17 @@ export default function HowItWorks() {
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs opacity-60">ReelDeal</p>
-                  <p className="text-xl font-extrabold mt-1">12 480,00 $ <span className="text-xs font-normal opacity-60">gagnés</span></p>
+                  <p className="text-xl font-extrabold mt-1">12 480,00 € <span className="text-xs font-normal opacity-60">gagnés</span></p>
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] opacity-60">En attente</p>
-                  <p className="text-sm font-bold text-[#F87171]">482,50 $</p>
+                  <p className="text-sm font-bold text-[#F87171]">482,50 €</p>
                 </div>
               </div>
               <div className="flex justify-between items-center mt-4 text-xs opacity-70 font-mono">
                 <span>•••• 4829</span><span>Sarah C.</span>
               </div>
-              <p className="text-3xl font-extrabold mt-3 text-[#F87171]">7 496 $</p>
+              <p className="text-3xl font-extrabold mt-3 text-[#F87171]">7 496 €</p>
               <div className="mt-3 h-10 rounded-xl bg-[#EF4444] text-white text-sm font-bold flex items-center justify-center">Retirer mes gains</div>
             </div>
             <div className="mt-auto">
