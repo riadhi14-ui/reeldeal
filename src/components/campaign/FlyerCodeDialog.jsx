@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Ticket, Check, Copy, ExternalLink, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
@@ -27,8 +27,15 @@ export default function FlyerCodeDialog() {
   const [accepted, setAccepted] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [existingCode, setExistingCode] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    base44.auth.me()
+      .then((me) => { if (me?.flyer_code) setExistingCode(me.flyer_code); })
+      .catch(() => {});
+  }, []);
 
   const generate = async () => {
     const clean = name.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -38,7 +45,9 @@ export default function FlyerCodeDialog() {
     setError("");
     try {
       await base44.functions.invoke("syncToFlyercash", { nom: name.trim(), code_unique: newCode });
+      await base44.auth.updateMe({ flyer_code: newCode });
       setCode(newCode);
+      setExistingCode(newCode);
     } catch {
       setError("Une erreur est survenue lors de la création du code. Réessaie dans un instant.");
     } finally {
@@ -54,22 +63,26 @@ export default function FlyerCodeDialog() {
     setError("");
   };
 
+  // Code shown in the result view: either just-generated or the one saved on the account.
+  const shownCode = code || existingCode;
+  const hasCode = !!existingCode;
+
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => { if (hasCode) setCode(existingCode); setOpen(true); }}
         className="mt-4 inline-flex h-14 px-10 items-center gap-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-xl transition-all hover:scale-[1.03]"
       >
-        <Ticket className="w-5 h-5" /> Créer mon code unique
+        <Ticket className="w-5 h-5" /> {hasCode ? "Voir mon code unique" : "Créer mon code unique"}
       </button>
 
       <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) reset(); }}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-xl font-extrabold">Créer mon code unique</DialogTitle>
+            <DialogTitle className="text-xl font-extrabold">{shownCode ? "Mon code unique" : "Créer mon code unique"}</DialogTitle>
           </DialogHeader>
 
-          {!code ? (
+          {!shownCode ? (
             <div className="space-y-5">
               <button
                 onClick={() => setAccepted((a) => !a)}
@@ -109,9 +122,9 @@ export default function FlyerCodeDialog() {
                 <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Ton code unique</p>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-12 px-4 rounded-2xl bg-red-50 ring-1 ring-[#EF4444] flex items-center font-mono font-extrabold text-lg text-[#DC2626] truncate">
-                    {code}
+                    {shownCode}
                   </div>
-                  <CopyButton value={code} />
+                  <CopyButton value={shownCode} />
                 </div>
               </div>
 
