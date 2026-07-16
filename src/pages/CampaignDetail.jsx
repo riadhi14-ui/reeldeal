@@ -7,6 +7,7 @@ import Footer from "@/components/landing/Footer";
 import JoinedActions from "@/components/campaign/JoinedActions";
 import BrandCampaignControls from "@/components/campaign/BrandCampaignControls";
 import ExampleVideos from "@/components/campaign/ExampleVideos";
+import FlyerCodeDialog from "@/components/campaign/FlyerCodeDialog";
 import { getCampaign } from "@/lib/campaignsData";
 
 export default function CampaignDetail() {
@@ -23,6 +24,7 @@ export default function CampaignDetail() {
 
   const isOwner = me && campaign && (campaign.created_by_id === me.id);
   const isBrand = me?.account_type === "brand";
+  const isFlyerCash = campaign && /flyer/i.test(`${campaign.brand || ""} ${campaign.name || ""}`);
 
   useEffect(() => {
     if (!staticCampaign) {
@@ -157,6 +159,12 @@ export default function CampaignDetail() {
                 >
                   {joining ? <><Loader2 className="w-5 h-5 animate-spin" /> Inscription...</> : "Rejoindre cette campagne →"}
                 </button>
+              )}
+
+              {isFlyerCash && !isOwner && !isBrand && (
+                <div className="mt-4">
+                  <FlyerCodeDialog />
+                </div>
               )}
             </div>
           </div>
