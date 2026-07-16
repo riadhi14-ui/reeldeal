@@ -68,7 +68,7 @@ export default function Campaigns() {
                     <p className="font-bold text-slate-900 truncate">{c.name}</p>
                     <p className="text-sm text-slate-400 mt-0.5">{c.brand}</p>
                     <div className="mt-3 inline-flex items-baseline gap-1.5 bg-red-50 text-[#DC2626] rounded-full px-3 py-1.5">
-                      <span className="font-extrabold font-mono">${c.rate.toFixed(2)}</span>
+                      <span className="font-extrabold font-mono">{c.rate} €</span>
                       <span className="text-[10px] font-semibold">/1K vues</span>
                     </div>
                   </div>

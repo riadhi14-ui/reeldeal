@@ -136,7 +136,7 @@ export default function CampaignDetail() {
               <p className="mt-1 text-lg text-slate-400 font-semibold">{campaign.brand}</p>
 
               <div className="mt-6 inline-flex items-baseline gap-2 bg-red-50 text-[#DC2626] rounded-2xl px-5 py-3">
-                <span className="text-3xl font-extrabold font-mono">${campaign.rate.toFixed(2)}</span>
+                <span className="text-3xl font-extrabold font-mono">{campaign.rate} €</span>
                 <span className="text-sm font-semibold">/1K vues</span>
               </div>
 
