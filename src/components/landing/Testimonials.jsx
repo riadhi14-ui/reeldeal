@@ -6,19 +6,19 @@ const stories = [
     name: "Sarah C.",
     img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=face",
     quote: "« Je me suis inscrite sans grande attente et j'ai décroché ma première campagne en une semaine. Tout est simple : filmer, publier, être payée. »",
-    earned: "840 $ le premier mois",
+    earned: "840 € le premier mois",
   },
   {
     name: "Marcus J.",
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face",
-    quote: "« En seulement 30 jours, j'ai gagné 1 250 $ de bénéfices sans aucun processus compliqué ni négociation. »",
-    earned: "1 250 $ nets en 30 jours",
+    quote: "« En seulement 30 jours, j'ai gagné 1 250 € de bénéfices sans aucun processus compliqué ni négociation. »",
+    earned: "1 250 € nets en 30 jours",
   },
   {
     name: "Emma R.",
     img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face",
     quote: "« L'absence de minimum d'abonnés m'a convaincue. J'ai commencé avec 2K abonnés et j'ai quand même été acceptée. Un vrai game changer. »",
-    earned: "620 $ gagnés depuis l'inscription",
+    earned: "620 € gagnés depuis l'inscription",
   },
 ];
 
