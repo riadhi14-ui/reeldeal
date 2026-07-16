@@ -9,7 +9,7 @@ const platforms = [
   { name: "Instagram Reels", rate: 0.2 },
 ];
 
-const fmt = (n) => Math.round(n).toLocaleString("fr-FR") + " $";
+const fmt = (n) => Math.round(n).toLocaleString("fr-FR") + " €";
 const fmtViews = (n) => (n >= 1000000 ? (n / 1000000).toFixed(1) + "M" : n >= 1000 ? Math.round(n / 1000) + "K" : n);
 
 export default function Estimator() {
@@ -63,7 +63,7 @@ export default function Estimator() {
               <div className="rounded-2xl bg-red-50 ring-2 ring-[#EF4444] p-4 flex items-center justify-between">
                 <div>
                   <p className="font-bold text-slate-900">ReelDeal</p>
-                  <p className="text-xs text-[#DC2626] font-mono">{PROMOTE_RATE.toFixed(2)} $/1K vues</p>
+                  <p className="text-xs text-[#DC2626] font-mono">{PROMOTE_RATE.toFixed(2)} €/1K vues</p>
                 </div>
                 <p className="text-2xl font-extrabold text-[#DC2626] font-mono">{fmt(monthly)}<span className="text-xs font-semibold text-slate-400">/mois</span></p>
               </div>
@@ -71,7 +71,7 @@ export default function Estimator() {
                 <div key={p.name} className="rounded-2xl bg-slate-50 p-4 flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-slate-600">{p.name}</p>
-                    <p className="text-xs text-slate-400 font-mono">{p.rate.toFixed(2)} $/1K vues</p>
+                    <p className="text-xs text-slate-400 font-mono">{p.rate.toFixed(2)} €/1K vues</p>
                   </div>
                   <p className="text-xl font-bold text-slate-400 font-mono">{fmt((views / 1000) * p.rate)}<span className="text-xs">/mois</span></p>
                 </div>

@@ -64,7 +64,7 @@ export default function AdminCampaigns() {
                 <div className="flex-1 min-w-0">
                   <p className="font-bold truncate">{c.name}</p>
                   <p className="text-sm text-slate-400">{c.brand} · {c.category}</p>
-                  <p className="text-xs font-extrabold text-[#DC2626] font-mono mt-1">${c.rate?.toFixed(2)}/1K vues · {c.budget}</p>
+                  <p className="text-xs font-extrabold text-[#DC2626] font-mono mt-1">{c.rate?.toFixed(2)} €/1K vues · {c.budget}</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                   <button onClick={() => decide(c.id, "active")} disabled={busyId === c.id} className="inline-flex h-10 px-4 items-center justify-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold disabled:opacity-50">

@@ -26,7 +26,7 @@ export default function MyCampaigns({ participations }) {
           <div className="flex-1 min-w-0">
             <p className="font-bold text-slate-900 truncate">{p.campaign_name}</p>
             <p className="text-xs text-slate-400">{p.brand}</p>
-            <p className="mt-1 text-xs font-extrabold text-[#DC2626] font-mono">{p.rate?.toFixed(2)} $/1K vues</p>
+            <p className="mt-1 text-xs font-extrabold text-[#DC2626] font-mono">{p.rate?.toFixed(2)} €/1K vues</p>
           </div>
         </Link>
       ))}

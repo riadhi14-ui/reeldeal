@@ -3,7 +3,7 @@ import { Wallet, Clock, Eye, Video } from "lucide-react";
 
 export default function StatsCards({ stats }) {
   const cards = [
-    { icon: Wallet, label: "Gains totaux", value: stats.total.toLocaleString("fr-FR") + " $", accent: true },
+    { icon: Wallet, label: "Gains totaux", value: stats.total.toLocaleString("fr-FR") + " €", accent: true },
     { icon: Clock, label: "En attente", value: stats.pending.toLocaleString("fr-FR") + " $" },
     { icon: Eye, label: "Vues totales", value: stats.views.toLocaleString("fr-FR") },
     { icon: Video, label: "Vidéos soumises", value: stats.videos },

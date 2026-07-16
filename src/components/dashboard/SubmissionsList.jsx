@@ -35,7 +35,7 @@ export default function SubmissionsList({ submissions }) {
               <p className="text-[10px] text-slate-400">vues</p>
             </div>
             <div className="text-right w-24">
-              <p className="text-sm font-extrabold text-[#DC2626] font-mono">{(s.earnings || 0).toLocaleString("fr-FR")} $</p>
+              <p className="text-sm font-extrabold text-[#DC2626] font-mono">{(s.earnings || 0).toLocaleString("fr-FR")} €</p>
               <p className="text-[10px] text-slate-400">gains</p>
             </div>
             <span className={`text-[11px] font-bold px-3 py-1.5 rounded-full ${st.cls}`}>{st.label}</span>

@@ -37,11 +37,11 @@ export default function EstimatorBrand() {
           >
             <div className="flex justify-between items-baseline mb-6">
               <p className="text-sm font-bold text-slate-500 uppercase tracking-wide">Budget de campagne</p>
-              <p className="text-3xl font-extrabold text-slate-900 font-mono">{fmt(budget)} $</p>
+              <p className="text-3xl font-extrabold text-slate-900 font-mono">{fmt(budget)} €</p>
             </div>
             <Slider value={[budget]} min={500} max={50000} step={500} onValueChange={([v]) => setBudget(v)} className="[&_[role=slider]]:h-6 [&_[role=slider]]:w-6 [&_[role=slider]]:border-[#EF4444]" />
             <div className="flex justify-between text-xs text-slate-400 font-mono mt-3">
-              <span>500 $</span><span>25K $</span><span>50K $</span>
+              <span>500 €</span><span>25K €</span><span>50K €</span>
             </div>
 
             <div className="mt-10 rounded-2xl bg-gradient-to-br from-[#F87171] to-[#DC2626] text-white p-8 text-center">
@@ -49,7 +49,7 @@ export default function EstimatorBrand() {
               <p className="text-5xl font-extrabold mt-2">{fmtViews(views)}</p>
               <p className="mt-2 text-sm opacity-80">≈ {videos} vidéos de créateurs</p>
             </div>
-            <p className="text-xs text-slate-400 mt-4 text-center">*Basé sur un taux moyen de {REELDEAL_RATE.toFixed(2)} $/1K vues. Les résultats réels peuvent varier.</p>
+            <p className="text-xs text-slate-400 mt-4 text-center">*Basé sur un taux moyen de {REELDEAL_RATE.toFixed(2)} €/1K vues. Les résultats réels peuvent varier.</p>
           </motion.div>
 
           {/* Panneau comparaison */}
@@ -64,7 +64,7 @@ export default function EstimatorBrand() {
               <div className="rounded-2xl bg-red-50 ring-2 ring-[#EF4444] p-4 flex items-center justify-between">
                 <div>
                   <p className="font-bold text-slate-900">ReelDeal</p>
-                  <p className="text-xs text-[#DC2626] font-mono">{REELDEAL_RATE.toFixed(2)} $/1K vues</p>
+                  <p className="text-xs text-[#DC2626] font-mono">{REELDEAL_RATE.toFixed(2)} €/1K vues</p>
                 </div>
                 <p className="text-2xl font-extrabold text-[#DC2626] font-mono">{fmtViews(views)}<span className="text-xs font-semibold text-slate-400"> vues</span></p>
               </div>
@@ -72,7 +72,7 @@ export default function EstimatorBrand() {
                 <div key={p.name} className="rounded-2xl bg-slate-50 p-4 flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-slate-600">{p.name}</p>
-                    <p className="text-xs text-slate-400 font-mono">{p.rate.toFixed(2)} $/1K vues</p>
+                    <p className="text-xs text-slate-400 font-mono">{p.rate.toFixed(2)} €/1K vues</p>
                   </div>
                   <p className="text-xl font-bold text-slate-400 font-mono">{fmtViews((budget / p.rate) * 1000)}<span className="text-xs"> vues</span></p>
                 </div>

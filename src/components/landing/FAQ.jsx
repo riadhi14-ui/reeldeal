@@ -36,7 +36,7 @@ const brandFaqs = [
   },
   {
     q: "Combien coûte une campagne ?",
-    a: "Vous fixez librement votre budget total et votre taux par 1 000 vues (généralement entre 1 et 3 $). Vous ne payez que les vues réellement générées par les vidéos que vous avez validées — aucun frais fixe, aucun engagement.",
+    a: "Vous fixez librement votre budget total et votre taux par 1 000 vues (généralement entre 1 et 3 €). Vous ne payez que les vues réellement générées par les vidéos que vous avez validées — aucun frais fixe, aucun engagement.",
   },
   {
     q: "Comment sont sélectionnés les créateurs ?",

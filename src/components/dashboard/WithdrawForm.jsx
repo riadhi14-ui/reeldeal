@@ -25,7 +25,7 @@ export default function WithdrawForm({ available, onWithdrawn }) {
     setError("");
     const value = parseFloat(amount);
     if (!value || value <= 0) return setError("Saisis un montant valide.");
-    if (value > available) return setError(`Montant supérieur au solde disponible ($${available.toFixed(2)}).`);
+    if (value > available) return setError(`Montant supérieur au solde disponible (${available.toFixed(2)} €).`);
     if (!destination.trim()) return setError("Renseigne une adresse de destination.");
 
     setLoading(true);
@@ -59,9 +59,9 @@ export default function WithdrawForm({ available, onWithdrawn }) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="amount">Montant ($ USD)</Label>
+          <Label htmlFor="amount">Montant (€)</Label>
           <Input id="amount" type="number" min="1" step="0.01" placeholder="100" value={amount} onChange={(e) => setAmount(e.target.value)} />
-          <p className="text-xs text-slate-400">Solde max disponible : ${available.toFixed(2)}</p>
+          <p className="text-xs text-slate-400">Solde max disponible : {available.toFixed(2)} €</p>
         </div>
 
         <div className="space-y-2">
@@ -70,7 +70,7 @@ export default function WithdrawForm({ available, onWithdrawn }) {
         </div>
 
         <button type="submit" disabled={loading || available <= 0} className="w-full h-12 rounded-full bg-[#F59E0B] hover:bg-[#D97706] text-white text-sm font-bold shadow-lg shadow-amber-500/25 transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
-          {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Traitement...</> : <><Banknote className="w-4 h-4" /> Demander le retrait{amount ? ` ($${parseFloat(amount || 0).toFixed(2)} USD)` : ""}</>}
+          {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Traitement...</> : <><Banknote className="w-4 h-4" /> Demander le retrait{amount ? ` (${parseFloat(amount || 0).toFixed(2)} €)` : ""}</>}
         </button>
       </form>
     </div>

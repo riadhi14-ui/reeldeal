@@ -3,9 +3,9 @@ import { Wallet, CheckCircle2, Clock, Eye } from "lucide-react";
 
 export default function EarningsCards({ available, withdrawn, pending, views }) {
   const cards = [
-    { icon: Wallet, label: "Solde retirable", value: `$${available.toFixed(2)}`, hint: "Paiement instantané", accent: true },
-    { icon: CheckCircle2, label: "Déjà retiré", value: `$${withdrawn.toFixed(2)}`, hint: "Transferts réussis" },
-    { icon: Clock, label: "En attente", value: `$${pending.toFixed(2)}`, hint: "En cours de validation" },
+    { icon: Wallet, label: "Solde retirable", value: `${available.toFixed(2)} €`, hint: "Paiement instantané", accent: true },
+    { icon: CheckCircle2, label: "Déjà retiré", value: `${withdrawn.toFixed(2)} €`, hint: "Transferts réussis" },
+    { icon: Clock, label: "En attente", value: `${pending.toFixed(2)} €`, hint: "En cours de validation" },
     { icon: Eye, label: "Vues totales générées", value: views.toLocaleString("fr-FR"), hint: "Mise à jour en direct" },
   ];
 

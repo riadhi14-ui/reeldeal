@@ -42,7 +42,7 @@ export default function WithdrawalHistory({ withdrawals }) {
                     <td className="py-3 pr-4 font-semibold text-slate-900 whitespace-nowrap">{w.method}</td>
                     <td className="py-3 pr-4 text-slate-500 font-mono text-xs">{maskDestination(w.destination)}</td>
                     <td className="py-3 pr-4"><span className={`text-[11px] font-bold px-3 py-1.5 rounded-full ${st.cls}`}>{st.label}</span></td>
-                    <td className="py-3 text-right font-extrabold text-slate-900 font-mono whitespace-nowrap">${w.amount.toFixed(2)}</td>
+                    <td className="py-3 text-right font-extrabold text-slate-900 font-mono whitespace-nowrap">{w.amount.toFixed(2)} €</td>
                   </tr>
                 );
               })}

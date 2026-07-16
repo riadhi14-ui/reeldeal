@@ -28,7 +28,7 @@ export default function AvailableCampaigns({ participations, campaigns }) {
           <div className="flex-1 min-w-0">
             <p className="font-bold text-slate-900 truncate">{c.name}</p>
             <p className="text-xs text-slate-400">{c.brand}</p>
-            <p className="mt-1 text-xs font-extrabold text-[#DC2626] font-mono">{c.rate?.toFixed(2)} $/1K vues</p>
+            <p className="mt-1 text-xs font-extrabold text-[#DC2626] font-mono">{c.rate?.toFixed(2)} €/1K vues</p>
           </div>
           <span className="shrink-0 w-9 h-9 rounded-full bg-red-50 text-[#DC2626] flex items-center justify-center group-hover:bg-[#EF4444] group-hover:text-white transition-colors">
             <Plus className="w-4 h-4" />

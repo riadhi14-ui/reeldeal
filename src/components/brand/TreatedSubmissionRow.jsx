@@ -65,7 +65,7 @@ export default function TreatedSubmissionRow({ submission, rate, onUpdated }) {
             <p className="text-[10px] text-slate-400">vues</p>
           </div>
           <div className="text-right w-24">
-            <p className="text-sm font-extrabold text-[#DC2626] font-mono">${(submission.earnings || 0).toFixed(2)}</p>
+            <p className="text-sm font-extrabold text-[#DC2626] font-mono">{(submission.earnings || 0).toFixed(2)} €</p>
             <p className="text-[10px] text-slate-400">gains</p>
           </div>
           {isApproved && (
