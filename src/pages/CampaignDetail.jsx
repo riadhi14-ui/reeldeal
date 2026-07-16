@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, XCircle, Wallet, Video, Share2, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Wallet, Video, Share2, Loader2, ArrowRight, PlayCircle } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { base44 } from "@/api/base44Client";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -21,6 +22,7 @@ export default function CampaignDetail() {
   const [joined, setJoined] = useState(false);
   const [justJoined, setJustJoined] = useState(false);
   const [me, setMe] = useState(null);
+  const [showExplainer, setShowExplainer] = useState(false);
 
   const isOwner = me && campaign && (campaign.created_by_id === me.id);
   const isBrand = me?.account_type === "brand";
@@ -105,10 +107,26 @@ export default function CampaignDetail() {
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div className="relative rounded-3xl overflow-hidden ring-1 ring-slate-100 shadow-lg">
-              <img src={campaign.img} alt={campaign.name} className="w-full aspect-square object-cover" />
-              {campaign.rank && (
-                <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top rémunération</span>
+            <div>
+              <div className="relative rounded-3xl overflow-hidden ring-1 ring-slate-100 shadow-lg">
+                <img src={campaign.img} alt={campaign.name} className="w-full aspect-square object-cover" />
+                {campaign.rank && (
+                  <span className="absolute top-5 left-5 bg-white/90 backdrop-blur text-slate-900 text-sm font-extrabold px-3 py-1.5 rounded-full shadow">#{campaign.rank} Top rémunération</span>
+                )}
+                {campaign.explainer_video && (
+                  <button
+                    onClick={() => setShowExplainer(true)}
+                    className="absolute top-1/2 right-5 -translate-y-1/2 w-12 h-12 rounded-full bg-white/95 text-[#DC2626] shadow-xl flex items-center justify-center hover:scale-110 transition-transform"
+                    aria-label="Voir la vidéo explicative"
+                  >
+                    <ArrowRight className="w-6 h-6" />
+                  </button>
+                )}
+              </div>
+              {campaign.explainer_video && (
+                <button onClick={() => setShowExplainer(true)} className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-[#DC2626] hover:text-[#EF4444]">
+                  <PlayCircle className="w-5 h-5" /> Voir la vidéo explicative
+                </button>
               )}
             </div>
 
@@ -180,6 +198,14 @@ export default function CampaignDetail() {
           <ExampleVideos campaign={campaign} />
         </div>
       </main>
+
+      {campaign.explainer_video && (
+        <Dialog open={showExplainer} onOpenChange={setShowExplainer}>
+          <DialogContent className="sm:max-w-sm p-0 overflow-hidden bg-black border-0">
+            <video src={campaign.explainer_video} controls autoPlay className="w-full aspect-[9/16] object-contain bg-black" />
+          </DialogContent>
+        </Dialog>
+      )}
 
       <Footer />
     </div>
