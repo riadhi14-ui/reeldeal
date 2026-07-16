@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Ticket, Check, Copy, ExternalLink } from "lucide-react";
+import { Ticket, Check, Copy, ExternalLink, Loader2 } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 const AFFILIATE_LINK = "https://flyercash.io/ugc";
 
@@ -26,17 +27,31 @@ export default function FlyerCodeDialog() {
   const [accepted, setAccepted] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-  const generate = () => {
+  const generate = async () => {
     const clean = name.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
     if (!clean) return;
-    setCode(`FLYER-${clean}-2026`);
+    const newCode = `FLYER-${clean}-2026`;
+    setSaving(true);
+    setError("");
+    try {
+      await base44.functions.invoke("syncToFlyercash", { nom: name.trim(), code_unique: newCode });
+      setCode(newCode);
+    } catch {
+      setError("Une erreur est survenue lors de la création du code. Réessaie dans un instant.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const reset = () => {
     setAccepted(false);
     setName("");
     setCode("");
+    setSaving(false);
+    setError("");
   };
 
   return (
@@ -78,12 +93,14 @@ export default function FlyerCodeDialog() {
                 />
               </div>
 
+              {error && <p className="text-sm font-semibold text-[#DC2626]">{error}</p>}
+
               <button
                 onClick={generate}
-                disabled={!accepted || !name.trim()}
-                className="w-full h-12 rounded-2xl bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled={!accepted || !name.trim() || saving}
+                className="w-full h-12 rounded-2xl bg-[#EF4444] hover:bg-[#DC2626] text-white font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
               >
-                Générer mon code
+                {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Création...</> : "Générer mon code"}
               </button>
             </div>
           ) : (
