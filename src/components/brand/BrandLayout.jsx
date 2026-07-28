@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
 import { useLang } from "@/i18n/LanguageContext";
+import NotificationBell from "@/components/notifications/NotificationBell";
 import { LayoutDashboard, Briefcase, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
 
 const BrandContext = createContext(null);
@@ -94,10 +95,11 @@ export default function BrandLayout() {
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
             <span className="w-9 h-9 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold overflow-hidden">{avatarUrl ? <img src={avatarUrl} alt={name} className="w-full h-full object-cover" /> : avatarEmoji ? <span className="text-lg leading-none">{avatarEmoji}</span> : initial}</span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p className="text-sm font-bold truncate">{name}</p>
               <p className="text-[10px] font-bold text-[#DC2626] uppercase tracking-widest">{t("role_brand")}</p>
             </div>
+            <NotificationBell userId={user?.id} />
           </div>
 
           <nav className="flex-1 p-3 space-y-1">
