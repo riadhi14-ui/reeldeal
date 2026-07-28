@@ -52,7 +52,11 @@ export default function BrandLayout() {
     setLoading(false);
   }, [navigate, setLang]);
 
-  useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => {
+    loadData();
+    const unsubscribe = base44.entities.Submission.subscribe(() => loadData());
+    return unsubscribe;
+  }, [loadData]);
 
   const stats = {
     views: submissions.reduce((sum, s) => sum + (s.views || 0), 0),

@@ -3,7 +3,6 @@ import { ExternalLink } from "lucide-react";
 import { safeUrl } from "@/lib/utils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import VideoViewHistory from "@/components/dashboard/VideoViewHistory";
 
 const statusConfig = {
   pending: { label: "En attente", cls: "bg-amber-50 text-amber-600" },
@@ -11,7 +10,7 @@ const statusConfig = {
   rejected: { label: "Refusée", cls: "bg-red-50 text-red-600" },
 };
 
-export default function SubmissionsList({ submissions, snapshotsBySubmission }) {
+export default function SubmissionsList({ submissions }) {
   if (submissions.length === 0) {
     return (
       <div className="rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm p-10 text-center">
@@ -47,7 +46,6 @@ export default function SubmissionsList({ submissions, snapshotsBySubmission }) 
               <p className="text-[10px] text-slate-400">gains</p>
             </div>
             <span className={`text-[11px] font-bold px-3 py-1.5 rounded-full ${st.cls}`}>{st.label}</span>
-            <VideoViewHistory snapshots={snapshotsBySubmission[s.id] || []} />
           </div>
         );
       })}

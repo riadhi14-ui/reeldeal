@@ -64,7 +64,11 @@ export default function DashboardLayout() {
     setLoading(false);
   }, [navigate, setLang]);
 
-  useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => {
+    loadData();
+    const unsubscribe = base44.entities.Submission.subscribe(() => loadData());
+    return unsubscribe;
+  }, [loadData]);
 
   if (!user && !loading) return null;
 

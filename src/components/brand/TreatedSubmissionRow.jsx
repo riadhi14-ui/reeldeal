@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { base44 } from "@/api/base44Client";
 import { ExternalLink, Pencil, Check, X, Loader2 } from "lucide-react";
-import { updateSubmissionViews } from "@/lib/viewTracking";
 import { Input } from "@/components/ui/input";
 import { safeUrl } from "@/lib/utils";
 
@@ -20,7 +20,10 @@ export default function TreatedSubmissionRow({ submission, rate, onUpdated }) {
   const save = async () => {
     setSaving(true);
     const v = Number(views) || 0;
-    await updateSubmissionViews(submission, v, rate);
+    await base44.entities.Submission.update(submission.id, {
+      views: v,
+      earnings: Math.round((v / 1000) * rate * 100) / 100,
+    });
     setSaving(false);
     setEditing(false);
     onUpdated();
