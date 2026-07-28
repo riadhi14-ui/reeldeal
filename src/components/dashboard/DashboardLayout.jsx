@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { campaigns } from "@/lib/campaignsData";
 import { getAvatarEmoji, getAvatarImageUrl } from "@/lib/avatar";
 import { useLang } from "@/i18n/LanguageContext";
-import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Home, Settings } from "lucide-react";
+import { LayoutDashboard, Briefcase, Compass, Video, MessageCircle, LogOut, UserRound, Home, Settings, Sparkles } from "lucide-react";
 
 const DashboardContext = createContext(null);
 export const useDashboard = () => useContext(DashboardContext);
@@ -26,6 +26,15 @@ export default function DashboardLayout() {
   const [withdrawals, setWithdrawals] = useState([]);
   const [dbCampaigns, setDbCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [demoMode, setDemoMode] = useState(() => localStorage.getItem("creator_demo_mode") === "1");
+
+  const toggleDemoMode = useCallback(() => {
+    setDemoMode((prev) => {
+      const next = !prev;
+      localStorage.setItem("creator_demo_mode", next ? "1" : "0");
+      return next;
+    });
+  }, []);
 
   const loadData = useCallback(async () => {
     const me = await base44.auth.me();
@@ -107,7 +116,7 @@ export default function DashboardLayout() {
   const avatarEmoji = getAvatarEmoji(user);
 
   return (
-    <DashboardContext.Provider value={{ user, participations: livePartsForContext, submissions, withdrawals, stats, allCampaigns, loadData }}>
+    <DashboardContext.Provider value={{ user, participations: livePartsForContext, submissions, withdrawals, stats, allCampaigns, loadData, demoMode, toggleDemoMode }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
@@ -138,6 +147,12 @@ export default function DashboardLayout() {
           </nav>
 
           <div className="p-3 border-t border-slate-100 space-y-1">
+            <button
+              onClick={toggleDemoMode}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${demoMode ? "bg-[#EF4444] text-white hover:bg-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}
+            >
+              <Sparkles className="w-4 h-4" /> {demoMode ? "Quitter le mode démo" : "Activer le mode démo"}
+            </button>
             <NavLink to="/dashboard/settings" className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${isActive ? "bg-red-50 text-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
               <Settings className="w-4 h-4" /> {t("nav_settings")}
             </NavLink>

@@ -1,12 +1,14 @@
 import React from "react";
+import { Sparkles } from "lucide-react";
 import { useDashboard } from "@/components/dashboard/DashboardLayout";
+import { DEMO_STATS, DEMO_CHART, DEMO_WITHDRAWALS } from "@/lib/demoData";
 import EarningsCards from "@/components/dashboard/EarningsCards";
 import WithdrawForm from "@/components/dashboard/WithdrawForm";
 import EarningsChart from "@/components/dashboard/EarningsChart";
 import WithdrawalHistory from "@/components/dashboard/WithdrawalHistory";
 
 export default function DashboardHome() {
-  const { user, submissions, withdrawals, stats, loadData } = useDashboard();
+  const { user, submissions, withdrawals, stats, loadData, demoMode, toggleDemoMode } = useDashboard();
 
   // Cumulative earnings per month for the chart
   const monthLabels = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"];
@@ -22,10 +24,27 @@ export default function DashboardHome() {
     return { label, value: Math.round(value) };
   });
   const hasChartData = chartData.some((d) => d.value > 0);
-  const displayChart = hasChartData ? chartData : monthLabels.map((label) => ({ label, value: 0 }));
+  const realChart = hasChartData ? chartData : monthLabels.map((label) => ({ label, value: 0 }));
+
+  // En mode démo, on remplace uniquement l'affichage par des chiffres fictifs.
+  const displayStats = demoMode ? DEMO_STATS : stats;
+  const displayChart = demoMode ? DEMO_CHART : realChart;
+  const displayWithdrawals = demoMode ? DEMO_WITHDRAWALS : withdrawals;
 
   return (
     <div>
+      {demoMode && (
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-3xl bg-[#EF4444] text-white px-6 py-4 shadow-lg">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-5 h-5 shrink-0" />
+            <p className="text-sm font-bold">Mode démo activé — ces chiffres sont fictifs et ne reflètent pas ton compte réel.</p>
+          </div>
+          <button onClick={toggleDemoMode} className="shrink-0 h-10 px-5 rounded-full bg-white text-[#DC2626] text-sm font-bold hover:bg-white/90 transition-colors">
+            Quitter
+          </button>
+        </div>
+      )}
+
       <div className="mb-8">
         <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-1">Espace créateur</p>
         <h1 className="text-3xl font-extrabold tracking-tight">Tableau de bord créateur</h1>
@@ -33,19 +52,19 @@ export default function DashboardHome() {
       </div>
 
       <EarningsCards
-        available={stats.available}
-        withdrawn={stats.withdrawn}
-        pending={stats.withdrawalPending + stats.pending}
-        views={stats.views}
+        available={displayStats.available}
+        withdrawn={displayStats.withdrawn}
+        pending={displayStats.withdrawalPending + displayStats.pending}
+        views={displayStats.views}
       />
 
       <div className="grid lg:grid-cols-2 gap-6 mt-6">
-        <WithdrawForm available={stats.available} onWithdrawn={loadData} />
+        <WithdrawForm available={displayStats.available} onWithdrawn={loadData} />
         <EarningsChart data={displayChart} />
       </div>
 
       <div className="mt-6">
-        <WithdrawalHistory withdrawals={withdrawals} />
+        <WithdrawalHistory withdrawals={displayWithdrawals} />
       </div>
     </div>
   );
