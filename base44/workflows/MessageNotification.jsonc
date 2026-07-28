@@ -16,8 +16,8 @@
             "args": {
               "kind": "message",
               "event_type": "${ .trigger.event_type }",
-              "data": "${ .trigger.data }",
-              "old_data": "${ .trigger.old_data }"
+              "record_id": "${ .trigger.data.id }",
+              "campaign_id": "${ .trigger.data.campaign_id }"
             }
           },
           "then": "end",

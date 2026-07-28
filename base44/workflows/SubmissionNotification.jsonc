@@ -16,7 +16,7 @@
             "args": {
               "kind": "submission",
               "event_type": "${ .trigger.event_type }",
-              "data": "${ .trigger.data }"
+              "record_id": "${ .trigger.data.id }"
             }
           },
           "then": "end",
