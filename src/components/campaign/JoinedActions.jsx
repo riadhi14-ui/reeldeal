@@ -8,8 +8,9 @@ import {
 import ScenariosSheet from "@/components/campaign/ScenariosSheet";
 
 export default function JoinedActions({ campaign, onSubmitted, justJoined = false }) {
+  const platforms = campaign.platforms?.length ? campaign.platforms : ["TikTok", "Instagram Reels", "YouTube Shorts"];
   const [videoUrl, setVideoUrl] = useState("");
-  const [platform, setPlatform] = useState("TikTok");
+  const [platform, setPlatform] = useState(platforms[0]);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [scenariosOpen, setScenariosOpen] = useState(false);
@@ -52,9 +53,7 @@ export default function JoinedActions({ campaign, onSubmitted, justJoined = fals
         <Select value={platform} onValueChange={setPlatform}>
           <SelectTrigger className="bg-white"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="TikTok">TikTok</SelectItem>
-            <SelectItem value="Instagram Reels">Instagram Reels</SelectItem>
-            <SelectItem value="YouTube Shorts">YouTube Shorts</SelectItem>
+            {platforms.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
           </SelectContent>
         </Select>
         <div className="relative">
