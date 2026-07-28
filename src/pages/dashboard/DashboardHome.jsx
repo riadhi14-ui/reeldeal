@@ -33,18 +33,6 @@ export default function DashboardHome() {
 
   return (
     <div>
-      {demoMode && (
-        <div className="mb-6 flex items-center justify-between gap-4 rounded-3xl bg-[#EF4444] text-white px-6 py-4 shadow-lg">
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-5 h-5 shrink-0" />
-            <p className="text-sm font-bold">Mode démo activé</p>
-          </div>
-          <button onClick={toggleDemoMode} className="shrink-0 h-10 px-5 rounded-full bg-white text-[#DC2626] text-sm font-bold hover:bg-white/90 transition-colors">
-            Quitter
-          </button>
-        </div>
-      )}
-
       <div className="mb-8">
         <p className="text-sm font-bold text-[#DC2626] uppercase tracking-widest mb-1">Espace créateur</p>
         <h1 className="text-3xl font-extrabold tracking-tight">Tableau de bord créateur</h1>
