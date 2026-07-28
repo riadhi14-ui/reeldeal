@@ -147,12 +147,21 @@ export default function DashboardLayout() {
           </nav>
 
           <div className="p-3 border-t border-slate-100 space-y-1">
-            <button
-              onClick={toggleDemoMode}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${demoMode ? "bg-[#EF4444] text-white hover:bg-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}
-            >
-              <Sparkles className="w-4 h-4" /> {demoMode ? "Quitter le mode démo" : "Activer le mode démo"}
-            </button>
+            <div className="flex items-center gap-3 px-3 py-2.5">
+              <Sparkles className="w-4 h-4 text-slate-500 shrink-0" />
+              <span className="flex-1 text-sm font-semibold text-slate-500">Mode démo</span>
+              <button
+                onClick={toggleDemoMode}
+                role="switch"
+                aria-checked={demoMode}
+                className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${demoMode ? "bg-[#EF4444]" : "bg-slate-300"}`}
+              >
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${demoMode ? "translate-x-5" : "translate-x-0"}`} />
+              </button>
+              <span className={`text-xs font-bold w-16 ${demoMode ? "text-[#DC2626]" : "text-slate-400"}`}>
+                {demoMode ? "Activé" : "Désactivé"}
+              </span>
+            </div>
             <NavLink to="/dashboard/settings" className={({ isActive }) => `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-colors ${isActive ? "bg-red-50 text-[#DC2626]" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
               <Settings className="w-4 h-4" /> {t("nav_settings")}
             </NavLink>
