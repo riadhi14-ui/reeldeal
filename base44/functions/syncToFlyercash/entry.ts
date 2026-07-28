@@ -25,7 +25,9 @@ Deno.serve(async (req) => {
 
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      return Response.json({ error: 'Flyercash a refusé la requête', status: res.status, details: data }, { status: 502 });
+      // 404 / 400 côté Flyercash = le compte créateur n'existe pas encore
+      const noAccount = res.status === 404 || res.status === 400;
+      return Response.json({ error: 'Flyercash a refusé la requête', status: res.status, no_account: noAccount, details: data }, { status: 502 });
     }
 
     return Response.json({ success: true, flyercash: data });

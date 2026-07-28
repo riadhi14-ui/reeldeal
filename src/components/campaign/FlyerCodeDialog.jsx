@@ -4,6 +4,7 @@ import { Ticket, Check, Copy, ExternalLink, Loader2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
 const AFFILIATE_LINK = "https://flyercash.io/ugc";
+const SIGNUP_LINK = "https://flyercash.io/ugc";
 
 function CopyButton({ value }) {
   const [copied, setCopied] = useState(false);
@@ -30,6 +31,7 @@ export default function FlyerCodeDialog() {
   const [existingCode, setExistingCode] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [noAccount, setNoAccount] = useState(false);
 
   useEffect(() => {
     base44.auth.me()
@@ -43,13 +45,22 @@ export default function FlyerCodeDialog() {
     const newCode = `FLYER-${clean}-2026`;
     setSaving(true);
     setError("");
+    setNoAccount(false);
     try {
-      await base44.functions.invoke("syncToFlyercash", { nom: name.trim(), code_unique: newCode });
+      const res = await base44.functions.invoke("syncToFlyercash", { nom: name.trim(), code_unique: newCode });
+      if (res?.data?.no_account) {
+        setNoAccount(true);
+        return;
+      }
       await base44.auth.updateMe({ flyer_code: newCode });
       setCode(newCode);
       setExistingCode(newCode);
-    } catch {
-      setError("Une erreur est survenue lors de la création du code. Réessaie dans un instant.");
+    } catch (err) {
+      if (err?.response?.data?.no_account || err?.data?.no_account) {
+        setNoAccount(true);
+      } else {
+        setError("Une erreur est survenue lors de la création du code. Réessaie dans un instant.");
+      }
     } finally {
       setSaving(false);
     }
@@ -61,6 +72,7 @@ export default function FlyerCodeDialog() {
     setCode("");
     setSaving(false);
     setError("");
+    setNoAccount(false);
   };
 
   // Code shown in the result view: either just-generated or the one saved on the account.
@@ -105,6 +117,22 @@ export default function FlyerCodeDialog() {
                   className="w-full h-12 px-4 rounded-2xl bg-white ring-1 ring-slate-200 focus:ring-2 focus:ring-[#EF4444] outline-none text-slate-900 font-semibold"
                 />
               </div>
+
+              {noAccount && (
+                <div className="rounded-2xl bg-red-50 ring-1 ring-[#EF4444]/30 p-4 space-y-3">
+                  <p className="text-sm font-semibold text-[#DC2626]">
+                    Tu dois d'abord créer ton compte Flyercash avant de pouvoir générer ton code unique.
+                  </p>
+                  <a
+                    href={SIGNUP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" /> Créer mon compte Flyercash
+                  </a>
+                </div>
+              )}
 
               {error && <p className="text-sm font-semibold text-[#DC2626]">{error}</p>}
 
