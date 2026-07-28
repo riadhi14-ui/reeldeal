@@ -37,7 +37,7 @@ export default function DashboardHome() {
         <div className="mb-6 flex items-center justify-between gap-4 rounded-3xl bg-[#EF4444] text-white px-6 py-4 shadow-lg">
           <div className="flex items-center gap-3">
             <Sparkles className="w-5 h-5 shrink-0" />
-            <p className="text-sm font-bold">Mode démo activé — ces chiffres sont fictifs et ne reflètent pas ton compte réel.</p>
+            <p className="text-sm font-bold">Mode démo activé</p>
           </div>
           <button onClick={toggleDemoMode} className="shrink-0 h-10 px-5 rounded-full bg-white text-[#DC2626] text-sm font-bold hover:bg-white/90 transition-colors">
             Quitter
