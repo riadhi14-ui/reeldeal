@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { ExternalLink, Check, X, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { safeUrl } from "@/lib/utils";
 
 function ReviewRow({ submission, rate, onUpdated }) {
   const [views, setViews] = useState("");
@@ -24,9 +25,13 @@ function ReviewRow({ submission, rate, onUpdated }) {
         <p className="font-bold text-slate-900 truncate">{submission.campaign_name}</p>
         <p className="text-xs text-slate-400">{submission.platform}</p>
       </div>
-      <a href={submission.video_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#DC2626] transition-colors">
-        Voir la vidéo <ExternalLink className="w-3 h-3" />
-      </a>
+      {safeUrl(submission.video_url) ? (
+        <a href={safeUrl(submission.video_url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#DC2626] transition-colors">
+          Voir la vidéo <ExternalLink className="w-3 h-3" />
+        </a>
+      ) : (
+        <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400">URL invalide</span>
+      )}
       <Input
         type="number"
         min="0"
