@@ -1,7 +1,7 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
 import { useDashboard } from "@/components/dashboard/DashboardLayout";
-import { DEMO_STATS, DEMO_CHART, DEMO_WITHDRAWALS } from "@/lib/demoData";
+import { getDemoData } from "@/lib/demoData";
 import EarningsCards from "@/components/dashboard/EarningsCards";
 import WithdrawForm from "@/components/dashboard/WithdrawForm";
 import EarningsChart from "@/components/dashboard/EarningsChart";
@@ -26,10 +26,12 @@ export default function DashboardHome() {
   const hasChartData = chartData.some((d) => d.value > 0);
   const realChart = hasChartData ? chartData : monthLabels.map((label) => ({ label, value: 0 }));
 
-  // En mode démo, on remplace uniquement l'affichage par des chiffres fictifs.
-  const displayStats = demoMode ? DEMO_STATS : stats;
-  const displayChart = demoMode ? DEMO_CHART : realChart;
-  const displayWithdrawals = demoMode ? DEMO_WITHDRAWALS : withdrawals;
+  // En mode démo, on remplace uniquement l'affichage par des chiffres fictifs
+  // propres à chaque créateur (dérivés de son identifiant).
+  const demo = demoMode ? getDemoData(user?.id || user?.email || "") : null;
+  const displayStats = demo ? demo.stats : stats;
+  const displayChart = demo ? demo.chart : realChart;
+  const displayWithdrawals = demo ? demo.withdrawals : withdrawals;
 
   return (
     <div>
