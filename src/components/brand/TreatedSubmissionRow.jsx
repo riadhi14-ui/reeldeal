@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { ExternalLink, Pencil, Check, X, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { safeUrl } from "@/lib/utils";
 
 const statusStyles = {
   approved: { label: "Approuvée", cls: "bg-green-50 text-green-700" },
@@ -76,9 +77,11 @@ export default function TreatedSubmissionRow({ submission, rate, onUpdated }) {
         </>
       )}
 
-      <a href={submission.video_url} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-[#DC2626]">
-        <ExternalLink className="w-4 h-4" />
-      </a>
+      {safeUrl(submission.video_url) && (
+        <a href={safeUrl(submission.video_url)} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-[#DC2626]">
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      )}
       <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${st.cls}`}>{st.label}</span>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { ExternalLink } from "lucide-react";
+import { safeUrl } from "@/lib/utils";
 
 const statusConfig = {
   pending: { label: "En attente", cls: "bg-amber-50 text-amber-600" },
@@ -27,9 +28,13 @@ export default function SubmissionsList({ submissions }) {
               <p className="font-bold text-slate-900 truncate">{s.campaign_name}</p>
               <p className="text-xs text-slate-400">{s.platform}</p>
             </div>
-            <a href={s.video_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#DC2626] transition-colors">
-              Voir la vidéo <ExternalLink className="w-3 h-3" />
-            </a>
+            {safeUrl(s.video_url) ? (
+              <a href={safeUrl(s.video_url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#DC2626] transition-colors">
+                Voir la vidéo <ExternalLink className="w-3 h-3" />
+              </a>
+            ) : (
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400">URL invalide</span>
+            )}
             <div className="text-right w-24">
               <p className="text-sm font-extrabold text-slate-900 font-mono">{(s.views || 0).toLocaleString("fr-FR")}</p>
               <p className="text-[10px] text-slate-400">vues</p>
