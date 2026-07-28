@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import { useDashboard } from "@/components/dashboard/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ import { Loader2, Plus } from "lucide-react";
 const PLATFORMS = ["TikTok", "Instagram Reels", "YouTube Shorts"];
 
 export default function SubmitVideoDialog({ participations, onSubmitted }) {
+  const { user } = useDashboard();
   const [open, setOpen] = useState(false);
   const [campaignId, setCampaignId] = useState("");
   const [platform, setPlatform] = useState("");
@@ -29,6 +31,7 @@ export default function SubmitVideoDialog({ participations, onSubmitted }) {
       await base44.entities.Submission.create({
         campaign_id: part.campaign_id,
         campaign_name: part.campaign_name,
+        creator_name: user?.display_name || user?.full_name || "",
         platform,
         video_url: videoUrl,
         status: "pending",

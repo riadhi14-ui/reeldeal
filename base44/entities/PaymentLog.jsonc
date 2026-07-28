@@ -1,5 +1,5 @@
 {
-  "name": "Submission",
+  "name": "PaymentLog",
   "type": "object",
   "properties": {
     "campaign_id": {
@@ -8,42 +8,27 @@
     "campaign_name": {
       "type": "string"
     },
+    "creator_id": {
+      "type": "string"
+    },
     "creator_name": {
       "type": "string"
     },
-    "platform": {
-      "type": "string",
-      "enum": [
-        "TikTok",
-        "Instagram Reels",
-        "YouTube Shorts"
-      ]
+    "views_paid": {
+      "type": "number"
     },
-    "video_url": {
-      "type": "string"
+    "amount": {
+      "type": "number"
     },
-    "status": {
-      "type": "string",
-      "enum": [
-        "pending",
-        "approved",
-        "rejected"
-      ],
-      "default": "pending"
-    },
-    "views": {
-      "type": "number",
-      "default": 0
-    },
-    "earnings": {
-      "type": "number",
-      "default": 0
+    "rate": {
+      "type": "number"
     }
   },
   "required": [
     "campaign_id",
-    "campaign_name",
-    "video_url"
+    "creator_id",
+    "views_paid",
+    "amount"
   ],
   "rls": {
     "create": {
@@ -66,16 +51,7 @@
           "created_by_id": "{{user.id}}"
         },
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
-    "update": {
-      "$or": [
-        {
-          "created_by_id": "{{user.id}}"
+          "data.creator_id": "{{user.id}}"
         },
         {
           "user_condition": {
@@ -83,6 +59,11 @@
           }
         }
       ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
     },
     "delete": {
       "user_condition": {

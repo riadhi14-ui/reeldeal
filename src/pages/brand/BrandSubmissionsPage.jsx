@@ -3,6 +3,7 @@ import { useBrand } from "@/components/brand/BrandLayout";
 import ReviewSubmissions from "@/components/brand/ReviewSubmissions";
 import SubmissionsAnalytics from "@/components/brand/SubmissionsAnalytics";
 import TreatedSubmissionRow from "@/components/brand/TreatedSubmissionRow";
+import PayoutTracker from "@/components/brand/PayoutTracker";
 
 export default function BrandSubmissionsPage() {
   const { submissions, pendingSubmissions, campaignsById, loadData } = useBrand();
@@ -13,6 +14,12 @@ export default function BrandSubmissionsPage() {
       <h1 className="text-2xl font-extrabold tracking-tight mb-8">Soumissions</h1>
 
       <SubmissionsAnalytics submissions={submissions} />
+
+      <h2 className="text-lg font-extrabold text-slate-900 mb-4">Suivi des paiements par créateur</h2>
+      <p className="text-sm text-slate-500 -mt-3 mb-4">Vues cumulées de toutes les vidéos approuvées. Chaque palier de 1000 vues déjà payé est mémorisé — aucun double paiement possible.</p>
+      <div className="mb-10">
+        <PayoutTracker submissions={submissions} campaignsById={campaignsById} />
+      </div>
 
       <h2 className="text-lg font-extrabold text-slate-900 mb-4">
         À valider {pendingSubmissions.length > 0 && <span className="ml-2 text-sm bg-red-50 text-[#DC2626] px-3 py-1 rounded-full">{pendingSubmissions.length}</span>}

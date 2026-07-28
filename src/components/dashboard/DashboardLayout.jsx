@@ -25,6 +25,7 @@ export default function DashboardLayout() {
   const [participations, setParticipations] = useState([]);
   const [submissions, setSubmissions] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [dbCampaigns, setDbCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [demoMode, setDemoMode] = useState(() => localStorage.getItem("creator_demo_mode") === "1");
@@ -48,15 +49,17 @@ export default function DashboardLayout() {
     if (me?.account_type === "brand") { navigate("/brand", { replace: true }); return; }
     if (me?.language) setLang(me.language);
     setUser(me);
-    const [parts, subs, wds, activeCampaigns] = await Promise.all([
+    const [parts, subs, wds, pays, activeCampaigns] = await Promise.all([
       base44.entities.Participation.filter({ created_by_id: me.id }, "-created_date"),
       base44.entities.Submission.filter({ created_by_id: me.id }, "-created_date"),
       base44.entities.Withdrawal.filter({ created_by_id: me.id }, "-created_date"),
+      base44.entities.PaymentLog.filter({ creator_id: me.id }, "-created_date").catch(() => []),
       base44.entities.Campaign.filter({ status: "active" }).catch(() => []),
     ]);
     setParticipations(parts);
     setSubmissions(subs);
     setWithdrawals(wds);
+    setPayments(pays);
     setDbCampaigns(activeCampaigns);
     setLoading(false);
   }, [navigate, setLang]);
@@ -65,9 +68,28 @@ export default function DashboardLayout() {
 
   if (!user && !loading) return null;
 
-  const earnedTotal = submissions.filter((s) => s.status === "approved").reduce((sum, s) => sum + (s.earnings || 0), 0);
   const withdrawnTotal = withdrawals.filter((w) => w.status === "completed").reduce((sum, w) => sum + (w.amount || 0), 0);
   const withdrawalPending = withdrawals.filter((w) => w.status === "pending").reduce((sum, w) => sum + (w.amount || 0), 0);
+
+  const allCampaigns = [...dbCampaigns, ...campaigns];
+  const campaignById = new Map(allCampaigns.map((c) => [c.id, c]));
+
+  // Gains réels = paiements effectivement enregistrés par les marques (PaymentLog).
+  const earnedTotal = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
+  const paidViewsByCampaign = payments.reduce((acc, p) => {
+    acc[p.campaign_id] = (acc[p.campaign_id] || 0) + (p.views_paid || 0);
+    return acc;
+  }, {});
+  // Valeur des vues approuvées pas encore payées par les marques.
+  const approvedViewsByCampaign = submissions.filter((s) => s.status === "approved").reduce((acc, s) => {
+    acc[s.campaign_id] = (acc[s.campaign_id] || 0) + (s.views || 0);
+    return acc;
+  }, {});
+  let unpaidValue = 0;
+  for (const [cid, views] of Object.entries(approvedViewsByCampaign)) {
+    const rate = campaignById.get(cid)?.rate || 0;
+    unpaidValue += (Math.max(views - (paidViewsByCampaign[cid] || 0), 0) / 1000) * rate;
+  }
 
   const stats = {
     total: earnedTotal,
@@ -75,13 +97,10 @@ export default function DashboardLayout() {
     withdrawn: withdrawnTotal,
     available: Math.max(earnedTotal - withdrawnTotal - withdrawalPending, 0),
     withdrawalPending,
-    pending: submissions.filter((s) => s.status === "pending").reduce((sum, s) => sum + (s.earnings || 0), 0),
+    pending: Math.round(unpaidValue * 100) / 100,
     views: submissions.reduce((sum, s) => sum + (s.views || 0), 0),
     videos: submissions.length,
   };
-
-  const allCampaigns = [...dbCampaigns, ...campaigns];
-  const campaignById = new Map(allCampaigns.map((c) => [c.id, c]));
   // Enrich each participation with the campaign's live price / image / name so
   // brand edits are always reflected in "Mes campagnes".
   const livePartsForContext = participations.map((p) => {
@@ -117,7 +136,7 @@ export default function DashboardLayout() {
   const avatarEmoji = getAvatarEmoji(user);
 
   return (
-    <DashboardContext.Provider value={{ user, participations: livePartsForContext, submissions, withdrawals, stats, allCampaigns, loadData, demoMode, toggleDemoMode }}>
+    <DashboardContext.Provider value={{ user, participations: livePartsForContext, submissions, withdrawals, payments, stats, allCampaigns, loadData, demoMode, toggleDemoMode }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">

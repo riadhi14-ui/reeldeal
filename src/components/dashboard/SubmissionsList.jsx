@@ -1,6 +1,8 @@
 import React from "react";
 import { ExternalLink } from "lucide-react";
 import { safeUrl } from "@/lib/utils";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 const statusConfig = {
   pending: { label: "En attente", cls: "bg-amber-50 text-amber-600" },
@@ -26,7 +28,7 @@ export default function SubmissionsList({ submissions }) {
           <div key={s.id} className="flex flex-wrap items-center gap-3 p-5">
             <div className="flex-1 min-w-[180px]">
               <p className="font-bold text-slate-900 truncate">{s.campaign_name}</p>
-              <p className="text-xs text-slate-400">{s.platform}</p>
+              <p className="text-xs text-slate-400">{s.platform} · {format(new Date(s.created_date), "dd MMM yyyy", { locale: fr })}</p>
             </div>
             {safeUrl(s.video_url) ? (
               <a href={safeUrl(s.video_url)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#DC2626] transition-colors">
