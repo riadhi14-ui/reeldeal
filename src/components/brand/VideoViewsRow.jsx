@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { base44 } from "@/api/base44Client";
 import { ExternalLink, Check, Loader2, Eye } from "lucide-react";
+import { updateSubmissionViews } from "@/lib/viewTracking";
 import { Input } from "@/components/ui/input";
 import { safeUrl } from "@/lib/utils";
 import { format } from "date-fns";
@@ -16,10 +16,7 @@ export default function VideoViewsRow({ submission, rate, onUpdated }) {
   const save = async () => {
     setSaving(true);
     const v = Number(views) || 0;
-    await base44.entities.Submission.update(submission.id, {
-      views: v,
-      earnings: Math.round((v / 1000) * rate * 100) / 100,
-    });
+    await updateSubmissionViews(submission, v, rate);
     setSaving(false);
     onUpdated();
   };
