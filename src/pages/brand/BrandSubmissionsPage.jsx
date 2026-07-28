@@ -18,7 +18,7 @@ export default function BrandSubmissionsPage() {
       <h2 className="text-lg font-extrabold text-slate-900 mb-4">Suivi des paiements par créateur</h2>
       <p className="text-sm text-slate-500 -mt-3 mb-4">Vues cumulées de toutes les vidéos approuvées. Chaque palier de 1000 vues déjà payé est mémorisé — aucun double paiement possible.</p>
       <div className="mb-10">
-        <PayoutTracker submissions={submissions} campaignsById={campaignsById} />
+        <PayoutTracker submissions={submissions} campaignsById={campaignsById} onUpdated={loadData} />
       </div>
 
       <h2 className="text-lg font-extrabold text-slate-900 mb-4">

@@ -4,7 +4,7 @@ import PayoutRow from "@/components/brand/PayoutRow";
 
 // Regroupe les vidéos approuvées par (campagne + créateur), cumule les vues
 // et calcule ce qui a déjà été payé (PaymentLog) pour éviter tout double paiement.
-export default function PayoutTracker({ submissions, campaignsById }) {
+export default function PayoutTracker({ submissions, campaignsById, onUpdated }) {
   const [payments, setPayments] = useState([]);
   const [payingKey, setPayingKey] = useState(null);
 
@@ -19,9 +19,10 @@ export default function PayoutTracker({ submissions, campaignsById }) {
   const groups = {};
   submissions.filter((s) => s.status === "approved").forEach((s) => {
     const key = `${s.campaign_id}|${s.created_by_id}`;
-    if (!groups[key]) groups[key] = { key, campaign_id: s.campaign_id, campaign_name: s.campaign_name, creator_id: s.created_by_id, creator_name: s.creator_name || "", views: 0, videos: 0 };
+    if (!groups[key]) groups[key] = { key, campaign_id: s.campaign_id, campaign_name: s.campaign_name, creator_id: s.created_by_id, creator_name: s.creator_name || "", views: 0, videos: 0, subs: [] };
     groups[key].views += s.views || 0;
     groups[key].videos += 1;
+    groups[key].subs.push(s);
     if (s.creator_name) groups[key].creator_name = s.creator_name;
   });
 
@@ -69,7 +70,7 @@ export default function PayoutTracker({ submissions, campaignsById }) {
   return (
     <div className="rounded-3xl bg-white ring-1 ring-slate-100 shadow-sm divide-y divide-slate-100 overflow-hidden">
       {rows.map((row) => (
-        <PayoutRow key={row.key} row={row} paying={payingKey === row.key} onPay={() => pay(row)} />
+        <PayoutRow key={row.key} row={row} paying={payingKey === row.key} onPay={() => pay(row)} onUpdated={onUpdated} />
       ))}
     </div>
   );

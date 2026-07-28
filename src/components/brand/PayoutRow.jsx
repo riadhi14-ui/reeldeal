@@ -1,7 +1,9 @@
-import React from "react";
-import { Loader2, BadgeCheck } from "lucide-react";
+import React, { useState } from "react";
+import { Loader2, BadgeCheck, ChevronDown } from "lucide-react";
+import VideoViewsRow from "@/components/brand/VideoViewsRow";
 
-export default function PayoutRow({ row, paying, onPay }) {
+export default function PayoutRow({ row, paying, onPay, onUpdated }) {
+  const [open, setOpen] = useState(false);
   const progress = Math.min(((row.dueViews % 1000) / 1000) * 100, 100);
   return (
     <div className="p-5 space-y-3">
@@ -43,6 +45,22 @@ export default function PayoutRow({ row, paying, onPay }) {
           {row.dueViews % 1000} / 1000 vues vers le prochain palier · Taux : {row.rate} € / 1000 vues
         </p>
       </div>
+
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-[#DC2626] transition-colors"
+      >
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+        {open ? "Masquer" : "Traquer"} les vues vidéo par vidéo ({row.videos})
+      </button>
+
+      {open && (
+        <div className="rounded-2xl bg-slate-50 px-4 divide-y divide-slate-200">
+          {row.subs.map((s) => (
+            <VideoViewsRow key={s.id} submission={s} rate={row.rate} onUpdated={onUpdated} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
