@@ -71,6 +71,20 @@ export default function DashboardLayout() {
   };
 
   const allCampaigns = [...dbCampaigns, ...campaigns];
+  const campaignById = new Map(allCampaigns.map((c) => [c.id, c]));
+  // Enrich each participation with the campaign's live price / image / name so
+  // brand edits are always reflected in "Mes campagnes".
+  const livePartsForContext = participations.map((p) => {
+    const c = campaignById.get(p.campaign_id);
+    if (!c) return p;
+    return {
+      ...p,
+      campaign_name: c.name ?? p.campaign_name,
+      brand: c.brand ?? p.brand,
+      rate: c.rate ?? p.rate,
+      img: c.img ?? p.img,
+    };
+  });
   const joinedIds = new Set(participations.map((p) => p.campaign_id));
   const availableCount = allCampaigns.filter((c) => !joinedIds.has(c.id)).length;
   const counts = {
@@ -93,7 +107,7 @@ export default function DashboardLayout() {
   const avatarEmoji = getAvatarEmoji(user);
 
   return (
-    <DashboardContext.Provider value={{ user, participations, submissions, withdrawals, stats, allCampaigns, loadData }}>
+    <DashboardContext.Provider value={{ user, participations: livePartsForContext, submissions, withdrawals, stats, allCampaigns, loadData }}>
       <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-body flex">
         <aside className="hidden md:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 h-screen sticky top-0">
           <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-100">
