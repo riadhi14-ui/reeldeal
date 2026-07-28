@@ -21,6 +21,7 @@ export default function JoinedActions({ campaign, onSubmitted, justJoined = fals
     await base44.entities.Submission.create({
       campaign_id: campaign.id,
       campaign_name: campaign.name,
+      brand_id: campaign.created_by_id || "",
       platform,
       video_url: videoUrl.trim(),
     });

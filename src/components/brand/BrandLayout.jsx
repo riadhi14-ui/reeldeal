@@ -47,10 +47,7 @@ export default function BrandLayout() {
     setUser(me);
     const myCampaigns = await base44.entities.Campaign.filter({ created_by_id: me.id }, "-created_date");
     setCampaigns(myCampaigns);
-    const ids = myCampaigns.map((c) => c.id);
-    const subs = ids.length > 0
-      ? await base44.entities.Submission.filter({ campaign_id: { $in: ids } }, "-created_date")
-      : [];
+    const subs = await base44.entities.Submission.filter({ brand_id: me.id }, "-created_date");
     setSubmissions(subs);
     setLoading(false);
   }, [navigate, setLang]);

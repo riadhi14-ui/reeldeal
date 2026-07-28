@@ -10,7 +10,7 @@ import { Loader2, Plus } from "lucide-react";
 const PLATFORMS = ["TikTok", "Instagram Reels", "YouTube Shorts"];
 
 export default function SubmitVideoDialog({ participations, onSubmitted }) {
-  const { user } = useDashboard();
+  const { user, allCampaigns } = useDashboard();
   const [open, setOpen] = useState(false);
   const [campaignId, setCampaignId] = useState("");
   const [platform, setPlatform] = useState("");
@@ -32,6 +32,7 @@ export default function SubmitVideoDialog({ participations, onSubmitted }) {
         campaign_id: part.campaign_id,
         campaign_name: part.campaign_name,
         creator_name: user?.display_name || user?.full_name || "",
+        brand_id: allCampaigns?.find((c) => c.id === part.campaign_id)?.created_by_id || "",
         platform,
         video_url: videoUrl,
         status: "pending",
