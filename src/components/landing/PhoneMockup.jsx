@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Heart, MessageCircle, Share2, Music, Eye, Plus } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
 export default function PhoneMockup() {
   const [videos, setVideos] = useState([]);
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
   const [earnings, setEarnings] = useState([211]);
   const touchStartY = useRef(null);
   const scrollLocked = useRef(false);
@@ -18,13 +20,14 @@ export default function PhoneMockup() {
 
   useEffect(() => {
     if (videos.length < 2) return;
-    const interval = setInterval(() => setIndex((i) => (i + 1) % videos.length), 6000);
+    const interval = setInterval(() => goTo(1), 6000);
     return () => clearInterval(interval);
   }, [videos.length]);
 
   const goTo = (dir) => {
     if (videos.length < 2 || scrollLocked.current) return;
     scrollLocked.current = true;
+    setDirection(dir);
     setIndex((i) => (i + dir + videos.length) % videos.length);
     setTimeout(() => { scrollLocked.current = false; }, 500);
   };
@@ -49,15 +52,22 @@ export default function PhoneMockup() {
           onTouchEnd={handleTouchEnd}
         >
           {videos.length > 0 ? (
-            <video
-              key={videos[index].id}
-              src={videos[index].video_url}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.video
+                key={videos[index].id}
+                src={videos[index].video_url}
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                custom={direction}
+                initial={{ y: direction > 0 ? "100%" : "-100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: direction > 0 ? "-100%" : "100%" }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+              />
+            </AnimatePresence>
           ) : (
             <img
               src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=1200&fit=crop"
