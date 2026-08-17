@@ -29,7 +29,7 @@ export default function BrandMockup() {
       {/* Live campaigns badge */}
       <div className="absolute top-[14%] left-[6%] flex items-center gap-1.5 bg-white rounded-full pl-2 pr-3 py-1.5 shadow-lg ring-1 ring-slate-100 text-[11px] font-bold text-slate-700">
         <span className="w-2 h-2 rounded-full bg-emerald-500" />
-        12 campagnes en direct
+        23 campagnes en direct
       </div>
 
       {/* Central stat card */}
@@ -41,21 +41,21 @@ export default function BrandMockup() {
             </span>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Votre réseau de créateurs</p>
           </div>
-          <p className="text-4xl font-extrabold text-slate-900 tracking-tight">4 867+</p>
+          <p className="text-4xl font-extrabold text-slate-900 tracking-tight">7 340+</p>
           <p className="text-xs text-slate-400 mt-1">créateurs prêts à promouvoir votre marque</p>
 
           <div className="grid grid-cols-3 gap-2 mt-5 pt-5 border-t border-slate-100">
             <div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Portée</p>
-              <p className="text-sm font-extrabold text-slate-900 mt-0.5">35,6M</p>
+              <p className="text-sm font-extrabold text-slate-900 mt-0.5">52,8M</p>
             </div>
             <div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Versé</p>
-              <p className="text-sm font-extrabold text-emerald-600 mt-0.5">24 077 €</p>
+              <p className="text-sm font-extrabold text-emerald-600 mt-0.5">61 450 €</p>
             </div>
             <div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Vidéos</p>
-              <p className="text-sm font-extrabold text-slate-900 mt-0.5">3 252</p>
+              <p className="text-sm font-extrabold text-slate-900 mt-0.5">4 918</p>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function BrandMockup() {
             <span key={i} className="w-5 h-5 rounded-full bg-slate-800 text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">{l}</span>
           ))}
         </div>
-        <span className="text-[10px] font-bold text-slate-700">+148 marques</span>
+        <span className="text-[10px] font-bold text-slate-700">+210 marques</span>
       </div>
     </div>
   );
