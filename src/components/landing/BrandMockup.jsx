@@ -1,29 +1,31 @@
 import React from "react";
-import { Users, ShieldCheck } from "lucide-react";
+import { Users, ShieldCheck, Camera, Music, Star, Heart, Zap, Sparkles, Film, Mic, Palette, Flame } from "lucide-react";
 
 const avatars = [
-  { top: "2%", left: "8%", size: "w-10 h-10", grad: "from-red-300 to-red-500" },
-  { top: "0%", left: "42%", size: "w-9 h-9", grad: "from-orange-300 to-pink-400" },
-  { top: "10%", left: "78%", size: "w-11 h-11", grad: "from-rose-300 to-red-500" },
-  { top: "26%", left: "2%", size: "w-8 h-8", grad: "from-amber-300 to-orange-400" },
-  { top: "34%", left: "90%", size: "w-9 h-9", grad: "from-pink-300 to-rose-500" },
-  { top: "58%", left: "0%", size: "w-9 h-9", grad: "from-red-400 to-rose-600" },
-  { top: "66%", left: "86%", size: "w-10 h-10", grad: "from-orange-300 to-red-400" },
-  { top: "82%", left: "14%", size: "w-8 h-8", grad: "from-rose-300 to-pink-500" },
-  { top: "88%", left: "58%", size: "w-9 h-9", grad: "from-red-300 to-orange-400" },
-  { top: "78%", left: "40%", size: "w-7 h-7", grad: "from-pink-400 to-red-500" },
+  { top: "2%", left: "8%", size: "w-10 h-10", grad: "from-red-300 to-red-500", Icon: Camera },
+  { top: "0%", left: "42%", size: "w-9 h-9", grad: "from-orange-300 to-pink-400", Icon: Music },
+  { top: "10%", left: "78%", size: "w-11 h-11", grad: "from-rose-300 to-red-500", Icon: Star },
+  { top: "26%", left: "2%", size: "w-8 h-8", grad: "from-amber-300 to-orange-400", Icon: Heart },
+  { top: "34%", left: "90%", size: "w-9 h-9", grad: "from-pink-300 to-rose-500", Icon: Zap },
+  { top: "58%", left: "0%", size: "w-9 h-9", grad: "from-red-400 to-rose-600", Icon: Sparkles },
+  { top: "66%", left: "86%", size: "w-10 h-10", grad: "from-orange-300 to-red-400", Icon: Film },
+  { top: "82%", left: "14%", size: "w-8 h-8", grad: "from-rose-300 to-pink-500", Icon: Mic },
+  { top: "88%", left: "58%", size: "w-9 h-9", grad: "from-red-300 to-orange-400", Icon: Palette },
+  { top: "78%", left: "40%", size: "w-7 h-7", grad: "from-pink-400 to-red-500", Icon: Flame },
 ];
 
 export default function BrandMockup() {
   return (
     <div className="relative w-full max-w-[480px] mx-auto h-[440px]">
       {/* Floating creator avatars */}
-      {avatars.map((a, i) => (
+      {avatars.map(({ Icon, ...a }, i) => (
         <div
           key={i}
-          className={`absolute ${a.size} rounded-full bg-gradient-to-br ${a.grad} ring-4 ring-white shadow-lg`}
+          className={`absolute ${a.size} rounded-full bg-gradient-to-br ${a.grad} ring-4 ring-white shadow-lg flex items-center justify-center`}
           style={{ top: a.top, left: a.left }}
-        />
+        >
+          <Icon className="w-1/2 h-1/2 text-white" />
+        </div>
       ))}
 
       {/* Live campaigns badge */}
