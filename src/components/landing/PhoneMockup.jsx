@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Heart, MessageCircle, Share2, Music, Eye, Plus } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
 export default function PhoneMockup() {
   const [videos, setVideos] = useState([]);
   const [index, setIndex] = useState(0);
+  const [earnings, setEarnings] = useState([211]);
+  const touchStartY = useRef(null);
+  const scrollLocked = useRef(false);
 
   useEffect(() => {
-    base44.entities.LandingVideo.list("-created_date").then(setVideos).catch(() => {});
+    base44.entities.LandingVideo.list("-created_date").then((list) => {
+      setVideos(list);
+      setEarnings(list.length ? list.map(() => Math.floor(80 + Math.random() * 400)) : [211]);
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -16,11 +22,32 @@ export default function PhoneMockup() {
     return () => clearInterval(interval);
   }, [videos.length]);
 
+  const goTo = (dir) => {
+    if (videos.length < 2 || scrollLocked.current) return;
+    scrollLocked.current = true;
+    setIndex((i) => (i + dir + videos.length) % videos.length);
+    setTimeout(() => { scrollLocked.current = false; }, 500);
+  };
+
+  const handleWheel = (e) => goTo(e.deltaY > 0 ? 1 : -1);
+  const handleTouchStart = (e) => { touchStartY.current = e.touches[0].clientY; };
+  const handleTouchEnd = (e) => {
+    if (touchStartY.current === null) return;
+    const delta = touchStartY.current - e.changedTouches[0].clientY;
+    if (Math.abs(delta) > 40) goTo(delta > 0 ? 1 : -1);
+    touchStartY.current = null;
+  };
+
   return (
     <div className="relative">
       {/* Phone */}
       <div className="relative w-[280px] sm:w-[300px] mx-auto rounded-[3rem] bg-slate-900 p-3 shadow-2xl shadow-slate-900/30 ring-1 ring-slate-800">
-        <div className="rounded-[2.4rem] overflow-hidden bg-black aspect-[9/19] relative">
+        <div
+          className="rounded-[2.4rem] overflow-hidden bg-black aspect-[9/19] relative cursor-grab"
+          onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {videos.length > 0 ? (
             <video
               key={videos[index].id}
@@ -46,7 +73,7 @@ export default function PhoneMockup() {
           {/* Earned badge */}
           <div className="absolute top-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-[#EF4444] text-white rounded-full px-4 py-1.5 text-xs font-bold shadow-lg">
             <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[9px]">€</span>
-            211 € <span className="font-normal opacity-80 text-[10px]">gagnés</span>
+            {earnings[index] ?? 211} € <span className="font-normal opacity-80 text-[10px]">gagnés</span>
           </div>
           {/* Right rail */}
           <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 text-white">
