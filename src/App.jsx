@@ -33,6 +33,7 @@ import BrandMessagesPage from './pages/brand/BrandMessagesPage';
 import BrandSettingsPage from './pages/brand/BrandSettingsPage';
 import Profile from './pages/Profile';
 import AdminCampaigns from './pages/AdminCampaigns';
+import AdminLandingVideos from './pages/AdminLandingVideos';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -86,6 +87,7 @@ const AuthenticatedApp = () => {
         </Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/admin/campaigns" element={<AdminCampaigns />} />
+        <Route path="/admin/landing-videos" element={<AdminLandingVideos />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

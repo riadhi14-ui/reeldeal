@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Heart, MessageCircle, Share2, Music, Eye, Plus } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 export default function PhoneMockup() {
+  const [videos, setVideos] = useState([]);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    base44.entities.LandingVideo.list("-created_date").then(setVideos).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (videos.length < 2) return;
+    const interval = setInterval(() => setIndex((i) => (i + 1) % videos.length), 6000);
+    return () => clearInterval(interval);
+  }, [videos.length]);
+
   return (
     <div className="relative">
       {/* Phone */}
       <div className="relative w-[280px] sm:w-[300px] mx-auto rounded-[3rem] bg-slate-900 p-3 shadow-2xl shadow-slate-900/30 ring-1 ring-slate-800">
         <div className="rounded-[2.4rem] overflow-hidden bg-black aspect-[9/19] relative">
-          <img
-            src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=1200&fit=crop"
-            alt="Creator video"
-            className="absolute inset-0 w-full h-full object-cover opacity-90"
-          />
+          {videos.length > 0 ? (
+            <video
+              key={videos[index].id}
+              src={videos[index].video_url}
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <img
+              src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=1200&fit=crop"
+              alt="Creator video"
+              className="absolute inset-0 w-full h-full object-cover opacity-90"
+            />
+          )}
           {/* Status bar */}
           <div className="absolute top-0 inset-x-0 flex justify-between items-center px-6 pt-3 text-white text-[10px] font-semibold">
             <span>9:41</span>
