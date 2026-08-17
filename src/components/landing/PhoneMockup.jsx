@@ -3,18 +3,36 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart, MessageCircle, Share2, Music, Eye, Plus } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
+const SAMPLE_PROFILES = [
+  { username: "flamazerty", description: "Abonne toi ! Premier site web 100% gratuit avec le lien en bio ! #ia #viral #fyp #business", avatar: "from-red-400 to-red-600" },
+  { username: "lea.creates", description: "Ce produit a changé ma routine du matin 😍 lien en bio ! #ugc #tendance #fyp", avatar: "from-orange-400 to-pink-500" },
+  { username: "max.reviews", description: "J'ai testé pendant 7 jours, voici le résultat 🔥 #test #avis #viral", avatar: "from-purple-400 to-indigo-600" },
+  { username: "sofia.style", description: "La meilleure trouvaille de l'année, foncez !! #shopping #musthave #fyp", avatar: "from-teal-400 to-emerald-600" },
+  { username: "tom.unboxing", description: "Unboxing en direct, vous n'allez pas y croire 🤯 #unboxing #reveal", avatar: "from-blue-400 to-cyan-600" },
+];
+
 export default function PhoneMockup() {
   const [videos, setVideos] = useState([]);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [earnings, setEarnings] = useState([211]);
+  const [stats, setStats] = useState([{ likes: 4700, comments: 633, shares: 316, views: 52700 }]);
+  const [profiles, setProfiles] = useState([SAMPLE_PROFILES[0]]);
   const touchStartY = useRef(null);
   const scrollLocked = useRef(false);
 
   useEffect(() => {
     base44.entities.LandingVideo.list("-created_date").then((list) => {
       setVideos(list);
-      setEarnings(list.length ? list.map(() => Math.floor(80 + Math.random() * 400)) : [211]);
+      if (!list.length) return;
+      setEarnings(list.map(() => Math.floor(80 + Math.random() * 400)));
+      setStats(list.map(() => ({
+        likes: Math.floor(800 + Math.random() * 9000),
+        comments: Math.floor(50 + Math.random() * 1200),
+        shares: Math.floor(30 + Math.random() * 600),
+        views: Math.floor(5000 + Math.random() * 90000),
+      })));
+      setProfiles(list.map((_, i) => SAMPLE_PROFILES[i % SAMPLE_PROFILES.length]));
     }).catch(() => {});
   }, []);
 
@@ -31,6 +49,8 @@ export default function PhoneMockup() {
     setIndex((i) => (i + dir + videos.length) % videos.length);
     setTimeout(() => { scrollLocked.current = false; }, 500);
   };
+
+  const formatCount = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1)}K` : `${n}`);
 
   const handleWheel = (e) => goTo(e.deltaY > 0 ? 1 : -1);
   const handleTouchStart = (e) => { touchStartY.current = e.touches[0].clientY; };
@@ -88,19 +108,19 @@ export default function PhoneMockup() {
           {/* Right rail */}
           <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 text-white">
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-400 to-red-600 ring-2 ring-white" />
+              <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${profiles[index]?.avatar || "from-red-400 to-red-600"} ring-2 ring-white`} />
               <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#EF4444] flex items-center justify-center"><Plus className="w-3 h-3" /></span>
             </div>
-            <div className="flex flex-col items-center gap-0.5"><Heart className="w-7 h-7 fill-white" /><span className="text-[10px] font-semibold">4.7K</span></div>
-            <div className="flex flex-col items-center gap-0.5"><MessageCircle className="w-7 h-7" /><span className="text-[10px] font-semibold">633</span></div>
-            <div className="flex flex-col items-center gap-0.5"><Share2 className="w-7 h-7" /><span className="text-[10px] font-semibold">316</span></div>
+            <div className="flex flex-col items-center gap-0.5"><Heart className="w-7 h-7 fill-white" /><span className="text-[10px] font-semibold">{formatCount(stats[index]?.likes ?? 4700)}</span></div>
+            <div className="flex flex-col items-center gap-0.5"><MessageCircle className="w-7 h-7" /><span className="text-[10px] font-semibold">{formatCount(stats[index]?.comments ?? 633)}</span></div>
+            <div className="flex flex-col items-center gap-0.5"><Share2 className="w-7 h-7" /><span className="text-[10px] font-semibold">{formatCount(stats[index]?.shares ?? 316)}</span></div>
           </div>
           {/* Bottom info */}
           <div className="absolute bottom-4 left-4 right-14 text-white space-y-1">
-            <p className="text-xs font-bold">flamazerty</p>
-            <p className="text-[10px] leading-snug opacity-90">Abonne toi ! Premier site web 100% gratuit avec le lien en bio ! #ia #viral #fyp #business</p>
-            <p className="text-[10px] flex items-center gap-1 opacity-90"><Eye className="w-3 h-3" /> <b>52,7K vues</b> · Blink.new</p>
-            <p className="text-[10px] flex items-center gap-1 opacity-80"><Music className="w-3 h-3" /> Son original — flamazerty</p>
+            <p className="text-xs font-bold">{profiles[index]?.username || "flamazerty"}</p>
+            <p className="text-[10px] leading-snug opacity-90">{profiles[index]?.description || "Abonne toi ! Premier site web 100% gratuit avec le lien en bio ! #ia #viral #fyp #business"}</p>
+            <p className="text-[10px] flex items-center gap-1 opacity-90"><Eye className="w-3 h-3" /> <b>{formatCount(stats[index]?.views ?? 52700)} vues</b> · Blink.new</p>
+            <p className="text-[10px] flex items-center gap-1 opacity-80"><Music className="w-3 h-3" /> Son original — {profiles[index]?.username || "flamazerty"}</p>
           </div>
         </div>
       </div>
